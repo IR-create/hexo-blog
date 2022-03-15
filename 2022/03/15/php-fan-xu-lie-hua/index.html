@@ -1,0 +1,1302 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="php反序列化, Lees&#39;s Blog">
+    <meta name="description" content="啥是反序列化在这之前我们先了解下序列化，序列化是将变量或对象转换成字符串的过程。使用 serlize() 函数。案例引入
+
+案例输出反序列化就是将字符串转换成对象或变量。使用 unserlize() 函数。
+
+
+
+字母表示
+含义
+格式 &amp;l">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>php反序列化 | Lees&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="Lees's Blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Lees&#39;s Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Lees&#39;s Blog</div>
+        <div class="logo-desc">
+            
+            没有目的，就做不成任何事情
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">php反序列化</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+                                <span class="chip bg-color">反序列化</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="post-category">
+                                反序列化
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-03-15
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    11 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="啥是反序列化"><a href="#啥是反序列化" class="headerlink" title="啥是反序列化"></a>啥是反序列化</h2><p>在这之前我们先了解下序列化，序列化是将变量或对象转换成字符串的过程。使用 serlize() 函数。<br>案例引入<br><img src="https://bu.dusays.com/2021/09/15/697e3a6616a5f.png" alt="案例"></p>
+<span id="more"></span>
+<p>案例输出<br><img src="https://bu.dusays.com/2021/09/15/350680d486300.png" alt="输出"><br>反序列化就是将字符串转换成对象或变量。使用 unserlize() 函数。</p>
+<table>
+<thead>
+<tr>
+<th>字母表示</th>
+<th>含义</th>
+<th>格式 &lt;&gt;代表这里是一个变量值，实际反序列化中没有&lt;&gt;。看上面的例子就知道了</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a</td>
+<td>array，数组</td>
+<td>a:&lt;元素个数&gt;:{&lt;下标或键&gt;&lt;值&gt;&lt;下标或键&gt;&lt;值&gt;…&lt;下标或键&gt;&lt;值&gt;}</td>
+</tr>
+<tr>
+<td>b</td>
+<td>boolean，布尔，值只能为true和false</td>
+<td>b:<digit>; digit只能为0或1。</td>
+</tr>
+<tr>
+<td>d</td>
+<td>double，双精度浮点型，用来存储小数</td>
+<td>d:&lt;整数或小小数&gt;;</td>
+</tr>
+<tr>
+<td>i</td>
+<td>integer，整型，用来存储整数</td>
+<td>i:&lt;整数&gt;;范围为：-2147483648 到2147483647。</td>
+</tr>
+<tr>
+<td>o</td>
+<td>common object，php3引入用来标识对象，php4以后被O取代。</td>
+<td>这个基本处于半废的状态</td>
+</tr>
+<tr>
+<td>r</td>
+<td>reference，引用</td>
+<td>r:&lt;所引用对象的编号&gt;;O:6:”ClassA”:5:{s:3:”age”;i:1;s:3:”name”;s:5:”Tom”;s:4:”sex”;b:1;s:3:”obj”;r:1;s:2:”pr”;R:3;}最前面的class编号是1，然后age编号是2，name编号是3，sex编号是4，obj编号是5，pr编号是6</td>
+</tr>
+<tr>
+<td>C</td>
+<td>custom object，自定义对象，很少用到，后面也会有详解。PHP5时引入的</td>
+<td>C:<name length>:”<class name>“:<data length>:{<data>}</td>
+</tr>
+<tr>
+<td>s</td>
+<td>string，字符串</td>
+<td>s:&lt;值的长度&gt;:”&lt;值&gt;”;</td>
+</tr>
+<tr>
+<td>N</td>
+<td>null，空值</td>
+<td>N; 就一个单纯的N就行了</td>
+</tr>
+<tr>
+<td>R</td>
+<td>pointer reference，指针引用</td>
+<td>R:&lt;所引用对象的编号&gt;;O:6:”ClassA”:5:{s:3:”age”;i:1;s:3:”name”;s:5:”Tom”;s:4:”sex”;b:1;s:3:”obj”;r:1;s:2:”pr”;R:3;}最前面的class编号是1，然后age编号是2，name编号是3，sex编号是4，obj编号是5，pr编号是6</td>
+</tr>
+<tr>
+<td>U</td>
+<td>Unicode string，Unicode编码的字符串</td>
+<td>U:<length>:”<unicode string>“;</td>
+</tr>
+<tr>
+<td>O</td>
+<td>Object，对象。用来表示实例化对象</td>
+<td>O:&lt;类名长度&gt;:”&lt;类名&gt;”:&lt;字段数量&gt;:{s:名字长度:”第1个属性名字”;第一个属性对应的值;…s:名字长度:”第n个属性名字”;第n个属性对应的值;} 字段名是字符串型，序列化后格式与字符串型数据序列化后的格式相同。字段值可以是任意类型，其序列化后的格式与其所对应的类型序列化后的格式相同。序列化的字段不包括static 和const 声明的静态字段。</td>
+</tr>
+</tbody></table>
+<h2 id="常用魔术方法"><a href="#常用魔术方法" class="headerlink" title="常用魔术方法"></a>常用魔术方法</h2><blockquote>
+<p>__construct():   &#x2F;&#x2F;构造函数，当对象创建(new)时会自动调用但在unserialize()时是不会自动调用的。<br>__destruct():  &#x2F;&#x2F;析构函数当对象被销毁时会自动调用。<br>__wakeup() :  &#x2F;&#x2F; unserialize()时会自动调用。<br>__invoke():   &#x2F;&#x2F;当尝试以调用函数的方法调用一个对象时，会自动调<br>__call():    &#x2F;&#x2F;在对象上下文中调用不可访问的方法时触发<br>__callStatic():   &#x2F;&#x2F;在静态上下文中调用不可访问的方法时触发<br>__get():   &#x2F;&#x2F;用于从不可访问的属性读取数据<br>__set():   &#x2F;&#x2F;用于将数据写入不可访问的属性<br>__isset():   &#x2F;&#x2F;在不可访问的属性上调用 isset( )或 empty()触发<br>__unset():   &#x2F;&#x2F;在不可访问的属性上使用 unset()时触发<br>__toString():   &#x2F;&#x2F;把类当作字符串使用时触发<br>__sleep():   &#x2F;&#x2F;serialize()函数会检查类中是否存在一个魔术方法__sleep() .如果存在，该方法会被优先调用。</p>
+</blockquote>
+<h2 id="session反序列化"><a href="#session反序列化" class="headerlink" title="session反序列化"></a>session反序列化</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>PHP session概念: PHP session是一个特殊的变量，用于存储有关用户会话的信息，或更改用户会话的设置。session变量保存的信息是单一用户的，并且可供应用程序中的所有页面使用。它为每个访问者创建一个唯一的id (UID)，并基于这个UID来存储变量。UID存储在cookie 中，亦或通过URL进行传导。</p>
+<p>会话过程: 当开始一个会话时，PHP会尝试从请求中查找会话ID（通常通过会话cookie),如果请求中不包含会话ID信息，PHP就会创建一个新的会话。会话开始之后，PHP就会将会话中的数据设置到$_SESSION变量中。当PHP停止的时候，它会自动读取$_SESSION中的内容，并将其进行序列化，然后发送给会话保存管理器来进行保存。</p>
+<p>默认情况下，PHP使用内置的文件会话保存管理器（files)来完成会话的保存。可以通过调用函数session_start()来手动开始一个会话。如果配置项 session.auto_start 设置为1，那么请求开始的时候，会话会自动开始。</p>
+<p>PHP脚本执行完毕之后，会话会自动关闭。同时，也可以通过调用函数session_write_close()来手动关闭会话。</p>
+<p>了解了有关session的概念后，还需要了解php.ini中一些Session配置</p>
+<blockquote>
+<p>session.save_path&#x3D;””  –设置session的存储路径<br>session.save_handler&#x3D;””  –设定用户自定义存储函数，如果想使用PHP内置会话存储机制之外的可以使用本函数(数据库等方式)<br>session.auto_start boolen  –指定会话模块是否在请求开始时启动一个会话默认为0不启动<br>session.serialize_handler string  –定义用来序列化&#x2F;反序列化的处理器名字。默认使用php</p>
+</blockquote>
+<h3 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h3><p>PHP中的session中的内容默认是以文件的方式来存储的，存储方式就是由配置项session.save_handler来进行确定的，默认是以文件的方式存储。存储的文件是以sess_PHPSESSID来进行命名的，文件的内容就是session值的序列话之后的内容。<br>session.serialize_handler有如下三种取值</p>
+<table>
+<thead>
+<tr>
+<th>存储引擎</th>
+<th>存储方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>php_binary</td>
+<td>键名的长度对应的ASCII字符+键名+经serialize()后的值 <img src="https://bu.dusays.com/2021/09/17/3c3e6bd4475f6.png"></td>
+</tr>
+<tr>
+<td>php</td>
+<td>键名+竖线+经serialize()后的值  <img src="https://bu.dusays.com/2021/09/17/0c878370fb41a.png"></td>
+</tr>
+<tr>
+<td>php_serialize</td>
+<td>（php&lt;5.5.4）经serialize()后的值  <img src="https://bu.dusays.com/2021/09/17/280204f55738a.png"></td>
+</tr>
+</tbody></table>
+<p>linux常见存储session路径</p>
+<pre class=" language-text"><code class="language-text">/var/lib/php5/sess_PHPSESSID
+/var/lib/php7/sess_PHPSESSID
+/var/lib/php/sess_PHPSESSID
+/tmp/sess_PHPSESSID
+/tmp/sessions/sess_PHPSESSED
+</code></pre>
+<h3 id="有-SESSION赋值"><a href="#有-SESSION赋值" class="headerlink" title="有$_SESSION赋值"></a>有$_SESSION赋值</h3><p>Session反序列化漏洞: 当网站序列化存储session与反序列化读取session的方式不同时，就可能导致session反序列化漏洞的产生。一般都是以php_serialize序列化存储session，以PHP反序列化读取session，造成反序列化攻击。<br><img src="https://bu.dusays.com/2021/09/23/f6f2cb1ae3494.png"></p>
+<h3 id="无-SESSION赋值（php-gt-5-4-0）"><a href="#无-SESSION赋值（php-gt-5-4-0）" class="headerlink" title="无$_SESSION赋值（php&gt;5.4.0）"></a>无$_SESSION赋值（php&gt;5.4.0）</h3><p>使用upload_process机制，在$_SESSION中创建一对键值,其中值可控。<br><img src="https://bu.dusays.com/2021/09/24/ec93019455e81.png"></p>
+<p>以Jarvis OJ题目为例：<a target="_blank" rel="noopener" href="http://web.jarvisoj.com:32784/">http://web.jarvisoj.com:32784/</a><br>先找到phpinfo页面看配置，自己弄个表单页面</p>
+<pre class=" language-html"><code class="language-html">&lt;form action="http://web.jarvisoj.com:32784/index.php" method="POST"enctype="multipart/form-data">
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>hidden<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>PHP_SESSION_UPLOAD_PROGRESS<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>123<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>file<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>file<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>抓包上传，在123后面添加一个 | 和序列化后的字符串通过返回包得到session，然后再添加到http头再发一遍，<br>payload：</p>
+<p>|O:5:&quot;OowoO&quot;:1:+{s:4:&quot;mdzz&quot;;s:40:&quot;print_r(scandir(dirname(__FILE__)));&quot;;}  </p>
+<p>|O:5:&quot;OowoO&quot;:1:{s:4:&quot;mdzz&quot;;s:62:&quot;print_r(file_get_contents(&quot;&#x2F;opt&#x2F;lampp&#x2F;temp&#x2F;sess_xxxxxxxxx”));&quot;;}</p>
+<h2 id="phar反序列化"><a href="#phar反序列化" class="headerlink" title="phar反序列化"></a>phar反序列化</h2><h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><p>phar反序列化就是可以在不使用unserialize()函数进行反序列化。<br>phar文件的结构由四个部分组成：<br>stub：phar的文件标识，前面内容不限，但必须以 __HALT_COMPILER();?&gt; 结尾，否则无法识别为phar文件<br>manifest：压缩文件的属性等信息，以序列化的形式存储自定义的 meta-data，这里就是利用点<br>content：压缩文件的内容<br>signature：签名，在文件末尾<br>漏洞原因：使用伪协议 phar:&#x2F;&#x2F; 读取文件时，文件内容被解析成phar对象，然后phar对象内的meta-data信息会被反序列化，因此会造成反序列化漏洞。</p>
+<h3 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h3><p>phar文件要能够上传到服务器端<br>要有可用的魔术方法做 “跳板”<br>文件操作函数的参数可控，且 ：、&#x2F; 、phar等特殊字符没有被过滤</p>
+<table>
+<thead>
+<tr>
+<th>受影响的函数</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>fileatime()</td>
+<td>filectime()</td>
+<td>file_exists()</td>
+<td>file_get_contents()</td>
+</tr>
+<tr>
+<td>file_put_contents()</td>
+<td>file()</td>
+<td>filegroup()</td>
+<td>fopen()</td>
+</tr>
+<tr>
+<td>fileinode()</td>
+<td>filemtime()</td>
+<td>fileowner()</td>
+<td>fileperms()</td>
+</tr>
+<tr>
+<td>is_dir()</td>
+<td>is_executable()</td>
+<td>is_file()</td>
+<td>is_link()</td>
+</tr>
+<tr>
+<td>is_readable()</td>
+<td>is_writable()</td>
+<td>is_writeable()</td>
+<td>parse_ini_file()</td>
+</tr>
+<tr>
+<td>copy()</td>
+<td>unlink()</td>
+<td>stat()</td>
+<td>readline()</td>
+</tr>
+</tbody></table>
+<h3 id="生成phar文件"><a href="#生成phar文件" class="headerlink" title="生成phar文件"></a>生成phar文件</h3><p>注意：要将php.ini 中的 phar.readonly 选项设置为Off，否则无法生成 phar文件</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">class</span> <span class="token class-name">TestObject</span> <span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+<span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+
+@<span class="token function">unlink</span><span class="token punctuation">(</span><span class="token string">"phar.phar"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$phar</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Phar</span><span class="token punctuation">(</span><span class="token string">"phar.phar"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//后缀名必须为phar</span>
+<span class="token variable">$phar</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">startBuffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$phar</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">setStub</span><span class="token punctuation">(</span><span class="token string">"GIF89a"</span><span class="token punctuation">.</span><span class="token string">"&lt;?php __HALT_COMPILER(); ?>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//设置stub,增加gif文件头 </span>
+<span class="token variable">$o</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TestObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$phar</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">setMetadata</span><span class="token punctuation">(</span><span class="token variable">$o</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//将自定义的meta-data存入manifest</span>
+<span class="token variable">$phar</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">addFromString</span><span class="token punctuation">(</span><span class="token string">"test.txt"</span><span class="token punctuation">,</span> <span class="token string">"test"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//添加要压缩的文件</span>
+<span class="token comment" spellcheck="true">//签名自动计算</span>
+<span class="token variable">$phar</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">stopBuffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter">?></span>
+</code></pre>
+<h2 id="反序列化字符逃逸"><a href="#反序列化字符逃逸" class="headerlink" title="反序列化字符逃逸"></a>反序列化字符逃逸</h2><h3 id="概念-2"><a href="#概念-2" class="headerlink" title="概念"></a>概念</h3><p>在反序列化前，对序列化后的字符串进行替换或者修改，使得字符串的长度发生了变化，通过构造特定的字符串，导致对象注入等恶意操作。<br>php反序列化特性</p>
+<ol>
+<li>PHP在反序列化时，底层代码是以;作为字段的分隔，以}作为结尾(字符串除外)，并且是根据长度判断内容的。</li>
+<li>在反序列化的时候php会根据s所指定的字符长度去读取后边的字符。如果指定的长度错误则反序列化就会失败</li>
+<li>对类中不存在的属性也会进行反序列化</li>
+</ol>
+<h3 id="字符变多"><a href="#字符变多" class="headerlink" title="字符变多"></a>字符变多</h3><p>只需要一个变量<br><img src="https://bu.dusays.com/2021/09/29/2a18341829821.png" alt="例题"><br>    此题中对序列化中的x替换为yy，肯能导致字符串长度增加。<br>当传入 u&#x3D;admin，序列化为  a:2:{i:0;s:5:”admin”;i:1;s:3:”aaa”;}<br>替换反序列化后不满足 $a[1]&#x3D;&#x3D;&#x3D;’admin’ 条件。</p>
+<p>​    当传入u&#x3D;xxxxxxxxxxxxxxxxxxx”;i:1;s:5:”admin”;}，此时替换序列化的结果为 当传入u&#x3D;admin,序列化为 <code>a:2:&#123;i:0;s:5:&quot;admin&quot;;i:1;s:3:&quot;aaa&quot;;&#125;</code><br>反序列化后满足不了$a[1]&#x3D;&#x3D;&#x3D;’admin’条件</p>
+<p>​    当传入 u&#x3D;xxxxxxxxxxxxxxxxxxx”;i:1;s:5:”admin”;}，此时替换序列化的结果为（一般x字符串长度就为xxxxxxxxxx后面那截字符串的长度）</p>
+<p><code>a:2:&#123;i:0;s:38:&quot;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&quot;i:1;s:5:&quot;admin&quot;;&#125; &quot;;i:1;s:3:&quot;aaa&quot;;&#125;</code><br>此时 yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy 的长度刚好为38，不会报错，再加上后面的 ;i:1;s:5:”admin”} 成功反序列化，后面的就被忽略了</p>
+<h3 id="字符变少"><a href="#字符变少" class="headerlink" title="字符变少"></a>字符变少</h3><p>需要两个变量<br><img src="https://bu.dusays.com/2021/09/29/59af9ddd93206.png" alt="例题"></p>
+<p>要想得到flag，就要使得 “;i:2;s:5:”admin”;}，长度为19，经过观察序列化后 “;i:1;s: 这部分是不会改变的，因为整个payload肯定是不超过100个字符的，所以加上后面的长度 “;i:1;s:xx:” 为12个字符，这里存在着sec的替换，我们可以输入4个sec替换为空格，刚好空出12个字符，可以将”;i:1;s:xx:”这12个字符反序列化后在第一个元素值中，使得后面逃匿。<br>最后payload<br>u&#x3D;secsecsecsec&amp;p&#x3D;”;i:1;s:4:”eval”;i:2;s:5:”admin”;}<br>也可以多添加几个sec，假设为5个，此时空出15个字符，减去”;i:1;s:xx:”这12个字符，还剩下3个，可以再输入三个字符填充。<br>u&#x3D;secsecsecsecsec&amp;p&#x3D;123”;i:1;s:4:”eval”;i:2;s:5:”admin”,}</p>
+<h2 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h2><h3 id="php7-1之后对类属性不敏感"><a href="#php7-1之后对类属性不敏感" class="headerlink" title="php7.1之后对类属性不敏感"></a>php7.1之后对类属性不敏感</h3><p>7.1之前,如果变量前是protected，序列化结果会在变量名前加上\x00*\x00<br>8.但在特定版本7.1以上则对于类属性不敏感，比如下面的例子即使没\x00*\x00也依然会输出 abc</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">class</span> <span class="token class-name">test</span><span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+    <span class="token keyword">protected</span> <span class="token variable">$a</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">a</span> <span class="token operator">=</span> <span class="token string">'abc'</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span>  <span class="token function">__destruct</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+        <span class="token keyword">echo</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">a</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+<span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+<span class="token function">unserialize</span><span class="token punctuation">(</span><span class="token string">'O:4:"test":1:&amp;#123;s:1:"a";s:3:"abc";&amp;#125;'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="phar-x2F-x2F-不能出现在首部"><a href="#phar-x2F-x2F-不能出现在首部" class="headerlink" title="phar:&#x2F;&#x2F;不能出现在首部"></a>phar:&#x2F;&#x2F;不能出现在首部</h3><p>这时候可以使用compress.zlib:&#x2F;&#x2F;或compress.bzip2:&#x2F;&#x2F;或zlib:&#x2F;&#x2F;<br>(有些环境加斜线不成功)</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Lees</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lees01.gitee.io/2022/03/15/php-fan-xu-lie-hua/">https://lees01.gitee.io/2022/03/15/php-fan-xu-lie-hua/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Lees</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+                                    <span class="chip bg-color">反序列化</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2022/03/15/php-fan-xu-lie-hua/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="php反序列化">
+                        
+                        <span class="card-title">php反序列化</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            啥是反序列化在这之前我们先了解下序列化，序列化是将变量或对象转换成字符串的过程。使用 serlize() 函数。案例引入
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="post-category">
+                                    反序列化
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+                        <span class="chip bg-color">反序列化</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/03/15/hello-world/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        
+                        <span class="card-title">Hello World</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Lees
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('100')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Lees&#39;s Blog<br />'
+            + '文章作者: Lees<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2022</span>
+            
+            <a href="/about" target="_blank">Lees</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">3k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "9";
+                        var startDate = "5";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+    <a href="mailto:lees01@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2578546966" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2578546966" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
+            }
+        </script>
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
