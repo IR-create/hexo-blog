@@ -4,8 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, Lees&#39;s Blog">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="hexo+gitee博客搭建, Lees&#39;s Blog">
+    <meta name="description" content="之前也弄过一个博客，但后面有段时间没有更了，想对页面优化一下，结果忘记之前搞了哪些东西。现在重新搞个主题搭建吧。记录一下，免得后面想做更改又不知道改了啥。
+这次的主题是matery，博客的配置文件就不说了，主要是matery的配置文件。
+主">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +19,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | Lees&#39;s Blog</title>
+    <title>hexo+gitee博客搭建 | Lees&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -225,12 +227,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">hexo+gitee博客搭建</h1>
                 </div>
             </div>
         </div>
@@ -344,12 +346,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%8D%9A%E5%AE%A2/">
+                                <span class="chip bg-color">博客</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%8D%9A%E5%AE%A2/" class="post-category">
+                                博客
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -367,14 +382,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    73
+                    635
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -394,19 +409,69 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
+                <p>之前也弄过一个博客，但后面有段时间没有更了，想对页面优化一下，结果忘记之前搞了哪些东西。现在重新搞个主题搭建吧。记录一下，免得后面想做更改又不知道改了啥。</p>
+<p>这次的主题是matery，博客的配置文件就不说了，主要是matery的配置文件。</p>
+<h2 id="主题背景图颜色"><a href="#主题背景图颜色" class="headerlink" title="主题背景图颜色"></a>主题背景图颜色</h2><p>搭在本地后，首先看到首页的一片紫色在背景图上</p>
+<p><img src="https://bu.dusays.com/2022/03/16/99c222819792a.png" alt="image-20220316101443965"></p>
+<p>看不惯，在<code>/themes/source/css/matery.css</code>中，将下面两个注释掉</p>
+<pre class=" language-css"><code class="language-css"><span class="token atrule"><span class="token rule">@-webkit-keyframes</span> rainbow &amp;#123<span class="token punctuation">;</span></span>
+   <span class="token comment" spellcheck="true">/* 动态切换背景颜色. */</span>
+&amp;<span class="token hexcode">#125</span><span class="token punctuation">;</span>
+
+<span class="token atrule"><span class="token rule">@keyframes</span> rainbow &amp;#123<span class="token punctuation">;</span></span>
+    <span class="token comment" spellcheck="true">/* 动态切换背景颜色. */</span>
+&amp;<span class="token hexcode">#125</span><span class="token punctuation">;</span>
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
+<p>一直有一个问题，首页封面的图片没有切换的按钮，不知道是不是没有那个css的问题，禁用了。</p>
+<h2 id="字数统计"><a href="#字数统计" class="headerlink" title="字数统计"></a>字数统计</h2><p>我还弄了文字统计，安装<a target="_blank" rel="noopener" href="https://github.com/willin/hexo-wordcount">hexo-wordcount</a>插件，在主题配置文件修改相关项为true</p>
+<pre class=" language-shell"><code class="language-shell">npm i --save hexo-wordcount
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate
+<pre class=" language-yml"><code class="language-yml">postInfo:
+  date: true  # 发布时间
+  update: false  # 更新时间
+  wordCount: true # 设置文章字数统计为 true
+  totalCount: true # 设置站点文章总字数统计为 true
+  min2read: true # 阅读时长
+  readCount: true # 阅读次数
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
+<h2 id="中文拼音链接"><a href="#中文拼音链接" class="headerlink" title="中文拼音链接"></a>中文拼音链接</h2><p>当你的文章标题有中文的时候，生成的永久链接会将中文编码，搞成一大长串，这时可以来个插件将链接设置为中文拼音，安装<a target="_blank" rel="noopener" href="https://github.com/viko16/hexo-permalink-pinyin">hexo-permalink-pinyin</a>插件</p>
+<pre class=" language-shell"><code class="language-shell">npm i hexo-permalink-pinyin --save
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>然后在博客跟目录下的<code>_config.yml</code>文件中添加</p>
+<pre class=" language-yml"><code class="language-yml">permalink_pinyin:
+  enable: true
+  separator: '-' # default: '-'
+</code></pre>
+<h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2><p>用的是<a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search">hexo-generator-search</a>插件</p>
+<pre class=" language-shell"><code class="language-shell">npm install hexo-generator-search --save
+</code></pre>
+<p>然后在博客跟目录下的<code>_config.yml</code>文件中添加</p>
+<pre class=" language-yml"><code class="language-yml">search:
+  path: search.xml
+  field: post
+</code></pre>
+<h2 id="代码高亮"><a href="#代码高亮" class="headerlink" title="代码高亮"></a>代码高亮</h2><p>用的是<a target="_blank" rel="noopener" href="https://github.com/ele828/hexo-prism-plugin">hexo-prism-plugin</a>插件</p>
+<pre class=" language-shell"><code class="language-shell">npm i -S hexo-prism-plugin
+</code></pre>
+<p>然后在博客跟目录下的<code>_config.yml</code>中添加，把原先的设置为false</p>
+<pre class=" language-yml"><code class="language-yml">highlight:
+  enable: false
+
+prism_plugin:
+  mode: 'preprocess'    # realtime/preprocess
+  theme: 'tomorrow'
+  line_number: false    # default false
+  custom_css:
+</code></pre>
+<h2 id="导航栏颜色"><a href="#导航栏颜色" class="headerlink" title="导航栏颜色"></a>导航栏颜色</h2><p>在<code>/themes/matery/source/css/matery.css</code>中修改<code>.bg-color</code></p>
+<pre class=" language-css"><code class="language-css"><span class="token number">.</span>bg-color &amp;<span class="token hexcode">#123</span><span class="token punctuation">;</span>
+    <span class="token property">background-image</span><span class="token punctuation">:</span> <span class="token function">linear-gradient</span><span class="token punctuation">(</span>to right, <span class="token hexcode">#4cbf30</span> <span class="token number">0%</span>, <span class="token hexcode">#0f9d58</span> <span class="token number">100%</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    //修改成自己喜欢的颜色值
+    <span class="token property">opacity</span><span class="token punctuation">:</span> <span class="token number">0.8</span><span class="token punctuation">;</span>  
+    //透明效果 值范围 <span class="token number">0</span>~<span class="token number">1</span>
+&amp;<span class="token hexcode">#125</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>最后还可以对主题的图片进行更换，只要保持数量一致就行，不然还得去修改其他文件，当然去网上找的图片可能有点大，需要去压缩一下（我有张背景图15M，加载老半天，后面改了），安利一个找壁纸的网站吧，感觉还行<a target="_blank" rel="noopener" href="https://wallhaven.cc/">wallhaven.cc</a></p>
 
                 
             </div>
@@ -470,7 +535,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E5%8D%9A%E5%AE%A2/">
+                                    <span class="chip bg-color">博客</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -570,9 +639,9 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="hexo+gitee博客搭建">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">hexo+gitee博客搭建</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -587,13 +656,25 @@
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Lees
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%8D%9A%E5%AE%A2/" class="post-category">
+                                    博客
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%8D%9A%E5%AE%A2/">
+                        <span class="chip bg-color">博客</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -777,7 +858,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">3k</span>
+                        class="white-color">3.6k</span>
             
             
             

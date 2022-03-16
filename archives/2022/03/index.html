@@ -261,7 +261,7 @@
 
 <script>
     // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/medias/banner/6.jpg" ;
+    var bannerUrl = "/medias/banner/" + new Data().getDay() + '.jpg';
     $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
 </script>
 
@@ -457,15 +457,17 @@
                             <div class="card-image">
                                 
                                 
-                                <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                                <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="hexo+gitee博客搭建">
                                 
-                                <span class="card-title">Hello World</span>
+                                <span class="card-title">hexo+gitee博客搭建</span>
                             </div>
                         </a>
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
+                                    之前也弄过一个博客，但后面有段时间没有更了，想对页面优化一下，结果忘记之前搞了哪些东西。现在重新搞个主题搭建吧。记录一下，免得后面想做更改又不知道改了啥。
+这次的主题是matery，博客的配置文件就不说了，主要是matery的配置文件。
+主
                                 
                             </div>
                             <div class="publish-info">
@@ -474,13 +476,23 @@
                                 </span>
                                 <span class="publish-author">
                                     
-                                    <i class="fas fa-user fa-fw"></i>
-                                    Lees
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                    <a href="/categories/%E5%8D%9A%E5%AE%A2/" class="post-category">
+                                    博客
+                                    </a>
+                                    
                                     
                                 </span>
                             </div>
                         </div>
 
+                        
+                        <div class="card-action article-tags">
+                            
+                            <a href="/tags/%E5%8D%9A%E5%AE%A2/"><span class="chip bg-color">博客</span></a>
+                            
+                        </div>
                         
                     </div>
                 </div>
@@ -510,7 +522,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">3k</span>
+                        class="white-color">3.6k</span>
             
             
             
