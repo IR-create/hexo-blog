@@ -62,4 +62,237 @@
     
   </entry>
   
+  <entry>
+    <title>利用pearcmd.php从LFI到getshell</title>
+    <link href="https://lees01.gitee.io/2021/11/22/li-yong-pearcmd-php-cong-lfi-dao-getshell/"/>
+    <id>https://lees01.gitee.io/2021/11/22/li-yong-pearcmd-php-cong-lfi-dao-getshell/</id>
+    <published>2021-11-22T08:54:04.423Z</published>
+    <updated>2021-12-06T08:44:54.184Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;再复现之前打湖湘杯比赛的时候遇到了这个，新知识，看着p神的笔记学习一波&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://tttang.com/archive/1312/&quot;&gt;https://tttang.com/archive/1312/&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;环境&quot;&gt;&lt;a href=&quot;#环境&quot; class=&quot;headerlink&quot; title=&quot;环境&quot;&gt;&lt;/a&gt;环境&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;安装了pear&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;开启了&lt;code&gt;register_argc_argv&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;存在文件包含&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    
+    <category term="php" scheme="https://lees01.gitee.io/tags/php/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux的/proc/self/学习</title>
+    <link href="https://lees01.gitee.io/2021/10/23/linux-de-proc-xia-de-self-xue-xi/"/>
+    <id>https://lees01.gitee.io/2021/10/23/linux-de-proc-xia-de-self-xue-xi/</id>
+    <published>2021-10-23T07:55:56.273Z</published>
+    <updated>2021-10-24T14:38:48.292Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;x2F-proc目录&quot;&gt;&lt;a href=&quot;#x2F-proc目录&quot; class=&quot;headerlink&quot; title=&quot;&amp;#x2F;proc目录&quot;&gt;&lt;/a&gt;&amp;#x2F;proc目录&lt;/h2&gt;&lt;p&gt;&amp;#x2F;proc是一个虚拟文件系统。它有时也被称为进程信息伪文件系统，它提供了一种内核数据结构的接口。它不包含真实的文件，而是包含运行时系统信息（例如系统内存、安装的设备、硬件配置等）。它只存在内存当中，而不占用外存空间。它以文件系统的方式为访问系统内核数据的操作提供接口。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Linux" scheme="https://lees01.gitee.io/categories/Linux/"/>
+    
+    
+    <category term="Linux" scheme="https://lees01.gitee.io/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pickle反序列化</title>
+    <link href="https://lees01.gitee.io/2021/10/15/python-pickle-fan-xu-lie-hua/"/>
+    <id>https://lees01.gitee.io/2021/10/15/python-pickle-fan-xu-lie-hua/</id>
+    <published>2021-10-15T13:31:17.740Z</published>
+    <updated>2022-03-08T11:13:34.424Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;基础知识&quot;&gt;&lt;a href=&quot;#基础知识&quot; class=&quot;headerlink&quot; title=&quot;基础知识&quot;&gt;&lt;/a&gt;基础知识&lt;/h2&gt;&lt;h3 id=&quot;pickle库及函数&quot;&gt;&lt;a href=&quot;#pickle库及函数&quot; class=&quot;headerlink&quot; title=&quot;pickle库及函数&quot;&gt;&lt;/a&gt;pickle库及函数&lt;/h3&gt;&lt;p&gt;pickle是python语言的一个标准模块，实现了基本的数据序列化和反序列化。&lt;/p&gt;
+&lt;p&gt;常用的函数&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;函数&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td&gt;dumps&lt;/td&gt;
+&lt;td&gt;对象反序列化为bytes对象&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;dump&lt;/td&gt;
+&lt;td&gt;对象反序列化到文件对象，存入文件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;loads&lt;/td&gt;
+&lt;td&gt;从bytes对象反序列化&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;load&lt;/td&gt;
+&lt;td&gt;对象反序列化，从文件中读取数据&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;我们举例来看看&lt;/p&gt;
+&lt;p&gt;序列化&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="反序列化" scheme="https://lees01.gitee.io/categories/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+    
+    <category term="反序列化" scheme="https://lees01.gitee.io/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SSTI(服务器模板注入)</title>
+    <link href="https://lees01.gitee.io/2021/10/11/ssti/"/>
+    <id>https://lees01.gitee.io/2021/10/11/ssti/</id>
+    <published>2021-10-11T11:12:39.737Z</published>
+    <updated>2021-12-17T03:29:06.940Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;官方解释：“模板引擎（这里特指用于Web开发的模板引擎）是为了使用户界面与业务数据（内容）分离而产生的，它可以生成特定格式的文档，用于网站的模板引擎就会生成一个标准的HTML文档。”&lt;/p&gt;
+&lt;p&gt;模板引擎也会提供沙箱机制来进行漏洞防范，但是可以用沙箱逃逸技术来进行绕过。&lt;/p&gt;
+&lt;h2 id=&quot;ssti&quot;&gt;&lt;a href=&quot;#ssti&quot; class=&quot;headerlink&quot; title=&quot;ssti&quot;&gt;&lt;/a&gt;ssti&lt;/h2&gt;&lt;p&gt;当前的框架基本上都采用MVC模式。M（模板），V（视图），C（控制器）。用户数据给控制器，控制器将数据交给对应模板处理，最终经过渲染展现给用户。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="注入" scheme="https://lees01.gitee.io/categories/%E6%B3%A8%E5%85%A5/"/>
+    
+    
+    <category term="SSTI" scheme="https://lees01.gitee.io/tags/SSTI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>XXE(xml外部实体注入)</title>
+    <link href="https://lees01.gitee.io/2021/10/10/xml-wai-bu-shi-ti-zhu-ru/"/>
+    <id>https://lees01.gitee.io/2021/10/10/xml-wai-bu-shi-ti-zhu-ru/</id>
+    <published>2021-10-10T12:37:20.505Z</published>
+    <updated>2021-10-24T06:55:50.009Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;xml基础&quot;&gt;&lt;a href=&quot;#xml基础&quot; class=&quot;headerlink&quot; title=&quot;xml基础&quot;&gt;&lt;/a&gt;xml基础&lt;/h2&gt;&lt;p&gt;xml 指可扩展标记语言，设计宗旨是用来传输数据&lt;/p&gt;
+&lt;p&gt;DTD（document type define文档类型定义）作用是定义XML文档的合法构建模块&lt;br&gt;DTD可以在XML文档中声明，也可以外部引用&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="注入" scheme="https://lees01.gitee.io/categories/%E6%B3%A8%E5%85%A5/"/>
+    
+    
+    <category term="XXE" scheme="https://lees01.gitee.io/tags/XXE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>文件包含&amp;上传</title>
+    <link href="https://lees01.gitee.io/2021/09/29/wen-jian-bao-han-shang-chuan/"/>
+    <id>https://lees01.gitee.io/2021/09/29/wen-jian-bao-han-shang-chuan/</id>
+    <published>2021-09-29T15:14:08.827Z</published>
+    <updated>2022-02-12T07:17:55.337Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;文件包含&quot;&gt;&lt;a href=&quot;#文件包含&quot; class=&quot;headerlink&quot; title=&quot;文件包含&quot;&gt;&lt;/a&gt;文件包含&lt;/h1&gt;&lt;h2 id=&quot;漏洞发现&quot;&gt;&lt;a href=&quot;#漏洞发现&quot; class=&quot;headerlink&quot; title=&quot;漏洞发现&quot;&gt;&lt;/a&gt;漏洞发现&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;引用本站&amp;#x2F;外站文件的某个功能点&lt;/li&gt;
+&lt;li&gt;找到传递的参数（get、post），查看其是否有包含关系&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="文件包含&amp;上传" scheme="https://lees01.gitee.io/categories/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-%E4%B8%8A%E4%BC%A0/"/>
+    
+    
+    <category term="文件包含&amp;上传" scheme="https://lees01.gitee.io/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-%E4%B8%8A%E4%BC%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>sql注入</title>
+    <link href="https://lees01.gitee.io/2021/09/08/sql-zhu-ru/"/>
+    <id>https://lees01.gitee.io/2021/09/08/sql-zhu-ru/</id>
+    <published>2021-09-08T11:09:00.542Z</published>
+    <updated>2021-11-13T05:33:31.424Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;​    本文是对sql注入的总结和回顾,本文的sql语句（无特别描述的）都是基于MySQL数据库的。&lt;/p&gt;
+&lt;h2 id=&quot;什么是sql注入&quot;&gt;&lt;a href=&quot;#什么是sql注入&quot; class=&quot;headerlink&quot; title=&quot;什么是sql注入&quot;&gt;&lt;/a&gt;什么是sql注入&lt;/h2&gt;&lt;p&gt;​    Sql注入允许攻击者扰乱对数据库的查询，从而让攻击者查看到正常情况下看不到的数据，甚至删除或修改这些数据。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="注入" scheme="https://lees01.gitee.io/categories/%E6%B3%A8%E5%85%A5/"/>
+    
+    
+    <category term="sql注入" scheme="https://lees01.gitee.io/tags/sql%E6%B3%A8%E5%85%A5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>md语法</title>
+    <link href="https://lees01.gitee.io/2021/08/27/md-yu-fa/"/>
+    <id>https://lees01.gitee.io/2021/08/27/md-yu-fa/</id>
+    <published>2021-08-27T07:32:03.859Z</published>
+    <updated>2021-09-06T12:41:57.718Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;​&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;支持平台：微信公众号。&lt;br&gt;​&lt;br&gt;支持注音符号，用法如下：&lt;br&gt;​&lt;br&gt;Markdown Nice 这么好用，简直是{喜大普奔|hē hē hē hē}呀！&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>php代码命令执行</title>
+    <link href="https://lees01.gitee.io/2021/08/24/php-dai-ma-ming-ling-zhi-xing/"/>
+    <id>https://lees01.gitee.io/2021/08/24/php-dai-ma-ming-ling-zhi-xing/</id>
+    <published>2021-08-24T08:58:38.982Z</published>
+    <updated>2021-12-06T08:39:02.143Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;代码命令执行常用函数&quot;&gt;&lt;a href=&quot;#代码命令执行常用函数&quot; class=&quot;headerlink&quot; title=&quot;代码命令执行常用函数&quot;&gt;&lt;/a&gt;代码命令执行常用函数&lt;/h2&gt;&lt;p&gt;代码&amp;#x2F;命令执行攻击中，Web服务器没有过滤类似system(),eval(),exec()等函数的传入参数是造成漏洞攻击成功的最主要原因。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="rce" scheme="https://lees01.gitee.io/categories/rce/"/>
+    
+    
+    <category term="rce" scheme="https://lees01.gitee.io/tags/rce/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在线工具链接</title>
+    <link href="https://lees01.gitee.io/2021/08/24/gong-ju/"/>
+    <id>https://lees01.gitee.io/2021/08/24/gong-ju/</id>
+    <published>2021-08-24T06:58:02.634Z</published>
+    <updated>2021-09-08T02:12:46.042Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;图床&quot;&gt;&lt;a href=&quot;#图床&quot; class=&quot;headerlink&quot; title=&quot;图床&quot;&gt;&lt;/a&gt;图床&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;晚风：&lt;a href=&quot;https://pic.alexhchu.com/&quot;&gt;https://pic.alexhchu.com/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;去不：&lt;a href=&quot;https://7bu.top/&quot;&gt;https://7bu.top/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="工具" scheme="https://lees01.gitee.io/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="工具" scheme="https://lees01.gitee.io/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
 </feed>
