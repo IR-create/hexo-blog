@@ -6,7 +6,7 @@
   <link href="https://lees01.gitee.io/atom.xml" rel="self"/>
   
   <link href="https://lees01.gitee.io/"/>
-  <updated>2022-03-15T10:45:27.191Z</updated>
+  <updated>2022-04-06T02:47:27.267Z</updated>
   <id>https://lees01.gitee.io/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>HFCTF&amp;HMGCTF赛题复现</title>
+    <link href="https://lees01.gitee.io/2022/03/24/hfctf-hmgctf/"/>
+    <id>https://lees01.gitee.io/2022/03/24/hfctf-hmgctf/</id>
+    <published>2022-03-24T13:09:43.053Z</published>
+    <updated>2022-04-06T02:47:27.267Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;这周打了几个ctf比赛，赛中坐牢，赛后复现下了。&lt;/p&gt;
+&lt;h1 id=&quot;HFCTF&quot;&gt;&lt;a href=&quot;#HFCTF&quot; class=&quot;headerlink&quot; title=&quot;HFCTF&quot;&gt;&lt;/a&gt;HFCTF&lt;/h1&gt;&lt;h2 id=&quot;ezphp&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="CTF" scheme="https://lees01.gitee.io/categories/CTF/"/>
+    
+    
+    <category term="CTF" scheme="https://lees01.gitee.io/tags/CTF/"/>
+    
+  </entry>
+  
+  <entry>
     <title>php反序列化</title>
     <link href="https://lees01.gitee.io/2022/03/15/php-fan-xu-lie-hua/"/>
     <id>https://lees01.gitee.io/2022/03/15/php-fan-xu-lie-hua/</id>
     <published>2022-03-15T06:00:36.194Z</published>
-    <updated>2022-03-15T10:45:27.191Z</updated>
+    <updated>2022-03-31T02:48:12.926Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;啥是反序列化&quot;&gt;&lt;a href=&quot;#啥是反序列化&quot; class=&quot;headerlink&quot; title=&quot;啥是反序列化&quot;&gt;&lt;/a&gt;啥是反序列化&lt;/h2&gt;&lt;p&gt;在这之前我们先了解下序列化，序列化是将变量或对象转换成字符串的过程。使用 serlize() 函数。&lt;br&gt;案例引入&lt;br&gt;&lt;img src=&quot;https://bu.dusays.com/2021/09/15/697e3a6616a5f.png&quot; alt=&quot;案例&quot;&gt;&lt;/p&gt;</summary>
@@ -67,7 +93,7 @@
     <link href="https://lees01.gitee.io/2021/11/22/li-yong-pearcmd-php-cong-lfi-dao-getshell/"/>
     <id>https://lees01.gitee.io/2021/11/22/li-yong-pearcmd-php-cong-lfi-dao-getshell/</id>
     <published>2021-11-22T08:54:04.423Z</published>
-    <updated>2021-12-06T08:44:54.184Z</updated>
+    <updated>2022-03-24T13:12:14.409Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;再复现之前打湖湘杯比赛的时候遇到了这个，新知识，看着p神的笔记学习一波&lt;/p&gt;
@@ -82,6 +108,8 @@
 &lt;/ul&gt;</summary>
     
     
+    
+    <category term="php" scheme="https://lees01.gitee.io/categories/php/"/>
     
     
     <category term="php" scheme="https://lees01.gitee.io/tags/php/"/>
@@ -112,7 +140,7 @@
     <link href="https://lees01.gitee.io/2021/10/15/python-pickle-fan-xu-lie-hua/"/>
     <id>https://lees01.gitee.io/2021/10/15/python-pickle-fan-xu-lie-hua/</id>
     <published>2021-10-15T13:31:17.740Z</published>
-    <updated>2022-03-08T11:13:34.424Z</updated>
+    <updated>2022-03-22T02:18:23.607Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;基础知识&quot;&gt;&lt;a href=&quot;#基础知识&quot; class=&quot;headerlink&quot; title=&quot;基础知识&quot;&gt;&lt;/a&gt;基础知识&lt;/h2&gt;&lt;h3 id=&quot;pickle库及函数&quot;&gt;&lt;a href=&quot;#pickle库及函数&quot; class=&quot;headerlink&quot; title=&quot;pickle库及函数&quot;&gt;&lt;/a&gt;pickle库及函数&lt;/h3&gt;&lt;p&gt;pickle是python语言的一个标准模块，实现了基本的数据序列化和反序列化。&lt;/p&gt;
@@ -158,7 +186,7 @@
     <link href="https://lees01.gitee.io/2021/10/11/ssti/"/>
     <id>https://lees01.gitee.io/2021/10/11/ssti/</id>
     <published>2021-10-11T11:12:39.737Z</published>
-    <updated>2021-12-17T03:29:06.940Z</updated>
+    <updated>2022-04-06T02:52:08.147Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;官方解释：“模板引擎（这里特指用于Web开发的模板引擎）是为了使用户界面与业务数据（内容）分离而产生的，它可以生成特定格式的文档，用于网站的模板引擎就会生成一个标准的HTML文档。”&lt;/p&gt;
@@ -199,7 +227,7 @@
     <link href="https://lees01.gitee.io/2021/09/29/wen-jian-bao-han-shang-chuan/"/>
     <id>https://lees01.gitee.io/2021/09/29/wen-jian-bao-han-shang-chuan/</id>
     <published>2021-09-29T15:14:08.827Z</published>
-    <updated>2022-02-12T07:17:55.337Z</updated>
+    <updated>2022-03-22T02:19:34.167Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;文件包含&quot;&gt;&lt;a href=&quot;#文件包含&quot; class=&quot;headerlink&quot; title=&quot;文件包含&quot;&gt;&lt;/a&gt;文件包含&lt;/h1&gt;&lt;h2 id=&quot;漏洞发现&quot;&gt;&lt;a href=&quot;#漏洞发现&quot; class=&quot;headerlink&quot; title=&quot;漏洞发现&quot;&gt;&lt;/a&gt;漏洞发现&lt;/h2&gt;&lt;ul&gt;
@@ -259,7 +287,7 @@
     <link href="https://lees01.gitee.io/2021/08/24/php-dai-ma-ming-ling-zhi-xing/"/>
     <id>https://lees01.gitee.io/2021/08/24/php-dai-ma-ming-ling-zhi-xing/</id>
     <published>2021-08-24T08:58:38.982Z</published>
-    <updated>2021-12-06T08:39:02.143Z</updated>
+    <updated>2022-03-22T02:20:45.756Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;代码命令执行常用函数&quot;&gt;&lt;a href=&quot;#代码命令执行常用函数&quot; class=&quot;headerlink&quot; title=&quot;代码命令执行常用函数&quot;&gt;&lt;/a&gt;代码命令执行常用函数&lt;/h2&gt;&lt;p&gt;代码&amp;#x2F;命令执行攻击中，Web服务器没有过滤类似system(),eval(),exec()等函数的传入参数是造成漏洞攻击成功的最主要原因。&lt;/p&gt;</summary>
