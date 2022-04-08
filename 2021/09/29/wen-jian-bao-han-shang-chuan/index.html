@@ -354,6 +354,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/php/">
+                                <span class="chip bg-color">php</span>
+                            </a>
+                        
                             <a href="/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-%E4%B8%8A%E4%BC%A0/">
                                 <span class="chip bg-color">文件包含&amp;上传</span>
                             </a>
@@ -366,7 +370,11 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-%E4%B8%8A%E4%BC%A0/" class="post-category">
+                            <a href="/categories/php/" class="post-category">
+                                php
+                            </a>
+                        
+                            <a href="/categories/php/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-%E4%B8%8A%E4%BC%A0/" class="post-category">
                                 文件包含&上传
                             </a>
                         
@@ -388,14 +396,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    761
+                    699
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    2 分
                 </div>
                 
 
@@ -456,33 +464,23 @@ Linux/Unix:
 </ul>
 <h2 id="文件后缀黑名单绕过"><a href="#文件后缀黑名单绕过" class="headerlink" title="文件后缀黑名单绕过"></a>文件后缀黑名单绕过</h2><ul>
 <li>使用php3、php4、php5、php7、pht、phtml等后缀</li>
-<li>上传.htaccess文件（存放apache服务器的配置文件）<br>&#96;&#96;&#96;text<br>&lt;FilesMatch “Lees”&gt;<br>SetHandler application&#x2F;x-httpd-php<br></FilesMatch>        只要文件名包含”Lees”字符串就会当中php文件执行</li>
+<li>上传.htaccess文件（存放apache服务器的配置文件）</li>
 </ul>
-<p>SetHandler application&#x2F;x-httpd-php，这样的话能够将所有的文件当做php文件来解析。</p>
-<pre><code>- 上传.user.ini文件，auto_prepend_file=1.gif   所有的php文件都包含1.gif 
-更多：https://blog.csdn.net/qq_36374896/article/details/107005123
-- Windows大小写不敏感绕过
-- 文件后缀.(点) (空格)绕过
-        Windows中，对于文件名中空格会被作为空处理，文件最后一个点会被自动去除
-- Windows文件流绕过
-        上传的文件名中test.php::$DATA，会生成test.php文件
-    — 双写绕过（php代码替换为空）
-## 条件竞争绕过
-上传的文件会被删除，文件内容为写入一句话木马，在删除前访问上传的文件，执行一次，生成一句话木马文件（这个文件不会被删）。
-
-# 文件解析漏洞
-## IIS6.0解析漏洞
-构造一个asp的一句话木马图片
-1. 上传修改后缀为asa
-2. test.asp;.jpg 将当做asp进行解析
-3. test.asp/123.jpg，系统会把5.asp当成一个文件夹，而这个子文件夹里的文件会当成asp解析
-
-## apache2.2.15解析漏洞
-从右到左解析后缀，test.php.png及.php.jpg、.php.gif等均会被解析成php文件执行
-
-## Nginx CGI解析漏洞
-上传1.jpg，浏览器中访问1.jpg/.php就可以成功执行php
-</code></pre>
+<p><img src="https://bu.dusays.com/2022/04/06/a1a8a2bf6a7e8.png"></p>
+<ul>
+<li>上传.user.ini文件，auto_prepend_file&#x3D;1.gif   所有的php文件都包含1.gif<br>更多：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36374896/article/details/107005123">https://blog.csdn.net/qq_36374896/article/details/107005123</a></li>
+<li>Windows大小写不敏感绕过</li>
+<li>文件后缀.(点) (空格)绕过<br>  Windows中，对于文件名中空格会被作为空处理，文件最后一个点会被自动去除</li>
+<li>Windows文件流绕过<br>  上传的文件名中test.php::$DATA，会生成test.php文件<br>  — 双写绕过（php代码替换为空）<h2 id="条件竞争绕过"><a href="#条件竞争绕过" class="headerlink" title="条件竞争绕过"></a>条件竞争绕过</h2>上传的文件会被删除，文件内容为写入一句话木马，在删除前访问上传的文件，执行一次，生成一句话木马文件（这个文件不会被删）。</li>
+</ul>
+<h1 id="文件解析漏洞"><a href="#文件解析漏洞" class="headerlink" title="文件解析漏洞"></a>文件解析漏洞</h1><h2 id="IIS6-0解析漏洞"><a href="#IIS6-0解析漏洞" class="headerlink" title="IIS6.0解析漏洞"></a>IIS6.0解析漏洞</h2><p>构造一个asp的一句话木马图片</p>
+<ol>
+<li>上传修改后缀为asa</li>
+<li>test.asp;.jpg 将当做asp进行解析</li>
+<li>test.asp&#x2F;123.jpg，系统会把5.asp当成一个文件夹，而这个子文件夹里的文件会当成asp解析</li>
+</ol>
+<h2 id="apache2-2-15解析漏洞"><a href="#apache2-2-15解析漏洞" class="headerlink" title="apache2.2.15解析漏洞"></a>apache2.2.15解析漏洞</h2><p>从右到左解析后缀，test.php.png及.php.jpg、.php.gif等均会被解析成php文件执行</p>
+<h2 id="Nginx-CGI解析漏洞"><a href="#Nginx-CGI解析漏洞" class="headerlink" title="Nginx CGI解析漏洞"></a>Nginx CGI解析漏洞</h2><p>上传1.jpg，浏览器中访问1.jpg&#x2F;.php就可以成功执行php</p>
 
                 
             </div>
@@ -546,6 +544,10 @@ Linux/Unix:
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/php/">
+                                    <span class="chip bg-color">php</span>
+                                </a>
                             
                                 <a href="/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-%E4%B8%8A%E4%BC%A0/">
                                     <span class="chip bg-color">文件包含&amp;上传</span>
@@ -870,7 +872,7 @@ DTD（document type define文档类型定义）作用是定义XML文档的合法
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">21.6k</span>
+                        class="white-color">22.6k</span>
             
             
             
