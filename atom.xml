@@ -6,7 +6,7 @@
   <link href="https://lees01.gitee.io/atom.xml" rel="self"/>
   
   <link href="https://lees01.gitee.io/"/>
-  <updated>2022-04-06T07:43:06.515Z</updated>
+  <updated>2022-04-10T14:24:06.027Z</updated>
   <id>https://lees01.gitee.io/</id>
   
   <author>
@@ -17,24 +17,51 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>Java cc1链简单分析</title>
+    <link href="https://lees01.gitee.io/2022/04/08/java-fan-xu-lie-hua-cc1/"/>
+    <id>https://lees01.gitee.io/2022/04/08/java-fan-xu-lie-hua-cc1/</id>
+    <published>2022-04-08T13:10:23.837Z</published>
+    <updated>2022-04-10T14:24:06.027Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Commons-Collections&quot;&gt;&lt;a href=&quot;#Commons-Collections&quot; class=&quot;headerlink&quot; title=&quot;Commons Collections&quot;&gt;&lt;/a&gt;Commons</summary>
+        
+      
+    
+    
+    
+    <category term="Java" scheme="https://lees01.gitee.io/categories/Java/"/>
+    
+    
+    <category term="反序列化" scheme="https://lees01.gitee.io/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+    <category term="Java" scheme="https://lees01.gitee.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>浅聊Java反序列化</title>
     <link href="https://lees01.gitee.io/2022/04/06/qian-liao-java-fan-xu-lie-hua/"/>
     <id>https://lees01.gitee.io/2022/04/06/qian-liao-java-fan-xu-lie-hua/</id>
     <published>2022-04-06T07:33:13.119Z</published>
-    <updated>2022-04-06T07:43:06.515Z</updated>
+    <updated>2022-04-10T15:10:40.534Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;浅聊Java反序列化&quot;&gt;&lt;a href=&quot;#浅聊Java反序列化&quot; class=&quot;headerlink&quot;</summary>
+    <summary type="html">&lt;h2 id=&quot;浅聊Java反序列化&quot;&gt;&lt;a href=&quot;#浅聊Java反序列化&quot; class=&quot;headerlink&quot;</summary>
         
       
     
     
     
-    <category term="反序列化" scheme="https://lees01.gitee.io/categories/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    <category term="Java" scheme="https://lees01.gitee.io/categories/Java/"/>
     
     
     <category term="反序列化" scheme="https://lees01.gitee.io/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
